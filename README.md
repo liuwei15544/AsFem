@@ -1,2 +1,2 @@
 # IgaExercise
-My iga-fem learning code
+My iga-fem exercise code
