@@ -4,6 +4,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/SFEM.dir/src/Mesh/MeshSettings.cpp.o"
   "CMakeFiles/SFEM.dir/src/Mesh/CreateMesh.cpp.o"
   "CMakeFiles/SFEM.dir/src/Mesh/Create1DMesh.cpp.o"
+  "CMakeFiles/SFEM.dir/src/Mesh/Create2DMesh.cpp.o"
   "../SFEM.pdb"
   "../SFEM"
 )

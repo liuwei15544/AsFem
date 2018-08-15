@@ -98,6 +98,9 @@
 		<Unit filename="/home/by/Projects/GitHub/sFEM/src/Mesh/Create1DMesh.cpp">
 			<Option target="SFEM"/>
 		</Unit>
+		<Unit filename="/home/by/Projects/GitHub/sFEM/src/Mesh/Create2DMesh.cpp">
+			<Option target="SFEM"/>
+		</Unit>
 		<Unit filename="/home/by/Projects/GitHub/sFEM/src/Mesh/CreateMesh.cpp">
 			<Option target="SFEM"/>
 		</Unit>
