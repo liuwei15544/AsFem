@@ -44,6 +44,6 @@ set(SRC src/main.cpp)
 # For mesh
 set(INC include/Mesh/Mesh.h)
 set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/MeshSettings.cpp)
-set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create2DMesh.cpp)
+set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create2DMesh.cpp src/Mesh/GetMeshInfo.cpp)
 
 add_executable(SFEM ${INC} ${SRC})

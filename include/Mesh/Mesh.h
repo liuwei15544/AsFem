@@ -46,6 +46,30 @@ public:
     void SetNz(int nz);
     bool IsMeshInfoComplete();
 
+    // For getting mesh information
+    int GetDims() const { return nDim;}
+    int GetNodesNumPerElmt() const { return nNodesPerElmt;}
+    int GetNodesNumPerBCElmt() const { return nNodesPerBCElmt;}
+    int GetNodesNum() const { return nNodes;}
+    int GetElmtsNum() const { return nElmts;}
+    int GetBCElmtsNum() const { return nBCElmts;}
+
+
+    int GetIthConnJthIndex(int e, int j) const;
+    double GetIthNodeJthCoord(int i, int j) const;
+    void GetLocalCoords(int e,double (&coords)[27][4]) const;
+
+    //* For boundary mesh information
+    int GetSideBCElmtNum(string sidename) const;
+    int GetSideBCIthConnJthIndex(string sidename,int i,int j) const;
+    double GetSideBCIthNodeJthCoord(string sidename,int e,int i,int j) const;
+    void GetLocalBCCoords(string sidename,int e,double (&coords)[27][4]) const;
+    //int GetBCIthConnJthIndex(int i,int j);
+    //double GetBCIthNodeJthCoord(int i,int j) const;
+
+    //* For VTK information
+    //void SetVTKCellType(int vtkcelltype);
+    int GetVTKCellType() const { return VTKCellType;}
 
     // For bult-in mesh
     void CreateMesh();
