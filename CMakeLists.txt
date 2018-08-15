@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 3.8)
+project(SFEM)
+
+set(CMAKE_CXX_STANDARD 14)
+#######################################
+### For debug mode                  ###
+#######################################
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -fopenmp -O2 ")
+
+#######################################
+### For release mode                ###
+#######################################
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fopenmp -Ofast -march=corei7-avx")
+
+#######################################
+### For release mode                ###
+#######################################
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
+#######################################
+### Set the PETSc path with your own###
+#######################################
+set(PETSc "/home/by/Programs/petsc3.9.3")
+include_directories("${PETSc}/include")
+link_libraries("${PETSc}/lib/libpetsc.so")
+#######################################
+### Set the mpi path with your own  ###
+#######################################
+set(MPI "/opt/moose/mpich-3.2/gcc-7.3.0")
+include_directories("${MPI}/include")
+
+
+
+################################################################
+### In most case, you don't need to edit the following line! ###
+### In most case, you don't need to edit the following line! ###
+### In most case, you don't need to edit the following line! ###
+################################################################
+#######################################
+### For src and header file         ###
+#######################################
+set(SRC src/main.cpp)
+
+# For mesh
+set(INC include/Mesh/Mesh.h)
+set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/MeshSettings.cpp)
+
+add_executable(SFEM ${INC} ${SRC})
