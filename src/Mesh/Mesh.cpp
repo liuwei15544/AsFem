@@ -32,7 +32,12 @@ Mesh::Mesh()
     // for boundary mesh
     BCMeshCreated=false;
     nBCNodes=0;nBCElmts=0;nNodesPerBCElmt=0;
+
+    BCMeshSet.clear();
     BCConn.clear();
+    LeftBCConn.clear();RightBCConn.clear();
+    BottomBCConn.clear();TopBCConn.clear();
+    BackBCConn.clear();FrontBCConn.clear();
 
     // for state variable check
     IsBultInMesh=true;
@@ -42,5 +47,63 @@ Mesh::Mesh()
     IsMeshTypeSet=false;
     IsNxSet=false;IsNySet=false;IsNzSet=false;
     IsDimSet=false;
+}
+
+//*************************
+void Mesh::Release()
+{
+    NodeCoords.clear();
+    Conn.clear();
+
+    BCMeshSet.clear();
+    BCConn.clear();
+    LeftBCConn.clear();RightBCConn.clear();
+    BottomBCConn.clear();TopBCConn.clear();
+    BackBCConn.clear();FrontBCConn.clear();
+}
+
+//***********************************
+bool Mesh::IsMeshInfoComplete()
+{
+    if(!IsDimSet)
+    {
+        return false;
+    }
+    else
+    {
+        if(nDim==1)
+        {
+            if(!IsNxSet) return false;
+            if(!IsXminSet) return false;
+            if(!IsXmaxSet) return false;
+        }
+        else if(nDim==2)
+        {
+            if(!IsNxSet) return false;
+            if(!IsNySet) return false;
+
+            if(!IsXminSet) return false;
+            if(!IsXmaxSet) return false;
+            if(!IsYminSet) return false;
+            if(!IsYmaxSet) return false;
+        }
+        else if(nDim==3)
+        {
+            if(!IsNxSet) return false;
+            if(!IsNySet) return false;
+            if(!IsNzSet) return false;
+
+            if(!IsXminSet) return false;
+            if(!IsXmaxSet) return false;
+            if(!IsYminSet) return false;
+            if(!IsYmaxSet) return false;
+            if(!IsZminSet) return false;
+            if(!IsZmaxSet) return false;
+        }
+    }
+
+    if(!IsMeshTypeSet) return false;
+
+    return true;
 }
 

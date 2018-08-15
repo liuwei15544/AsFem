@@ -215,3 +215,168 @@ void Mesh::SetNx(int nx)
     Nx=nx;
     IsNxSet=true;
 }
+//*********************
+void Mesh::SetNy(int ny)
+{
+    if(IsDimSet)
+    {
+        if(nDim<2)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: cant' set Ny, dim=%3d !!!              ***\n",nDim);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+            PetscFinalize();
+            abort();
+        }
+    }
+
+    if(ny<1)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: ny=%6d is invalid                   ***\n",ny);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    Ny=ny;
+    IsNySet=true;
+}
+//**********************
+void Mesh::SetNz(int nz)
+{
+    if(IsDimSet)
+    {
+        if(nDim<3)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: cant' set Nz, dim=%3d !!!              ***\n",nDim);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+            PetscFinalize();
+            abort();
+        }
+    }
+
+    if(nz<1)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: nz=%6d is invalid                   ***\n",nz);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    Nz=nz;
+    IsNzSet=true;
+}
+
+//*************************************
+void Mesh::SetMeshType(string meshtype)
+{
+    if(IsDimSet)
+    {
+        if(nDim==1)
+        {
+            if(meshtype.compare(0,5,"edge2")==0)
+            {
+                MeshType="edge2";
+                IsMeshTypeSet=true;
+            }
+            else if(meshtype.compare(0,5,"edge3")==0)
+            {
+                MeshType="edge3";
+                IsMeshTypeSet=true;
+            }
+            else if(meshtype.compare(0,5,"edge4")==0)
+            {
+                MeshType="edge4";
+                IsMeshTypeSet=true;
+            }
+            else
+            {
+                IsMeshTypeSet=false;
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported 1d mesh!                   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**         edge2,3,4 is valid for 1d mesh type!   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscFinalize();
+                abort();
+            }
+        }
+        else if(nDim==2)
+        {
+            if(meshtype.compare(0,5,"quad4")==0)
+            {
+                MeshType="quad4";
+                IsMeshTypeSet=true;
+            }
+            else if(meshtype.compare(0,5,"quad8")==0)
+            {
+                MeshType="quad8";
+                IsMeshTypeSet=true;
+            }
+            else if(meshtype.compare(0,5,"quad9")==0)
+            {
+                MeshType="quad9";
+                IsMeshTypeSet=true;
+            }
+            else
+            {
+                IsMeshTypeSet=false;
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported 1d mesh!                   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**         quad4,8,9 is valid for 2d mesh type!   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscFinalize();
+                abort();
+            }
+        }
+        else if(nDim==3)
+        {
+            if(meshtype.compare(0,8,"hex8")==0)
+            {
+                MeshType="hex8";
+                IsMeshTypeSet=true;
+            }
+            else if(meshtype.compare(0,5,"hex20")==0)
+            {
+                MeshType="hex20";
+                IsMeshTypeSet=true;
+            }
+            else if(meshtype.compare(0,5,"hex27")==0)
+            {
+                MeshType="hex27";
+                IsMeshTypeSet=true;
+            }
+            else
+            {
+                IsMeshTypeSet=false;
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported 1d mesh!                   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**         quad4,8,9 is valid for 2d mesh type!   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
+                PetscFinalize();
+                abort();
+            }
+        }
+    }
+    else
+    {
+        MeshType=meshtype;
+        IsMeshTypeSet=true;
+    }
+}

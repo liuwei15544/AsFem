@@ -28,6 +28,9 @@ class Mesh
 {
 public:
     Mesh();
+    void Release();
+
+    bool IsMeshCreated() const { return MeshCreated;}
 
     // For mesh settings
     void SetDim(int dim);
@@ -63,6 +66,7 @@ private:
     // for basic mesh information
     double Xmax,Xmin,Ymax,Ymin,Zmax,Zmin;
     bool MeshCreated=false;
+    int VTKCellType;
     string MeshType;
     string GmshFileName;
     int Nx,Ny,Nz,nDim;
@@ -74,6 +78,10 @@ private:
     bool BCMeshCreated=false;
     int nBCNodes,nBCElmts,nNodesPerBCElmt;
     vector<int> BCConn;
+    vector<int> LeftBCConn,RightBCConn;
+    vector<int> BottomBCConn,TopBCConn;
+    vector<int> BackBCConn,FrontBCConn;
+    vector<pair<string,vector<int>>> BCMeshSet;
 
 private:
     // for state variable check

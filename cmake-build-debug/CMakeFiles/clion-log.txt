@@ -1,0 +1,4 @@
+/home/by/Programs/clion-2018.1.2/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_COMPILER=/opt/moose/gcc-7.3.0/bin/gcc -DCMAKE_CXX_COMPILER=/opt/moose/gcc-7.3.0/bin/g++ -G "CodeBlocks - Unix Makefiles" /home/by/Projects/GitHub/sFEM
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/by/Projects/GitHub/sFEM/cmake-build-debug
