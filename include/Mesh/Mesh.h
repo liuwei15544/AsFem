@@ -74,9 +74,7 @@ public:
 
     // For bult-in mesh
     void CreateMesh();
-    void Create1DMesh();
-    void Create2DMesh();
-    void Create3DMesh();
+
 
     // For external mesh
     void ImportGmsh();
@@ -86,6 +84,10 @@ public:
     void PrintMeshInfo(string str="") const;
     void PrintMeshDetailInfo(string str="") const;
 
+private:
+    void Create1DMesh();
+    void Create2DMesh();
+    void Create3DMesh();
 
 private:
     // for basic mesh information

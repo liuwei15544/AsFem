@@ -170,7 +170,7 @@ void Mesh::Create3DMesh()
                 NodeCoords[4*(kk-1)+0]=1.0;
                 NodeCoords[4*(kk-1)+1]=Xmin+(i-1)*2*dx;
                 NodeCoords[4*(kk-1)+2]=Ymin+(j-1)*2*dy+dy;
-                NodeCoords[4*(kk-1)+3]=Zmax+(k-1)*2*dz;
+                NodeCoords[4*(kk-1)+3]=Zmin+(k-1)*2*dz;
             }
         }
         // for top line
@@ -182,34 +182,6 @@ void Mesh::Create3DMesh()
             NodeCoords[4*(kk-1)+1]=Xmin+(i-1)*dx;
             NodeCoords[4*(kk-1)+2]=Ymin+(j-1)*2*dy;
             NodeCoords[4*(kk-1)+3]=Zmin+(k-1)*2*dz;
-        }
-
-
-        // Create Connectivity matrix
-        for(j=1;j<=Ny;j++)
-        {
-            for(i=1;i<=Nx;i++)
-            {
-                e=(j-1)*Nx+i;
-                i1=(j-1)*(2*Nx+1+Nx+1)+2*i-1;
-                i2=i1+2;
-                i3=i2+(2*Nx+1+Nx+1);
-                i4=i3-2;
-
-                i5=i1+1;
-                i6=i2+(2*Nx+1)-i;
-                i7=i3-1;
-                i8=i1+(2*Nx+1)-(i-1);
-
-                Conn[(e-1)*nNodesPerElmt+1-1]=i1;
-                Conn[(e-1)*nNodesPerElmt+2-1]=i2;
-                Conn[(e-1)*nNodesPerElmt+3-1]=i3;
-                Conn[(e-1)*nNodesPerElmt+4-1]=i4;
-                Conn[(e-1)*nNodesPerElmt+5-1]=i5;
-                Conn[(e-1)*nNodesPerElmt+6-1]=i6;
-                Conn[(e-1)*nNodesPerElmt+7-1]=i7;
-                Conn[(e-1)*nNodesPerElmt+8-1]=i8;
-            }
         }
 
         // Create Connectivity matrix

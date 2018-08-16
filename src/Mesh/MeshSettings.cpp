@@ -365,7 +365,7 @@ void Mesh::SetMeshType(string meshtype)
                 IsMeshTypeSet=false;
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported 3d mesh!                   ***\n");
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**         quad4,8,9 is valid for 2d mesh type!   ***\n");
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**         hex8,20,27 is valid for 2d mesh type!  ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                   ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*****************************************************\n");

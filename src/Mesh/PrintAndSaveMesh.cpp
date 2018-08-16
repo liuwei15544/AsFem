@@ -96,3 +96,118 @@ void Mesh::SaveMeshToVTU(string filename)
         out.close();
     }
 }
+
+//*******************************************
+void Mesh::PrintMeshInfo(string str) const
+{
+    if(!MeshCreated)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't print mesh info, mesh hasn't been generated!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        CreateMesh should be called before this!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+        PetscFinalize();
+        abort();
+    }
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+    if(str.size()>1)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** str= %s\n",str.c_str());
+    }
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Mesh information:                      ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nDims=%2d                             ***\n",nDim);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nNodes=%10d                    ***\n",nNodes);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nElmts=%10D                    ***\n",nElmts);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nNodesPerElmt=%3d                    ***\n",nNodesPerElmt);
+
+    int i,j;
+    i=LeftBCConn.size();j=GetSideBCElmtNum("left");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Left side nodes=%5d, elmts=%5d   ***\n",i,j);
+
+    i=RightBCConn.size();j=GetSideBCElmtNum("right");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Right side nodes=%5d, elmts=%5d  ***\n",i,j);
+
+    if(nDim==2)
+    {
+        i=BottomBCConn.size();j=GetSideBCElmtNum("bottom");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Bottom side nodes=%5d, elmts=%5d ***\n",i,j);
+
+        i=TopBCConn.size();j=GetSideBCElmtNum("top");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   Top side nodes=%5d, elmts=%5d    ***\n",i,j);
+    }
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+}
+
+//*****************************
+void Mesh::PrintMeshDetailInfo(string str) const
+{
+    int i,j,e;
+    double x,y,z,w;
+    if(!MeshCreated)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't print mesh info, mesh hasn't been generated!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        CreateMesh should be called before this!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!\n");
+        PetscFinalize();
+        abort();
+    }
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+    if(str.size()>1)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** str= %s\n",str.c_str());
+    }
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Mesh detailed information:             ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nDims=%2d                             ***\n",nDim);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nNodes=%10d                    ***\n",nNodes);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nElmts=%10D                    ***\n",nElmts);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nNodesPerElmt=%3d                    ***\n",nNodesPerElmt);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Nodes' coordinates:                    ***\n");
+    for(i=1;i<=nNodes;++i)
+    {
+        w=GetIthNodeJthCoord(i,0);
+        x=GetIthNodeJthCoord(i,1);
+        y=GetIthNodeJthCoord(i,2);
+        z=GetIthNodeJthCoord(i,3);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** %6d-th node:",i);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"x=%12.5e,y=%12.5e,z=%12.5e,w=%6.2f\n",x,y,z,w);
+    }
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Elements's connectivity:                ***\n");
+    for(e=1;e<=nElmts;e++)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** e=%6d:",e);
+        for(i=1;i<=nNodesPerElmt;++i)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"%5d ",GetIthConnJthIndex(e,i));
+        }
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"\n");
+    }
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Boundary element's connectivity:       ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    string sidename;
+    for(unsigned int i=1;i<=BCMeshSet.size();++i)
+    {
+        sidename=BCMeshSet[i-1].first;
+
+        for(e=1;e<=GetSideBCElmtNum(sidename);e++)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** %8s side->",sidename.c_str());
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"e=%3d:",e);
+            for(j=1;j<=nNodesPerBCElmt;j++)
+            {
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"%5d ",GetSideBCIthConnJthIndex(sidename,e,j));
+            }
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"\n");
+        }
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    }
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+}
