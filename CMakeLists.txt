@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -fopenmp -O2 ")
 #######################################
 ### For release mode                ###
 #######################################
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 #######################################
 ### Set the PETSc path with your own###
@@ -28,6 +28,7 @@ link_libraries("${PETSc}/lib/libpetsc.so")
 #######################################
 set(MPI "/opt/moose/mpich-3.2/gcc-7.3.0")
 include_directories("${MPI}/include")
+link_libraries("${MPI}/lib/libmpi.so")
 
 
 
@@ -46,5 +47,6 @@ set(INC include/Mesh/Mesh.h)
 set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/MeshSettings.cpp)
 set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create2DMesh.cpp)
 set(SRC ${SRC} src/Mesh/GetMeshInfo.cpp src/Mesh/Create3DMesh.cpp)
+set(SRC ${SRC} src/Mesh/PrintAndSaveMesh.cpp)
 
-add_executable(SFEM ${INC} ${SRC})
+add_executable(ASFEM ${INC} ${SRC})

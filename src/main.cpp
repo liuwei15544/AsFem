@@ -16,10 +16,18 @@ int main(int args,char *argv[])
 
     Mesh mesh;
 
-    mesh.SetDim(1);
+    mesh.SetDim(2);
 
     mesh.SetXmin(0.0);
-    mesh.SetXmax(1.0);
+    mesh.SetXmax(10.0);
+    mesh.SetYmin(0.0);
+    mesh.SetYmax(2.0);
+
+    mesh.SetNx(1000);
+    mesh.SetNy(2000);
+    mesh.SetMeshType("quad9");
+    mesh.CreateMesh();
+    mesh.SaveMeshToVTU();
 
 
 

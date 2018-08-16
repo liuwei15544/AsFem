@@ -207,6 +207,8 @@ void Mesh::Create2DMesh()
         VTKCellType=28;
     }
 
+    MeshCreated=true;
+
     //*********************************************
     //*** Split the boundary mesh
     //*********************************************
@@ -306,6 +308,7 @@ void Mesh::Create2DMesh()
     temp_pair=make_pair("top",TopBCConn);
     BCMeshSet.push_back(temp_pair);
 
+
     // store all the bc subset to BCConn
     BCConn.clear();
     for(unsigned set=0;set<BCMeshSet.size();set++)
@@ -315,7 +318,9 @@ void Mesh::Create2DMesh()
             BCConn.push_back(BCMeshSet[set].second[i]);
         }
     }
-    if(int(BCConn.size())!=nBCElmts*nNodesPerBCElmt)
+
+    i=int(BCConn.size());
+    if(i!=nBCElmts*nNodesPerBCElmt)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: BCConn size is wrong!!! SplitBC fail ***\n");
@@ -327,10 +332,8 @@ void Mesh::Create2DMesh()
     }
     else
     {
-        BCConn.resize(nBCElmts*nNodesPerBCElmt,0);
+        BCConn.resize(nBCElmts*nNodesPerBCElmt);
     }
-
-    MeshCreated=true;
     BCMeshCreated=true;
 }
 
