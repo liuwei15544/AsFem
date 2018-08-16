@@ -9,11 +9,11 @@
 //******************************************************
 //
 // Created by walkandthinker on 15.08.18.
-// Generate 2D mesh for AsFem
+// Generate 3D mesh for AsFem
 
 #include "Mesh/Mesh.h"
 
-void Mesh::Create2DMesh()
+void Mesh::Create3DMesh()
 {
     MeshCreated=false;
     BCMeshCreated=false;
@@ -206,131 +206,5 @@ void Mesh::Create2DMesh()
 
         VTKCellType=28;
     }
-
-    //*********************************************
-    //*** Split the boundary mesh
-    //*********************************************
-    pair<string,vector<int>> temp_pair;
-    nBCElmts=2*(Nx+Ny);
-
-    // for leftside
-    LeftBCConn.clear();
-    i=1;
-    for(j=1;j<=Ny;j++)
-    {
-        e=(j-1)*Nx+i;
-        if(nNodesPerBCElmt==2)
-        {
-            // quad4 case
-            LeftBCConn.push_back(GetIthConnJthIndex(e,4));
-            LeftBCConn.push_back(GetIthConnJthIndex(e,1));
-        }
-        else
-        {
-            LeftBCConn.push_back(GetIthConnJthIndex(e,4));
-            LeftBCConn.push_back(GetIthConnJthIndex(e,8));
-            LeftBCConn.push_back(GetIthConnJthIndex(e,1));
-        }
-    }
-    LeftBCConn.resize(LeftBCConn.size());
-    // For right side
-    RightBCConn.clear();
-    i=Nx;
-    for(j=1;j<=Ny;j++)
-    {
-        e=(j-1)*Nx+i;
-        if(nNodesPerBCElmt==2)
-        {
-            // quad4 case
-            RightBCConn.push_back(GetIthConnJthIndex(e,2));
-            RightBCConn.push_back(GetIthConnJthIndex(e,3));
-        }
-        else
-        {
-            RightBCConn.push_back(GetIthConnJthIndex(e,2));
-            RightBCConn.push_back(GetIthConnJthIndex(e,6));
-            RightBCConn.push_back(GetIthConnJthIndex(e,3));
-        }
-    }
-    RightBCConn.resize(RightBCConn.size());
-    // For bottom edge
-    BottomBCConn.clear();
-    j=1;
-    for(i=1;i<=Nx;i++)
-    {
-        e=(j-1)*Nx+i;
-        if(nNodesPerBCElmt==2)
-        {
-            // quad4 case
-            BottomBCConn.push_back(GetIthConnJthIndex(e,1));
-            BottomBCConn.push_back(GetIthConnJthIndex(e,2));
-        }
-        else
-        {
-            BottomBCConn.push_back(GetIthConnJthIndex(e,1));
-            BottomBCConn.push_back(GetIthConnJthIndex(e,5));
-            BottomBCConn.push_back(GetIthConnJthIndex(e,2));
-        }
-    }
-    BottomBCConn.resize(BottomBCConn.size());
-    // For top edge
-    TopBCConn.clear();
-    j=Ny;
-    for(i=1;i<=Nx;i++)
-    {
-        e=(j-1)*Nx+i;
-        if(nNodesPerBCElmt==2)
-        {
-            // quad4 case
-            TopBCConn.push_back(GetIthConnJthIndex(e,3));
-            TopBCConn.push_back(GetIthConnJthIndex(e,4));
-        }
-        else
-        {
-            TopBCConn.push_back(GetIthConnJthIndex(e,3));
-            TopBCConn.push_back(GetIthConnJthIndex(e,7));
-            TopBCConn.push_back(GetIthConnJthIndex(e,4));
-        }
-    }
-    TopBCConn.resize(TopBCConn.size());
-
-    temp_pair=make_pair("left",LeftBCConn);
-    BCMeshSet.push_back(temp_pair);
-
-    temp_pair=make_pair("right",RightBCConn);
-    BCMeshSet.push_back(temp_pair);
-
-    temp_pair=make_pair("bottom",BottomBCConn);
-    BCMeshSet.push_back(temp_pair);
-
-    temp_pair=make_pair("top",TopBCConn);
-    BCMeshSet.push_back(temp_pair);
-
-    // store all the bc subset to BCConn
-    BCConn.clear();
-    for(unsigned set=0;set<BCMeshSet.size();set++)
-    {
-        for(i=0;i<int(BCMeshSet[set].second.size());i++)
-        {
-            BCConn.push_back(BCMeshSet[set].second[i]);
-        }
-    }
-    if(int(BCConn.size())!=nBCElmts*nNodesPerBCElmt)
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: BCConn size is wrong!!! SplitBC fail ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                 ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
-        PetscFinalize();
-        abort();
-    }
-    else
-    {
-        BCConn.resize(nBCElmts*nNodesPerBCElmt,0);
-    }
-
-    MeshCreated=true;
-    BCMeshCreated=true;
 }
 
