@@ -15,9 +15,8 @@
 
 void Mesh::SaveMeshToVTU(string filename)
 {
-    PetscMPIInt rank,size;
+    PetscMPIInt rank;
     MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
-    MPI_Comm_size(PETSC_COMM_WORLD,&size);
 
     if(rank==0)
     {
