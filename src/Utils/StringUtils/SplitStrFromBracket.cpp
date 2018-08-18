@@ -9,39 +9,32 @@
 //******************************************************
 //
 // Created by walkandthinker on 16.08.18.
-// several utils for string operation
+//*** Split string from a bracked                           ***
+//*** i.e. [test]-->result= test                            ***
 
 #include "Utils/StringUtils.h"
 
-string RemoveSpace(string instr)
+string SplitStrFromBracket(string &inputstr)
 {
-    if(instr.size()<=1)
+    string str,str1;
+    str1=RemoveSpace(inputstr);
+
+    if(str1.size()<2)
     {
-        return instr;
+        str="";
     }
-    unsigned int i,length;
-    char ch[1000];
-    length=0;
-    for(i=0;i<instr.size();i++)
+    else
     {
-        if(instr.at(i)!=' ')
+        if((str1.at(0)=='[') && (str1.at(str1.size()-1)==']') && str1.size()>2)
         {
-            ch[length]=instr.at(i);
-            length+=1;
+            str=str1.substr(1,str1.size()-2);
+        }
+        else
+        {
+            str="";
         }
     }
 
-    string outstr;
-    outstr.clear();
-    for(i=0;i<length;i++)
-    {
-        if(ch[i]=='\n')
-        {
-            break;
-        }
-        outstr+=ch[i];
-    }
-    return outstr;
+    return str;
 }
-
 

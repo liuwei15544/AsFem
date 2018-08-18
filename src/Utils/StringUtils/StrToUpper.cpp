@@ -9,39 +9,15 @@
 //******************************************************
 //
 // Created by walkandthinker on 16.08.18.
-// several utils for string operation
+// Convert str to upper case
 
+#include <algorithm>
 #include "Utils/StringUtils.h"
 
-string RemoveSpace(string instr)
+string StrToUpper(string instr)
 {
-    if(instr.size()<=1)
-    {
-        return instr;
-    }
-    unsigned int i,length;
-    char ch[1000];
-    length=0;
-    for(i=0;i<instr.size();i++)
-    {
-        if(instr.at(i)!=' ')
-        {
-            ch[length]=instr.at(i);
-            length+=1;
-        }
-    }
-
-    string outstr;
-    outstr.clear();
-    for(i=0;i<length;i++)
-    {
-        if(ch[i]=='\n')
-        {
-            break;
-        }
-        outstr+=ch[i];
-    }
+    string outstr=instr;
+    transform(outstr.begin(),outstr.end(),outstr.begin(),::toupper);
     return outstr;
 }
-
 

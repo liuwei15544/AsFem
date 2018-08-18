@@ -9,39 +9,21 @@
 //******************************************************
 //
 // Created by walkandthinker on 16.08.18.
-// several utils for string operation
+// split string by symbol
 
+#include <sstream>
 #include "Utils/StringUtils.h"
 
-string RemoveSpace(string instr)
+vector<string> SplitStr(string instr,char symbol)
 {
-    if(instr.size()<=1)
-    {
-        return instr;
-    }
-    unsigned int i,length;
-    char ch[1000];
-    length=0;
-    for(i=0;i<instr.size();i++)
-    {
-        if(instr.at(i)!=' ')
-        {
-            ch[length]=instr.at(i);
-            length+=1;
-        }
-    }
+    vector<string> outstr;
+    stringstream ss(instr);
+    string tok;
 
-    string outstr;
     outstr.clear();
-    for(i=0;i<length;i++)
+    while(getline(ss,tok,symbol))
     {
-        if(ch[i]=='\n')
-        {
-            break;
-        }
-        outstr+=ch[i];
+        outstr.push_back(tok);
     }
     return outstr;
 }
-
-

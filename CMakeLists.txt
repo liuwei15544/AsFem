@@ -54,7 +54,11 @@ set(INC ${INC} include/InputSystem/InputSystem.h)
 
 # For Utils
 #  for string utils
-set(INC ${INC} include/Utils/StringUtils/StringUtils.h)
-set(SRC ${SRC} src/Utils/StringUtils/RemoveSpace.cpp)
+set(INC ${INC} include/Utils/StringUtils.h)
+set(SRC ${SRC} src/Utils/StringUtils/RemoveSpace.cpp src/Utils/StringUtils/StrToLower.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/StrVecToLower.cpp src/Utils/StringUtils/StrToUpper.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/StrVecToUpper.cpp src/Utils/StringUtils/SplitStr.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/SplitNum.cpp src/Utils/StringUtils/SplitNumAfter.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/IsBracketMatch.cpp src/Utils/StringUtils/IsSubBracketMatch.cpp src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUtils/GotoLine.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

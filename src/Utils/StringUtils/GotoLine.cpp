@@ -9,39 +9,19 @@
 //******************************************************
 //
 // Created by walkandthinker on 16.08.18.
-// several utils for string operation
+//*** Split string from a bracked                           ***
+//*** i.e. [test]-->result= test                            ***
 
 #include "Utils/StringUtils.h"
 
-string RemoveSpace(string instr)
+void GotoLine(ifstream &in,int linenum)
 {
-    if(instr.size()<=1)
+    string line;
+    in.clear();
+    in.seekg(ios::beg);
+    for(int i=0;i<linenum-1;i++)
     {
-        return instr;
+        getline(in,line);
     }
-    unsigned int i,length;
-    char ch[1000];
-    length=0;
-    for(i=0;i<instr.size();i++)
-    {
-        if(instr.at(i)!=' ')
-        {
-            ch[length]=instr.at(i);
-            length+=1;
-        }
-    }
-
-    string outstr;
-    outstr.clear();
-    for(i=0;i<length;i++)
-    {
-        if(ch[i]=='\n')
-        {
-            break;
-        }
-        outstr+=ch[i];
-    }
-    return outstr;
 }
-
 

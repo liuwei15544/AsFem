@@ -9,39 +9,19 @@
 //******************************************************
 //
 // Created by walkandthinker on 16.08.18.
-// several utils for string operation
+// Convert str vec to upper case
 
+#include <algorithm>
 #include "Utils/StringUtils.h"
 
-string RemoveSpace(string instr)
+vector<string> StrVecToUpper(vector<string> instrvec)
 {
-    if(instr.size()<=1)
+    vector<string> outstrvec=instrvec;
+    for(unsigned int i=0;i<outstrvec.size();i++)
     {
-        return instr;
+        string str=outstrvec[i];
+        transform(str.begin(),str.end(),str.begin(),::toupper);
+        outstrvec[i]=str;
     }
-    unsigned int i,length;
-    char ch[1000];
-    length=0;
-    for(i=0;i<instr.size();i++)
-    {
-        if(instr.at(i)!=' ')
-        {
-            ch[length]=instr.at(i);
-            length+=1;
-        }
-    }
-
-    string outstr;
-    outstr.clear();
-    for(i=0;i<length;i++)
-    {
-        if(ch[i]=='\n')
-        {
-            break;
-        }
-        outstr+=ch[i];
-    }
-    return outstr;
+    return outstrvec;
 }
-
-

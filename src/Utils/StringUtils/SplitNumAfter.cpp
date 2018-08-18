@@ -9,39 +9,16 @@
 //******************************************************
 //
 // Created by walkandthinker on 16.08.18.
-// several utils for string operation
+// split number from string after pos
 
 #include "Utils/StringUtils.h"
 
-string RemoveSpace(string instr)
+vector<double> SplitNumAfter(string instr,int pos)
 {
-    if(instr.size()<=1)
-    {
-        return instr;
-    }
-    unsigned int i,length;
-    char ch[1000];
-    length=0;
-    for(i=0;i<instr.size();i++)
-    {
-        if(instr.at(i)!=' ')
-        {
-            ch[length]=instr.at(i);
-            length+=1;
-        }
-    }
-
-    string outstr;
-    outstr.clear();
-    for(i=0;i<length;i++)
-    {
-        if(ch[i]=='\n')
-        {
-            break;
-        }
-        outstr+=ch[i];
-    }
-    return outstr;
+    string str;
+    str=instr.substr(pos,instr.size()-pos+1);
+    return SplitNum(str);
 }
+
 
 
