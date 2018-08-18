@@ -14,9 +14,33 @@
 #ifndef ASFEM_INPUTSYSTEM_H
 #define ASFEM_INPUTSYSTEM_H
 
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+
+#include "petsc.h"
+
+// For AsFem's own header file
+#include "Utils/StringUtils.h"
+#include "Mesh/Mesh.h"
+
+using namespace std;
 
 class InputSystem
 {
+public:
+    InputSystem();
+    InputSystem(int argc,char *argv[]);
+
+    void InitInputSystem(int argc,char *argv[]);
+
+    //bool ReadInputFile(Mesh &mesh,EquationSystem &equationSystem);
+    bool ReadMeshBlock(Mesh &mesh);
+
+private:
+    bool IsInputSystemInit=false;
+    string InputFileName;
+    ifstream in;
 
 };
 
