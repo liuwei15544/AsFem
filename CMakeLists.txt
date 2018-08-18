@@ -49,4 +49,12 @@ set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create
 set(SRC ${SRC} src/Mesh/GetMeshInfo.cpp src/Mesh/Create3DMesh.cpp)
 set(SRC ${SRC} src/Mesh/PrintAndSaveMesh.cpp)
 
+# For input system
+set(INC ${INC} include/InputSystem/InputSystem.h)
+
+# For Utils
+#  for string utils
+set(INC ${INC} include/Utils/StringUtils/StringUtils.h)
+set(SRC ${SRC} src/Utils/StringUtils/RemoveSpace.cpp)
+
 add_executable(ASFEM ${INC} ${SRC})
