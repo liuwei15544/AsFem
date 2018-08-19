@@ -14,6 +14,8 @@
 #ifndef ASFEM_GAUSSPOINT_H
 #define ASFEM_GAUSSPOINT_H
 
+#include "petsc.h"
+
 void Int1D(int ngp,int &Lint,double (&gs)[125][4]);
 void Int2D(int ngp,int &Lint,double (&gs)[125][4]);
 void Int3D(int ngp,int &Lint,double (&gs)[125][4]);
