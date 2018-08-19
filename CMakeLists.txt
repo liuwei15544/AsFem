@@ -60,6 +60,11 @@ set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create
 set(SRC ${SRC} src/Mesh/GetMeshInfo.cpp src/Mesh/Create3DMesh.cpp)
 set(SRC ${SRC} src/Mesh/PrintAndSaveMesh.cpp)
 
+# For dof handler
+set(INC ${INC} include/DofHandler/DofHandler.h)
+set(SRC ${SRC} src/DofHandler/DofHandler.cpp src/DofHandler/DofHandlerSetting.cpp)
+set(SRC ${SRC} src/DofHandler/GetDofHandlerInfo.cpp src/DofHandler/PrintDofHandlerInfo.cpp)
+
 # For equation system
 set(INC ${INC} include/EquationSystem/EquationSystem.h)
 set(SRC ${SRC} src/EquationSystem/EquationSystem.cpp src/EquationSystem/EquationSystemSetting.cpp)
@@ -82,6 +87,6 @@ set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poiss
 set(INC ${INC} include/BCSystem/BCBlockInfo.h include/BCSystem/BCInfo.h)
 set(SRC ${SRC} src/BCSystem/BCInfo.cpp)
 set(INC ${INC} include/BCSystem/BCSystem.h)
-set(SRC ${SRC} )
+
 
 add_executable(ASFEM ${INC} ${SRC})
