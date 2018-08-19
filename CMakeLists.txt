@@ -71,6 +71,14 @@ set(SRC ${SRC} src/EquationSystem/EquationSystem.cpp src/EquationSystem/Equation
 set(SRC ${SRC} src/EquationSystem/EquationSystemInitAndReinit.cpp src/EquationSystem/EquationSystemMathUtils.cpp)
 set(SRC ${SRC} src/EquationSystem/GetEquationSystemInfo.cpp)
 
+# For boundary system
+set(INC ${INC} include/BCSystem/BCBlockInfo.h include/BCSystem/BCInfo.h)
+set(SRC ${SRC} src/BCSystem/BCInfo.cpp)
+set(INC ${INC} include/BCSystem/BCSystem.h)
+set(SRC ${SRC} src/BCSystem/BCSystem.cpp src/BCSystem/ApplyBoundaryCondition.cpp)
+set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp src/BCSystem/ApplyConstraint.cpp)
+
+
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
 set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp)
@@ -81,14 +89,8 @@ set(INC ${INC} include/ElementSystem/KernelBlockInfo.h)
 set(SRC ${SRC} src/ElementSystem/KernelBlockInfo.cpp)
 set(INC ${INC} include/ElementSystem/ElementSystem.h)
 set(SRC ${SRC} src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSystemSetting.cpp)
-set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp)
+set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp src/InputSystem/ReadBoundaryBlock.cpp)
 
-# For boundary system
-set(INC ${INC} include/BCSystem/BCBlockInfo.h include/BCSystem/BCInfo.h)
-set(SRC ${SRC} src/BCSystem/BCInfo.cpp)
-set(INC ${INC} include/BCSystem/BCSystem.h)
-set(SRC ${SRC} src/BCSystem/BCSystem.cpp src/BCSystem/ApplyBoundaryCondition.cpp)
-set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp src/BCSystem/ApplyConstraint.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})

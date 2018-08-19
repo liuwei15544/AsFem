@@ -25,6 +25,7 @@
 #include "Mesh/Mesh.h"
 #include "EquationSystem/EquationSystem.h"
 #include "ElementSystem/KernelBlockInfo.h"
+#include "BCSystem/BCSystem.h"
 
 using namespace std;
 
@@ -40,6 +41,8 @@ public:
     bool ReadMeshBlock(Mesh &mesh);
     bool ReadDofsName(EquationSystem &equationSystem);
     bool ReadKernelBlock(KernelBlockInfo &kernelBlockInfo);
+    bool ReadBoundaryBlock(vector<BCBlockInfo> &bcBlockList);
+
 
 private:
     bool IsInputSystemInit=false;
