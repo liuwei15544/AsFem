@@ -97,6 +97,6 @@ set(SRC ${SRC} src/ShapeFuns/Shp1D.cpp src/ShapeFuns/Shp2D.cpp src/ShapeFuns/Shp
 
 # For gauss point
 set(INC ${INC} include/GaussPoint/GaussPoint.h)
-set(SRC ${SRC} src/GaussPoint/Int1D.cpp src/GaussPoint/Int2D.cpp)
+set(SRC ${SRC} src/GaussPoint/Int1D.cpp src/GaussPoint/Int2D.cpp src/GaussPoint/Int3D.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
