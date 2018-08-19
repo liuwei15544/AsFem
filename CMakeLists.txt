@@ -91,6 +91,9 @@ set(INC ${INC} include/ElementSystem/ElementSystem.h)
 set(SRC ${SRC} src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSystemSetting.cpp)
 set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp)
 
+# For shapefuns
+set(INC ${INC} include/ShapeFuns/ShapeFuns.h)
+set(SRC ${SRC} src/ShapeFuns/Shp1D.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})
