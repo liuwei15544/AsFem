@@ -74,6 +74,12 @@ set(SRC ${SRC} src/InputSystem/ReadDofsName.cpp src/InputSystem/ReadKernelBlock.
 # For element system (AsFem's uel)
 set(INC ${INC} include/ElementSystem/KernelBlockInfo.h)
 set(SRC ${SRC} src/ElementSystem/KernelBlockInfo.cpp)
-set(INC ${INC} include/ElementSystem/ElementSystem.h src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSystemSetting.cpp src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp)
+set(INC ${INC} include/ElementSystem/ElementSystem.h)
+set(SRC ${SRC} src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSystemSetting.cpp)
+set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp)
+
+# For boundary system
+set(INC ${INC} include/BCSystem/BCBlockInfo.h include/BCSystem/BCInfo.h)
+set(SRC ${SRC} src/BCSystem/BCInfo.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
