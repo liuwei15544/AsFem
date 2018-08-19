@@ -70,5 +70,9 @@ set(SRC ${SRC} src/EquationSystem/GetEquationSystemInfo.cpp)
 set(INC ${INC} include/InputSystem/InputSystem.h)
 set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp src/InputSystem/ReadDofsName.cpp)
 
+# For element system (AsFem's uel)
+set(INC ${INC} include/ElementSystem/KernelBlockInfo.h)
+set(SRC ${SRC} src/ElementSystem/KernelBlockInfo.cpp)
+set(INC ${INC} include/ElementSystem/ElementSystem.h)
 
 add_executable(ASFEM ${INC} ${SRC})
