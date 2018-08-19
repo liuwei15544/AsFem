@@ -10,3 +10,9 @@
   ny=20
   meshtype=quad4
 []
+
+[dofs]
+
+name = ux   uy   uz
+
+[]

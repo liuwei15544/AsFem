@@ -23,6 +23,7 @@
 // For AsFem's own header file
 #include "Utils/StringUtils.h"
 #include "Mesh/Mesh.h"
+#include "EquationSystem/EquationSystem.h"
 
 using namespace std;
 
@@ -36,6 +37,7 @@ public:
 
     //bool ReadInputFile(Mesh &mesh,EquationSystem &equationSystem);
     bool ReadMeshBlock(Mesh &mesh);
+    bool ReadDofsName(EquationSystem &equationSystem);
 
 private:
     bool IsInputSystemInit=false;

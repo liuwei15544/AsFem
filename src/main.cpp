@@ -6,6 +6,7 @@
 //**********************
 #include "Mesh/Mesh.h"
 #include "InputSystem/InputSystem.h"
+#include "EquationSystem/EquationSystem.h"
 
 using namespace std;
 int main(int args,char *argv[])
@@ -16,11 +17,14 @@ int main(int args,char *argv[])
     ierr=PetscInitialize(&args,&argv,NULL,NULL);CHKERRQ(ierr);
 
     Mesh mesh;
+    EquationSystem equationSystem;
 
     InputSystem inputSystem(args,argv);
     inputSystem.ReadMeshBlock(mesh);
+    inputSystem.ReadDofsName(equationSystem);
 
-    mesh.PrintMeshDetailInfo();
+    mesh.PrintMeshInfo();
+    equationSystem.PrintSolutionNameMap();
 
 
     ierr=PetscFinalize();CHKERRQ(ierr);

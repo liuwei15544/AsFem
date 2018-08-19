@@ -42,13 +42,6 @@ link_libraries("${MPI}/lib/libmpi.so")
 #######################################
 set(SRC src/main.cpp)
 
-# For mesh
-set(INC include/Mesh/Mesh.h)
-set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/MeshSettings.cpp)
-set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create2DMesh.cpp)
-set(SRC ${SRC} src/Mesh/GetMeshInfo.cpp src/Mesh/Create3DMesh.cpp)
-set(SRC ${SRC} src/Mesh/PrintAndSaveMesh.cpp)
-
 # For Utils
 #  for string utils
 set(INC ${INC} include/Utils/StringUtils.h)
@@ -59,12 +52,23 @@ set(SRC ${SRC} src/Utils/StringUtils/SplitNum.cpp src/Utils/StringUtils/SplitNum
 set(SRC ${SRC} src/Utils/StringUtils/IsBracketMatch.cpp src/Utils/StringUtils/IsSubBracketMatch.cpp)
 set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUtils/GotoLine.cpp)
 
-# For input system
-set(INC ${INC} include/InputSystem/InputSystem.h)
-set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp)
+
+# For mesh
+set(INC include/Mesh/Mesh.h)
+set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/MeshSettings.cpp)
+set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create2DMesh.cpp)
+set(SRC ${SRC} src/Mesh/GetMeshInfo.cpp src/Mesh/Create3DMesh.cpp)
+set(SRC ${SRC} src/Mesh/PrintAndSaveMesh.cpp)
 
 # For equation system
 set(INC ${INC} include/EquationSystem/EquationSystem.h)
-set(SRC ${SRC} src/EquationSystem/EquationSystem.cpp src/EquationSystem/EquationSystemSetting.cpp src/EquationSystem/EquationSystemInitAndReinit.cpp src/EquationSystem/EquationSystemMathUtils.cpp src/EquationSystem/GetEquationSystemInfo.cpp)
+set(SRC ${SRC} src/EquationSystem/EquationSystem.cpp src/EquationSystem/EquationSystemSetting.cpp)
+set(SRC ${SRC} src/EquationSystem/EquationSystemInitAndReinit.cpp src/EquationSystem/EquationSystemMathUtils.cpp)
+set(SRC ${SRC} src/EquationSystem/GetEquationSystemInfo.cpp)
+
+# For input system
+set(INC ${INC} include/InputSystem/InputSystem.h)
+set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp src/InputSystem/ReadDofsName.cpp)
+
 
 add_executable(ASFEM ${INC} ${SRC})
