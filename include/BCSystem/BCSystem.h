@@ -22,7 +22,7 @@
 //*********************************
 #include "BCInfo.h"
 #include "Mesh/Mesh.h"
-//#include "DofHandler/DofHandler.h"
+#include "DofHandler/DofHandler.h"
 #include "EquationSystem/EquationSystem.h"
 
 class BCSystem

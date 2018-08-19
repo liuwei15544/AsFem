@@ -87,6 +87,8 @@ set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poiss
 set(INC ${INC} include/BCSystem/BCBlockInfo.h include/BCSystem/BCInfo.h)
 set(SRC ${SRC} src/BCSystem/BCInfo.cpp)
 set(INC ${INC} include/BCSystem/BCSystem.h)
+set(SRC ${SRC} src/BCSystem/BCSystem.cpp src/BCSystem/ApplyBoundaryCondition.cpp)
+set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp src/BCSystem/ApplyConstraint.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})

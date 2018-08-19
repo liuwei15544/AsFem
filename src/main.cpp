@@ -8,6 +8,7 @@
 #include "InputSystem/InputSystem.h"
 #include "EquationSystem/EquationSystem.h"
 #include "ElementSystem/KernelBlockInfo.h"
+#include "BCSystem/BCSystem.h"
 
 using namespace std;
 int main(int args,char *argv[])
@@ -20,6 +21,7 @@ int main(int args,char *argv[])
     Mesh mesh;
     EquationSystem equationSystem;
     KernelBlockInfo kernelBlockInfo;
+    BCSystem bcSystem;
 
     InputSystem inputSystem(args,argv);
     inputSystem.ReadMeshBlock(mesh);
