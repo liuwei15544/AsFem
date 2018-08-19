@@ -81,5 +81,7 @@ set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poiss
 # For boundary system
 set(INC ${INC} include/BCSystem/BCBlockInfo.h include/BCSystem/BCInfo.h)
 set(SRC ${SRC} src/BCSystem/BCInfo.cpp)
+set(INC ${INC} include/BCSystem/BCSystem.h)
+set(SRC ${SRC} )
 
 add_executable(ASFEM ${INC} ${SRC})
