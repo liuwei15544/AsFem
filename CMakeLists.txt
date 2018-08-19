@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 #######################################
 ### For debug mode                  ###
 #######################################
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -fopenmp -O2 ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fopenmp -O2 ")
 
 #######################################
 ### For release mode                ###
@@ -68,11 +68,12 @@ set(SRC ${SRC} src/EquationSystem/GetEquationSystemInfo.cpp)
 
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
-set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp src/InputSystem/ReadDofsName.cpp)
+set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp)
+set(SRC ${SRC} src/InputSystem/ReadDofsName.cpp src/InputSystem/ReadKernelBlock.cpp)
 
 # For element system (AsFem's uel)
 set(INC ${INC} include/ElementSystem/KernelBlockInfo.h)
 set(SRC ${SRC} src/ElementSystem/KernelBlockInfo.cpp)
-set(INC ${INC} include/ElementSystem/ElementSystem.h src/InputSystem/ReadKernelBlock.cpp)
+set(INC ${INC} include/ElementSystem/ElementSystem.h src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSystemSetting.cpp src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
