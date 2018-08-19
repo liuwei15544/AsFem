@@ -40,7 +40,7 @@ void DofHandler::GetLocalDofMap(const int e, int &ndofsperelmt, int (&rInd)[270]
 //*** For boundary mesh
 void DofHandler::GetLocalBCDofMap(string sidename, const int e, int &ndofsperbcelmt, int (&Ind)[270]) const
 {
-    int i,j;
+    int i;
     ndofsperbcelmt=nDofsPerBCElmt;
 
     if(nDims==1)

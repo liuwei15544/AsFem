@@ -121,7 +121,7 @@ bool BCInfo::CheckDofsName(EquationSystem &equationSystem)
     {
         dof=BCBlockList[i].BCBlockDofsName;
         IsDofsNameValid=false;
-        for(unsigned int k=0;k<equationSystem.GetDofsNumPerNode();k++)
+        for(int k=0;k<equationSystem.GetDofsNumPerNode();k++)
         {
             if(dof==equationSystem.GetDofNameByIndex(k+1))
             {
