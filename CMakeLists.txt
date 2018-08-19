@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 #######################################
 ### For debug mode                  ###
 #######################################
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -fopenmp -O2 ")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fopenmp -O2 ")
 
 #######################################
 ### For release mode                ###
@@ -95,5 +95,7 @@ set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poiss
 set(INC ${INC} include/ShapeFuns/ShapeFuns.h)
 set(SRC ${SRC} src/ShapeFuns/Shp1D.cpp src/ShapeFuns/Shp2D.cpp src/ShapeFuns/Shp3D.cpp)
 
+# For gauss point
+set(INC ${INC} include/GaussPoint/GaussPoint.h)
 
 add_executable(ASFEM ${INC} ${SRC})
