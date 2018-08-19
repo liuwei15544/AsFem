@@ -93,7 +93,7 @@ set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poiss
 
 # For shapefuns
 set(INC ${INC} include/ShapeFuns/ShapeFuns.h)
-set(SRC ${SRC} src/ShapeFuns/Shp1D.cpp)
+set(SRC ${SRC} src/ShapeFuns/Shp1D.cpp src/ShapeFuns/Shp2D.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})
