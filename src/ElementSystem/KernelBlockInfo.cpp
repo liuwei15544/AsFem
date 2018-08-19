@@ -19,13 +19,19 @@ KernelBlockInfo::KernelBlockInfo()
     MaterialKernelName="";
     params.clear();
 }
-
+//*********************************
+void KernelBlockInfo::Init()
+{
+    ElementName="";
+    MaterialKernelName="";
+    params.clear();
+}
 //*********************************
 void KernelBlockInfo::PrintKernelBlockInfo() const
 {
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Kernel block information:              ***\n");
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   elmt  name= %-18s      ***\n",ElementName.c_str());
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   elmt  name= %-18s       ***\n",ElementName.c_str());
     if(MaterialKernelName.size()>0)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   material name= %-18s    ***\n",MaterialKernelName.c_str());
@@ -35,7 +41,7 @@ void KernelBlockInfo::PrintKernelBlockInfo() const
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   params=");
         for(unsigned int i=0;i<params.size();i++)
         {
-            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"%10.3f ",params[i]);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"%8.3e ",params[i]);
             if(params.size()>5)
             {
                 if((i+1)%5==0)
@@ -49,4 +55,5 @@ void KernelBlockInfo::PrintKernelBlockInfo() const
     }
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 }
+
 

@@ -12,7 +12,15 @@
 []
 
 [dofs]
-
 name = ux   uy   uz
+[]
+
+[kernel]
+
+  type=poisson
+
+  mate=   user1
+
+  params= 1 2 4.0
 
 []

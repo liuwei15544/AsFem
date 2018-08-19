@@ -73,6 +73,6 @@ set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp
 # For element system (AsFem's uel)
 set(INC ${INC} include/ElementSystem/KernelBlockInfo.h)
 set(SRC ${SRC} src/ElementSystem/KernelBlockInfo.cpp)
-set(INC ${INC} include/ElementSystem/ElementSystem.h)
+set(INC ${INC} include/ElementSystem/ElementSystem.h src/InputSystem/ReadKernelBlock.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

@@ -34,6 +34,7 @@ public:
 
     //*********************************
     //*** functions
+    void Init();
     int GetParamNum() const { return params.size();}
     void PrintKernelBlockInfo() const;
 };

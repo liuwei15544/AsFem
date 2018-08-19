@@ -7,6 +7,7 @@
 #include "Mesh/Mesh.h"
 #include "InputSystem/InputSystem.h"
 #include "EquationSystem/EquationSystem.h"
+#include "ElementSystem/KernelBlockInfo.h"
 
 using namespace std;
 int main(int args,char *argv[])
@@ -18,13 +19,16 @@ int main(int args,char *argv[])
 
     Mesh mesh;
     EquationSystem equationSystem;
+    KernelBlockInfo kernelBlockInfo;
 
     InputSystem inputSystem(args,argv);
     inputSystem.ReadMeshBlock(mesh);
     inputSystem.ReadDofsName(equationSystem);
+    inputSystem.ReadKernelBlock(kernelBlockInfo);
 
     mesh.PrintMeshInfo();
     equationSystem.PrintSolutionNameMap();
+    kernelBlockInfo.PrintKernelBlockInfo();
 
 
     ierr=PetscFinalize();CHKERRQ(ierr);

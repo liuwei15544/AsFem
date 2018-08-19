@@ -24,6 +24,7 @@
 #include "Utils/StringUtils.h"
 #include "Mesh/Mesh.h"
 #include "EquationSystem/EquationSystem.h"
+#include "ElementSystem/KernelBlockInfo.h"
 
 using namespace std;
 
@@ -38,6 +39,7 @@ public:
     //bool ReadInputFile(Mesh &mesh,EquationSystem &equationSystem);
     bool ReadMeshBlock(Mesh &mesh);
     bool ReadDofsName(EquationSystem &equationSystem);
+    bool ReadKernelBlock(KernelBlockInfo &kernelBlockInfo);
 
 private:
     bool IsInputSystemInit=false;
