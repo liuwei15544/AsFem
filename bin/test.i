@@ -24,3 +24,19 @@ name = ux   uy   uz
   params= 1 2 4.0
 
 []
+
+[bcs]
+  [left]
+    type=dirichlet
+    dof=c
+    value=1
+    side=left
+  [end]
+
+  [right]
+   type=neumann
+   dof=u
+   value=2
+   side=right
+  [end]
+[]

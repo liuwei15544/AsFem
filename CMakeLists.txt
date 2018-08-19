@@ -82,14 +82,14 @@ set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
 set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp)
-set(SRC ${SRC} src/InputSystem/ReadDofsName.cpp src/InputSystem/ReadKernelBlock.cpp)
+set(SRC ${SRC} src/InputSystem/ReadDofsName.cpp src/InputSystem/ReadKernelBlock.cpp src/InputSystem/ReadBoundaryBlock.cpp)
 
 # For element system (AsFem's uel)
 set(INC ${INC} include/ElementSystem/KernelBlockInfo.h)
 set(SRC ${SRC} src/ElementSystem/KernelBlockInfo.cpp)
 set(INC ${INC} include/ElementSystem/ElementSystem.h)
 set(SRC ${SRC} src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSystemSetting.cpp)
-set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp src/InputSystem/ReadBoundaryBlock.cpp)
+set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp)
 
 
 
