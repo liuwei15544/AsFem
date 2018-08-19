@@ -10,7 +10,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror -fopenmp -O2 ")
 #######################################
 ### For release mode                ###
 #######################################
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fopenmp -Ofast -march=corei7-avx")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fopenmp -Ofast -march=native")
 
 #######################################
 ### For release mode                ###
@@ -33,9 +33,9 @@ link_libraries("${MPI}/lib/libmpi.so")
 
 
 ################################################################
-### In most case, you don't need to edit the following line! ###
-### In most case, you don't need to edit the following line! ###
-### In most case, you don't need to edit the following line! ###
+### In most cases, you don't need to edit the following line!###
+### In most cases, you don't need to edit the following line!###
+### In most cases, you don't need to edit the following line!###
 ################################################################
 #######################################
 ### For src and header file         ###
@@ -62,5 +62,9 @@ set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUti
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
 set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp)
+
+# For equation system
+set(INC ${INC} include/EquationSystem/EquationSystem.h)
+set(SRC ${SRC} src/EquationSystem/EquationSystem.cpp src/EquationSystem/EquationSystemSetting.cpp src/EquationSystem/EquationSystemInitAndReinit.cpp src/EquationSystem/EquationSystemMathUtils.cpp src/EquationSystem/GetEquationSystemInfo.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
