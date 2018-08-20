@@ -73,11 +73,7 @@ void FESystem::FormKR(const int &iState, const double dt, const double t, const 
         AssembleLocalToGlobal(iState,AMATRIX,RHS,Proj);
     }
 
-    //VecAssemblyBegin(RHS);
-    //VecAssemblyEnd(RHS);
-
-    //MatAssemblyBegin(A,MAT_FINAL_ASSEMBLY);
-    //MatAssemblyEnd(A,MAT_FINAL_ASSEMBLY);
+    FinishAssemble(iState,AMATRIX,RHS,Proj);
 
     // delete scatter
     VecScatterDestroy(&scatteru);

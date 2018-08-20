@@ -45,16 +45,24 @@ void FESystem::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, 
 }
 
 //*****************************
-void FESystem::FinishAssemble(Mat &AMATRIX, Vec &RHS, Mat &Proj)
+void FESystem::FinishAssemble(const int &iState,Mat &AMATRIX, Vec &RHS, Mat &Proj)
 {
-    VecAssemblyBegin(RHS);
-    VecAssemblyEnd(RHS);
+    if(iState%3==0)
+    {
+        VecAssemblyBegin(RHS);
+        VecAssemblyEnd(RHS);
+        if(iState==6)
+        {
+            MatAssemblyBegin(AMATRIX,MAT_FINAL_ASSEMBLY);
+            MatAssemblyEnd(AMATRIX,MAT_FINAL_ASSEMBLY);
+        }
+    }
+    else if(iState==8)
+    {
+        MatAssemblyBegin(Proj,MAT_FINAL_ASSEMBLY);
+        MatAssemblyEnd(Proj,MAT_FINAL_ASSEMBLY);
+    }
 
-    MatAssemblyBegin(AMATRIX,MAT_FINAL_ASSEMBLY);
-    MatAssemblyEnd(AMATRIX,MAT_FINAL_ASSEMBLY);
-
-    MatAssemblyBegin(Proj,MAT_FINAL_ASSEMBLY);
-    MatAssemblyEnd(Proj,MAT_FINAL_ASSEMBLY);
 }
 
 

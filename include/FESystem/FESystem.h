@@ -48,7 +48,7 @@ public:
 
     // For assemble
     void AssembleLocalToGlobal(const int &iState,Mat &AMATRIX,Vec &RHS,Mat &Proj);
-    void FinishAssemble(Mat &AMATRIX,Vec &RHS,Mat &Proj);
+    void FinishAssemble(const int &iState,Mat &AMATRIX,Vec &RHS,Mat &Proj);
 
 private:
     bool IsInit;
