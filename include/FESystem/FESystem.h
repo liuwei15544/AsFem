@@ -48,16 +48,13 @@ public:
 
     // For assemble
     void AssembleLocalToGlobal(const int &iState,Mat &AMATRIX,Vec &RHS,Mat &Proj);
-    void AssembleLocalRHSToGlobal(Vec &RHS);
-    void AssembleLocalKToGlobal(Mat &AMATRIX);
-    void AssembleLocalProjToGlobal(Mat &Proj);
     void FinishAssemble(Mat &AMATRIX,Vec &RHS,Mat &Proj);
 
 private:
     bool IsInit;
     int nDims,nNodesPerElmt,nDofsPerElmt,nDofsPerNode;
     int current_elmt_id;
-    double localHist[50],localProj[12+1];
+    double localHist[50],localProj[27][12+1];
     double localK[270][270],localRHS[270]; // local matrix and residual
     double elCoords[27][4],elU[270][2]={0.0};
     PetscInt elConn[27]={0},elDofsConn[270]={0};
