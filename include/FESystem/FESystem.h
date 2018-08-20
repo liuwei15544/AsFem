@@ -47,13 +47,14 @@ public:
     void AssembleLocalKToGlobal(Mat &A);
 
 private:
+    bool IsInit;
     int nDims,nNodesPerElmt,nDofsPerElmt,nDofsPerNode;
     int current_elmt_id;
     double localHist[50],localProj[12+1];
     double localK[270][270],localRHS[270]; // local matrix and residual
     double elCoords[27][4],elU[270][2]={0.0};
     PetscInt elConn[27]={0},elDofsConn[270]={0};
-    double t,dt;
+
 
 private:
     VecScatter scatteru,scatterv;
