@@ -44,12 +44,14 @@ public:
     void FormKR(const int &iState,const double dt,const double t,const double (&ctan)[2],
                 Mesh &mesh,DofHandler &dofHandler,BCSystem &bcSystem,
                 const Vec &U,const Vec &V,
-                Mat &AMATRIX,Vec &RHS);
+                Mat &AMATRIX,Vec &RHS,Mat &Proj);
+
     // For assemble
-    void AssembleLocalToGlobal(Mat &A,Vec &RHS);
+    void AssembleLocalToGlobal(const int &iState,Mat &AMATRIX,Vec &RHS,Mat &Proj);
     void AssembleLocalRHSToGlobal(Vec &RHS);
-    void AssembleLocalKToGlobal(Mat &A);
+    void AssembleLocalKToGlobal(Mat &AMATRIX);
     void AssembleLocalProjToGlobal(Mat &Proj);
+    void FinishAssemble(Mat &AMATRIX,Vec &RHS,Mat &Proj);
 
 private:
     bool IsInit;
@@ -59,6 +61,8 @@ private:
     double localK[270][270],localRHS[270]; // local matrix and residual
     double elCoords[27][4],elU[270][2]={0.0};
     PetscInt elConn[27]={0},elDofsConn[270]={0};
+
+    PetscMPIInt rank,size;
 
 
 private:
