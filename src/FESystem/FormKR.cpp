@@ -14,7 +14,7 @@
 #include "FESystem/FESystem.h"
 
 void FESystem::FormKR(const int &iState, const double dt, const double t, const double (&ctan)[2],
-                      Mesh &mesh,DofHandler &dofHandler,BCSystem &bcSystem,
+                      Mesh &mesh,DofHandler &dofHandler,ElementSystem &elementSystem,
                       const Vec &U, const Vec &V,
                       Mat &AMATRIX, Vec &RHS,Mat &Proj)
 {
@@ -66,10 +66,11 @@ void FESystem::FormKR(const int &iState, const double dt, const double t, const 
 
 
 
-        //ElmtLib(e+1,t,dt,uelnum,istate,nDims,nNodesPerElmt,nDofsPerElmt,elCoords,elU,ctan,localK,localRHS,localHist,localProj);
+        elementSystem.RunElmtLib(iState,elConn,nDims,nNodesPerElmt,nDofsPerElmt,
+                                 dt,t,ctan,elCoords,elU,
+                                 localK,localRHS,localProj);
 
-
-        //AssembleLocalToGlobal(AMATRIX,RHS)
+        AssembleLocalToGlobal(iState,AMATRIX,RHS,Proj);
     }
 
     //VecAssemblyBegin(RHS);
