@@ -33,7 +33,11 @@ class FESystem
 {
 public:
     FESystem();
-    void Init(Mesh &mesh);
+    void Init(Mesh &mesh,DofHandler &dofHandler);
+
+
+    // Init related vector and matrix
+    void ZeroMatAndVec(const int &iState,Mat &AMATRIX,Mat &Proj,Vec &RHS);
 
 
     // For Ax=F system
@@ -45,6 +49,7 @@ public:
     void AssembleLocalToGlobal(Mat &A,Vec &RHS);
     void AssembleLocalRHSToGlobal(Vec &RHS);
     void AssembleLocalKToGlobal(Mat &A);
+    void AssembleLocalProjToGlobal(Mat &Proj);
 
 private:
     bool IsInit;
