@@ -75,7 +75,7 @@ set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp
 
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
-set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp)
+set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadInputFile.cpp src/InputSystem/ReadMeshBlock.cpp)
 set(SRC ${SRC} src/InputSystem/ReadDofsName.cpp src/InputSystem/ReadKernelBlock.cpp src/InputSystem/ReadBoundaryBlock.cpp)
 
 # For element system (AsFem's uel)
@@ -99,6 +99,6 @@ set(SRC ${SRC} src/FE/FE.cpp src/FE/FormKR.cpp src/FE/InitFE.cpp src/FE/FEAssemb
 
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
-set(SRC ${SRC} src/FESystem/FESystem.cpp src/InputSystem/ReadInputFile.cpp)
+set(SRC ${SRC} src/FESystem/FESystem.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

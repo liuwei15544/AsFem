@@ -33,6 +33,23 @@ class ElementSystem
 public:
     ElementSystem();
 
+
+    KernelBlockInfo kernelBlockInfo;
+
+public:
+    void Init();
+    void RunElmtLib(const int &iState,const int (&IX)[27],
+                    const int &nDim,const int &nNodes,const int &nDofs,
+                    const double &dt,const double &t,const double (&ctan)[2],
+                    const double (&Coords)[27][4],const double (&U)[270][2],
+                    double (&K)[270][270],double (&rhs)[270],double (&proj)[27][12+1]);
+
+private:
+    void SetUelIndex();
+    void SetUmatIndex();
+
+
+private:
     enum UelList
     {
         poisson,
@@ -60,20 +77,6 @@ public:
         freeenergy,
         conductivity
     };
-
-    KernelBlockInfo kernelBlockInfo;
-
-public:
-    void Init();
-    void RunElmtLib(const int &iState,const int (&IX)[27],
-                    const int &nDim,const int &nNodes,const int &nDofs,
-                    const double &dt,const double &t,const double (&ctan)[2],
-                    const double (&Coords)[27][4],const double (&U)[270][2],
-                    double (&K)[270][270],double (&rhs)[270],double (&proj)[27][12+1]);
-
-private:
-    void SetUelIndex();
-    void SetUmatIndex();
 
 private:
     void Poisson(const int &iState,const int (&IX)[27],

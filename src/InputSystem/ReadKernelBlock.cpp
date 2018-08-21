@@ -32,8 +32,11 @@ bool InputSystem::ReadKernelBlock(KernelBlockInfo &kernelBlockInfo)
     // Read the first comment line
     getline(in,line);linenum+=1;
 
+
+
     if(IsBracketMatch(in,line0,blockstartlinenum))
     {
+        kernelBlockInfo.MaterialKernelName="";
         // goes inside [kernels]/[] block pair
         GotoLine(in,blockstartlinenum);linenum=blockstartlinenum-1;
         getline(in,line);linenum+=1;// read [kernel]
@@ -93,7 +96,7 @@ bool InputSystem::ReadKernelBlock(KernelBlockInfo &kernelBlockInfo)
                 getline(in,line);linenum+=1;
                 str=RemoveSpace(line);
             }
-            cout<<"str="<<str<<endl;
+
             if(str.compare(0,2,"[]")==0)
             {
                 break;

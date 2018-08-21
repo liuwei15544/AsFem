@@ -87,7 +87,7 @@ void ElementSystem::SetUelIndex()
 //************************************************************
 void ElementSystem::SetUmatIndex()
 {
-    if(kernelBlockInfo.MaterialKernelName=="emptyumat")
+    if(kernelBlockInfo.MaterialKernelName.size()<1)
     {
         ActiveUmatIndex=UmatList::emptyumat;
     }

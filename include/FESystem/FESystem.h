@@ -28,7 +28,9 @@
 #include "Mesh/Mesh.h"
 #include "DofHandler/DofHandler.h"
 #include "BCSystem/BCSystem.h"
+#include "ElementSystem/ElementSystem.h"
 #include "FE/FE.h"
+#include "EquationSystem/EquationSystem.h"
 
 using namespace std;
 
@@ -43,6 +45,10 @@ private:
     Mesh mesh;
     DofHandler dofHandler;
     BCSystem bcSystem;
+    vector<BCBlockInfo> bcBlockList;
+
+    ElementSystem elementSystem;
+    EquationSystem equationSystem;
     FE fe;
 
 private:
