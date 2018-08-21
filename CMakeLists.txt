@@ -99,15 +99,16 @@ set(SRC ${SRC} src/FE/FE.cpp src/FE/FormKR.cpp src/FE/InitFE.cpp src/FE/FEAssemb
 
 # For linear solver
 set(INC ${INC} include/Solver/LinearSolver.h)
-set(SRC ${SRC} src/Solver/LinearSolver.cpp src/Solver/LinearSolverSetting.cpp)
-set(SRC ${SRC} src/Solver/GetLinearSolverInfo.cpp)
+set(SRC ${SRC} src/Solver/Linear/LinearSolver.cpp src/Solver/Linear/LinearSolverSetting.cpp)
+set(SRC ${SRC} src/Solver/Linear/GetLinearSolverInfo.cpp)
 
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp include/Solver/LinearSolver.h)
 
 # For nonlinear solver
-set(INC ${INC} )
+set(INC ${INC} include/Solver/NonlinearSolver.h)
+set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolver.cpp src/Solver/Nonlinear/NonlinearSolverSetting.cpp src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/NewtonRaphson.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})
