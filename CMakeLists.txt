@@ -99,6 +99,10 @@ set(SRC ${SRC} src/FE/FE.cpp src/FE/FormKR.cpp src/FE/InitFE.cpp src/FE/FEAssemb
 
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
-set(SRC ${SRC} src/FESystem/FESystem.cpp)
+set(SRC ${SRC} src/FESystem/FESystem.cpp include/Solver/LinearSolver.h)
+
+# For linear solver
+set(INC ${INC} include/Solver/LinearSolver.h)
+set(SRC ${SRC} )
 
 add_executable(ASFEM ${INC} ${SRC})

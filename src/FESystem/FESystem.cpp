@@ -24,6 +24,7 @@ void FESystem::Init(int args, char **argv)
     inputSystem.InitInputSystem(args,argv);
     inputSystem.ReadInputFile(mesh,equationSystem,bcSystem,elementSystem.kernelBlockInfo,bcBlockList);
 
+    mesh.PrintMeshInfo();
     equationSystem.Init();
     bcSystem.InitFromBCBlockList(bcBlockList);
     elementSystem.Init();

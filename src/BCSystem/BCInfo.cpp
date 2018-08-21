@@ -150,10 +150,10 @@ void BCInfo::GenerateBCKernelDofMap(EquationSystem &equationSystem)
     if(CheckDofsName(equationSystem))
     {
         BCBlockDofIndex.clear();
-        int i,j,k,iInd;
+        int i,j,iInd;
         string name;
         bool IsNameInList=false;
-        for(i=0;i<BCBlockList.size();i++)
+        for(i=0;i<int(BCBlockList.size());i++)
         {
             name=BCBlockList[i].BCBlockDofsName;
             IsNameInList=false;
@@ -201,7 +201,7 @@ void BCInfo::PrintBCInfo() const
 //***********************************************
 int BCInfo::GetIthBCKernelDofIndex(int i) const
 {
-    if(i<1||i>BCBlockList.size())
+    if(i<1||i>int(BCBlockList.size()))
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: i=%3d is out of bc kernel range!***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -217,7 +217,7 @@ int BCInfo::GetIthBCKernelDofIndex(int i) const
 //***************************
 string BCInfo::GetIthBCKernelName(int i) const
 {
-    if(i<1||i>BCBlockList.size())
+    if(i<1||i>int(BCBlockList.size()))
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: i=%3d is out of bc kernel range!***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -232,7 +232,7 @@ string BCInfo::GetIthBCKernelName(int i) const
 //*************************
 double BCInfo::GetIthBCKernelValue(int i) const
 {
-    if(i<1||i>BCBlockList.size())
+    if(i<1||i>int(BCBlockList.size()))
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: i=%3d is out of bc kernel range!***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -247,7 +247,7 @@ double BCInfo::GetIthBCKernelValue(int i) const
 //***********************
 string BCInfo::GetIthBCKernelSideName(int i) const
 {
-    if(i<1||i>BCBlockList.size())
+    if(i<1||i>int(BCBlockList.size()))
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: i=%3d is out of bc kernel range!***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
