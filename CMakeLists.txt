@@ -97,12 +97,17 @@ set(SRC ${SRC} src/GaussPoint/Int1D.cpp src/GaussPoint/Int2D.cpp src/GaussPoint/
 set(INC ${INC} include/FE/FE.h)
 set(SRC ${SRC} src/FE/FE.cpp src/FE/FormKR.cpp src/FE/InitFE.cpp src/FE/FEAssemble.cpp)
 
+# For linear solver
+set(INC ${INC} include/Solver/LinearSolver.h)
+set(SRC ${SRC} src/Solver/LinearSolver.cpp src/Solver/LinearSolverSetting.cpp)
+set(SRC ${SRC} src/Solver/GetLinearSolverInfo.cpp)
+
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp include/Solver/LinearSolver.h)
 
-# For linear solver
-set(INC ${INC} include/Solver/LinearSolver.h)
-set(SRC ${SRC} )
+# For nonlinear solver
+set(INC ${INC} )
+
 
 add_executable(ASFEM ${INC} ${SRC})
