@@ -9,10 +9,11 @@
 //******************************************************
 //
 // Created by walkandthinker on 18.08.18.
-// define the FEsystem in AsFem
+// define the FE in AsFem
 
-#ifndef ASFEM_FESYSTEM_H
-#define ASFEM_FESYSTEM_H
+#ifndef ASFEM_FE_H
+#define ASFEM_FE_H
+
 
 #include <iostream>
 #include <iomanip>
@@ -34,8 +35,6 @@ class FE
 public:
     FE();
     void Init(Mesh &mesh,DofHandler &dofHandler);
-
-
 
 
     // For Ax=F system
@@ -72,4 +71,4 @@ private:
 };
 
 
-#endif //ASFEM_FESYSTEM_H
+#endif //ASFEM_FE_H
