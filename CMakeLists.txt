@@ -105,5 +105,6 @@ set(SRC ${SRC} )
 
 # For FE
 set(INC ${INC} include/FE/FE.h)
+set(SRC ${SRC} src/FE/FE.cpp src/FE/FormKR.cpp src/FE/InitFE.cpp src/FE/FEAssemble.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
