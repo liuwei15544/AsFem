@@ -36,8 +36,6 @@ public:
     void Init(Mesh &mesh,DofHandler &dofHandler);
 
 
-    // Init related vector and matrix
-    void ZeroMatAndVec(const int &iState,Mat &AMATRIX,Mat &Proj,Vec &RHS);
 
 
     // For Ax=F system
@@ -45,6 +43,11 @@ public:
                 Mesh &mesh,DofHandler &dofHandler,ElementSystem &elementSystem,
                 const Vec &U,const Vec &V,
                 Mat &AMATRIX,Vec &RHS,Mat &Proj);
+
+
+private:
+    // Init related vector and matrix
+    void ZeroMatAndVec(const int &iState,Mat &AMATRIX,Mat &Proj,Vec &RHS);
 
     // For assemble
     void AssembleLocalToGlobal(const int &iState,Mat &AMATRIX,Vec &RHS,Mat &Proj);

@@ -99,9 +99,9 @@ set(SRC ${SRC} src/ShapeFuns/Shp1D.cpp src/ShapeFuns/Shp2D.cpp src/ShapeFuns/Shp
 set(INC ${INC} include/GaussPoint/GaussPoint.h)
 set(SRC ${SRC} src/GaussPoint/Int1D.cpp src/GaussPoint/Int2D.cpp src/GaussPoint/Int3D.cpp)
 
-# For FE system
+# For FE
 set(INC ${INC} include/FE/FE.h)
 set(SRC ${SRC} src/FE/FE.cpp src/FE/InitFE.cpp)
-set(SRC ${SRC} src/FE/FormKR.cpp src/FE/FEAssemble.cpp)
+set(SRC ${SRC} src/FE/FormKR.cpp src/FE/FEAssemble.cpp include/FESystem/FESystem.h)
 
 add_executable(ASFEM ${INC} ${SRC})
