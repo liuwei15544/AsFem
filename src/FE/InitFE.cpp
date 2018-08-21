@@ -9,11 +9,11 @@
 //******************************************************
 //
 // Created by walkandthinker on 19.08.18.
-// Initializing the FESystem
+// Initializing the FE
 
-#include "FESystem/FESystem.h"
+#include "FE/FE.h"
 
-void FESystem::Init(Mesh &mesh,DofHandler &dofHandler)
+void FE::Init(Mesh &mesh,DofHandler &dofHandler)
 {
     nDims=mesh.GetDims();
     nNodesPerElmt=mesh.GetNodesNumPerElmt();
@@ -24,7 +24,7 @@ void FESystem::Init(Mesh &mesh,DofHandler &dofHandler)
 }
 
 //**********************************
-void FESystem::ZeroMatAndVec(const int &iState, Mat &AMATRIX, Mat &Proj, Vec &RHS)
+void FE::ZeroMatAndVec(const int &iState, Mat &AMATRIX, Mat &Proj, Vec &RHS)
 {
     if(iState%3==0)
     {

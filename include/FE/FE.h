@@ -29,10 +29,10 @@
 using namespace std;
 
 
-class FESystem
+class FE
 {
 public:
-    FESystem();
+    FE();
     void Init(Mesh &mesh,DofHandler &dofHandler);
 
 

@@ -11,9 +11,9 @@
 // Created by walkandthinker on 18.08.18.
 // define the FEsystem in AsFem
 
-#include "FESystem/FESystem.h"
+#include "FE/FE.h"
 
-FESystem::FESystem()
+FE::FE()
 {
     IsInit=false;
 

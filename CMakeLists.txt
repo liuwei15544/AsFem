@@ -100,8 +100,8 @@ set(INC ${INC} include/GaussPoint/GaussPoint.h)
 set(SRC ${SRC} src/GaussPoint/Int1D.cpp src/GaussPoint/Int2D.cpp src/GaussPoint/Int3D.cpp)
 
 # For FE system
-set(INC ${INC} include/FESystem/FESystem.h)
-set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/InitFESystem.cpp)
-set(SRC ${SRC} src/FESystem/FormKR.cpp src/FESystem/FESystemAssemble.cpp)
+set(INC ${INC} include/FE/FE.h)
+set(SRC ${SRC} src/FE/FE.cpp src/FE/InitFE.cpp)
+set(SRC ${SRC} src/FE/FormKR.cpp src/FE/FEAssemble.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

@@ -11,9 +11,9 @@
 // Created by walkandthinker on 19.08.18.
 // Loop all the elements, form K and R for FE system
 
-#include "FESystem/FESystem.h"
+#include "FE/FE.h"
 
-void FESystem::FormKR(const int &iState, const double dt, const double t, const double (&ctan)[2],
+void FE::FormKR(const int &iState, const double dt, const double t, const double (&ctan)[2],
                       Mesh &mesh,DofHandler &dofHandler,ElementSystem &elementSystem,
                       const Vec &U, const Vec &V,
                       Mat &AMATRIX, Vec &RHS,Mat &Proj)
@@ -46,11 +46,13 @@ void FESystem::FormKR(const int &iState, const double dt, const double t, const 
     {
         nNodesPerElmt=mesh.GetNodesNumPerElmt();
         dofHandler.GetLocalDofMap(e+1,nDofsPerElmt,elDofsConn);
+        current_elmt_id=e+1;
 
         for(i=1;i<=nNodesPerElmt;++i)
         {
             j=mesh.GetIthConnJthIndex(e+1,i);
             elConn[i-1]=j-1;
+            elCoords[i-1][0]=mesh.GetIthNodeJthCoord(j,0);
             elCoords[i-1][1]=mesh.GetIthNodeJthCoord(j,1);
             elCoords[i-1][2]=mesh.GetIthNodeJthCoord(j,2);
             elCoords[i-1][3]=mesh.GetIthNodeJthCoord(j,3);

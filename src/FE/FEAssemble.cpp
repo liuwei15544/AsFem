@@ -11,9 +11,9 @@
 // Created by walkandthinker on 19.08.18.
 // Assemble the local contribution to global FE system
 
-#include "FESystem/FESystem.h"
+#include "FE/FE.h"
 
-void FESystem::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, Mat &Proj)
+void FE::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, Mat &Proj)
 {
     int i,j;
     if(iState%3==0)
@@ -45,7 +45,7 @@ void FESystem::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, 
 }
 
 //*****************************
-void FESystem::FinishAssemble(const int &iState,Mat &AMATRIX, Vec &RHS, Mat &Proj)
+void FE::FinishAssemble(const int &iState,Mat &AMATRIX, Vec &RHS, Mat &Proj)
 {
     if(iState%3==0)
     {
