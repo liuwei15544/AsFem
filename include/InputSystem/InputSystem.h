@@ -37,7 +37,13 @@ public:
 
     void InitInputSystem(int argc,char *argv[]);
 
-    //bool ReadInputFile(Mesh &mesh,EquationSystem &equationSystem);
+    bool ReadInputFile(Mesh &mesh,
+                       EquationSystem &equationSystem,
+                       BCSystem &bcSystem,
+                       KernelBlockInfo &kernelBlockInfo,
+                       vector<BCBlockInfo> &bcBlockList);
+
+private:
     bool ReadMeshBlock(Mesh &mesh);
     bool ReadDofsName(EquationSystem &equationSystem);
     bool ReadKernelBlock(KernelBlockInfo &kernelBlockInfo);

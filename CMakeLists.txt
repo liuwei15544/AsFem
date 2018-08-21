@@ -13,8 +13,6 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -fopenmp -O2 ")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fopenmp -Ofast -march=native")
 
 #######################################
-### For release mode                ###
-#######################################
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 #######################################
@@ -31,7 +29,6 @@ include_directories("${MPI}/include")
 link_libraries("${MPI}/lib/libmpi.so")
 
 
-
 ################################################################
 ### In most cases, you don't need to edit the following line!###
 ### In most cases, you don't need to edit the following line!###
@@ -41,7 +38,6 @@ link_libraries("${MPI}/lib/libmpi.so")
 ### For src and header file         ###
 #######################################
 set(SRC src/main.cpp)
-
 # For Utils
 #  for string utils
 set(INC ${INC} include/Utils/StringUtils.h)
@@ -51,7 +47,6 @@ set(SRC ${SRC} src/Utils/StringUtils/StrVecToUpper.cpp src/Utils/StringUtils/Spl
 set(SRC ${SRC} src/Utils/StringUtils/SplitNum.cpp src/Utils/StringUtils/SplitNumAfter.cpp)
 set(SRC ${SRC} src/Utils/StringUtils/IsBracketMatch.cpp src/Utils/StringUtils/IsSubBracketMatch.cpp)
 set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUtils/GotoLine.cpp)
-
 
 # For mesh
 set(INC include/Mesh/Mesh.h)
@@ -78,7 +73,6 @@ set(INC ${INC} include/BCSystem/BCSystem.h)
 set(SRC ${SRC} src/BCSystem/BCSystem.cpp src/BCSystem/ApplyBoundaryCondition.cpp)
 set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp src/BCSystem/ApplyConstraint.cpp)
 
-
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
 set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadMeshBlock.cpp)
@@ -99,12 +93,12 @@ set(SRC ${SRC} src/ShapeFuns/Shp1D.cpp src/ShapeFuns/Shp2D.cpp src/ShapeFuns/Shp
 set(INC ${INC} include/GaussPoint/GaussPoint.h)
 set(SRC ${SRC} src/GaussPoint/Int1D.cpp src/GaussPoint/Int2D.cpp src/GaussPoint/Int3D.cpp)
 
-# For FESystem
-set(INC ${INC} include/FESystem/FESystem.h)
-set(SRC ${SRC} )
-
 # For FE
 set(INC ${INC} include/FE/FE.h)
 set(SRC ${SRC} src/FE/FE.cpp src/FE/FormKR.cpp src/FE/InitFE.cpp src/FE/FEAssemble.cpp)
+
+# For FESystem
+set(INC ${INC} include/FESystem/FESystem.h)
+set(SRC ${SRC} src/FESystem/FESystem.cpp src/InputSystem/ReadInputFile.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

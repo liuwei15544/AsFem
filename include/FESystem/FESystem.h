@@ -43,6 +43,10 @@ private:
     Mesh mesh;
     DofHandler dofHandler;
     BCSystem bcSystem;
+    FE fe;
+
+private:
+    bool IsFESystemInit=false;
 };
 
 
