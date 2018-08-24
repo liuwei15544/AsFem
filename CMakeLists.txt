@@ -111,4 +111,8 @@ set(INC ${INC} include/Solver/NonlinearSolver.h)
 set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolver.cpp src/Solver/Nonlinear/NonlinearSolverSetting.cpp)
 set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/NewtonRaphson.cpp)
 
+# For FESystem info
+set(INC ${INC} include/FESystem/FESystemInfo.h)
+set(SRC ${SRC} )
+
 add_executable(ASFEM ${INC} ${SRC})
