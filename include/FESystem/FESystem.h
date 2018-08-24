@@ -39,6 +39,7 @@ class FESystem
 public:
     FESystem();
     void Init(int args,char *argv[]);
+    void Run();
 
 private:
     InputSystem inputSystem;
@@ -50,6 +51,26 @@ private:
     ElementSystem elementSystem;
     EquationSystem equationSystem;
     FE fe;
+
+private:
+    enum JobType
+    {
+        Static,
+        Transient
+    };
+
+private:
+    enum FEAction
+    {
+        StaticAnalysisAction,
+        TransientAnalysisAction,
+        OutputAction,
+        FormKRAction,
+        ProjectGaussToNodalAction,
+        InitHistoryAction,
+        UpdateHistoryAction,
+        UpdateSolutionAction
+    };
 
 private:
     bool IsFESystemInit=false;

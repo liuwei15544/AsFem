@@ -108,7 +108,7 @@ set(SRC ${SRC} src/FESystem/FESystem.cpp include/Solver/LinearSolver.h)
 
 # For nonlinear solver
 set(INC ${INC} include/Solver/NonlinearSolver.h)
-set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolver.cpp src/Solver/Nonlinear/NonlinearSolverSetting.cpp src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/NewtonRaphson.cpp)
-
+set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolver.cpp src/Solver/Nonlinear/NonlinearSolverSetting.cpp)
+set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/NewtonRaphson.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
