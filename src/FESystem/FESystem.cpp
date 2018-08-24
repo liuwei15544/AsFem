@@ -21,15 +21,36 @@ FESystem::FESystem()
 //*********************************
 void FESystem::Init(int args, char **argv)
 {
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Start initializing input system...     ***\n");
+
     inputSystem.InitInputSystem(args,argv);
     inputSystem.ReadInputFile(mesh,equationSystem,bcSystem,elementSystem.kernelBlockInfo,bcBlockList);
 
-    mesh.PrintMeshInfo();
-    equationSystem.Init();
-    bcSystem.InitFromBCBlockList(bcBlockList);
-    elementSystem.Init();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Input system initialized!              ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
-    bcSystem.PrintBCInfo();
-    equationSystem.PrintSolutionNameMap();
+    //dofHandler.CreateLocalToGlobalDofMap(mesh,equationSystem.GetDofsNumPerNode());
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Start initializing equation system...  ***\n");
+    equationSystem.SetDofsNum(dofHandler.GetDofsNum());
+    equationSystem.Init();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Equation system initialized!           ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Start initializing bc system...        ***\n");
+    bcSystem.InitFromBCBlockList(bcBlockList);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** BC system initialized!                 ***\n");
+
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Start initializing UEL system...       ***\n");
+    elementSystem.Init();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** UEL system initialized!                ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+
 }
 

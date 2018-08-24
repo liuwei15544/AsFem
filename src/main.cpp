@@ -15,6 +15,7 @@ int main(int args,char *argv[])
 
     FESystem feSystem;
     feSystem.Init(args,argv);
+    feSystem.Run();
 
 
     ierr=PetscFinalize();CHKERRQ(ierr);

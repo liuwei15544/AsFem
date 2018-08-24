@@ -31,6 +31,7 @@
 #include "ElementSystem/ElementSystem.h"
 #include "FE/FE.h"
 #include "EquationSystem/EquationSystem.h"
+#include "Solver/NonlinearSolver.h"
 
 #include "FESystemInfo.h"
 
@@ -42,6 +43,10 @@ public:
     FESystem();
     void Init(int args,char *argv[]);
     void Run();
+
+private:
+    void StaticAnalysis();
+    void TransientAnalysis();
 
     //****************************************
 private:
@@ -92,8 +97,11 @@ private:
     ElementSystem elementSystem;
     EquationSystem equationSystem;
     FE fe;
+    LinearSolver linearSolver;
+    NonlinearSolver nonlinearSolver;
 
     FESystemInfo feSystemInfo;
+
 private:
     JobType jobType;
     TimeInteMethod timeInteMethod;
