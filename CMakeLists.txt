@@ -113,6 +113,6 @@ set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/Newt
 
 # For FESystem info
 set(INC ${INC} include/FESystem/FESystemInfo.h)
-set(SRC ${SRC} )
+set(SRC ${SRC} src/FESystem/FESystemInfo.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
