@@ -32,6 +32,8 @@
 #include "FE/FE.h"
 #include "EquationSystem/EquationSystem.h"
 
+#include "FESystemInfo.h"
+
 using namespace std;
 
 class FESystem
@@ -40,6 +42,45 @@ public:
     FESystem();
     void Init(int args,char *argv[]);
     void Run();
+
+    //****************************************
+private:
+    enum JobType
+    {
+        Static,
+        Transient
+    };
+
+    enum TimeInteMethod
+    {
+        BackwardEuler,
+        CrankNicolson,
+        BDF2
+    };
+
+    enum FEAction
+    {
+        StaticAnalysisAction,
+        TransientAnalysisAction,
+        OutputAction,
+        FormKRAction,
+        ProjectGaussToNodalAction,
+        InitHistoryAction,
+        UpdateHistoryAction,
+        UpdateSolutionAction
+    };
+    //****************************************
+
+private:
+    void SetupFESystem();
+    void SetJobType();
+    void SetTimeStep();
+    void SetProjectionEnable();
+    void SetTimeIntegrationMethod();
+    void SetSolver();
+    void SetNonlinearSolver();
+    // TODO: add time stepping algorithm
+    void SetTimeStepper();
 
 private:
     InputSystem inputSystem;
@@ -52,25 +93,14 @@ private:
     EquationSystem equationSystem;
     FE fe;
 
+    FESystemInfo feSystemInfo;
 private:
-    enum JobType
-    {
-        Static,
-        Transient
-    };
+    JobType jobType;
+    TimeInteMethod timeInteMethod;
+    int TotalTimeStep=0;
+    double FinalTime=0.0;
 
-private:
-    enum FEAction
-    {
-        StaticAnalysisAction,
-        TransientAnalysisAction,
-        OutputAction,
-        FormKRAction,
-        ProjectGaussToNodalAction,
-        InitHistoryAction,
-        UpdateHistoryAction,
-        UpdateSolutionAction
-    };
+
 
 private:
     bool IsFESystemInit=false;
