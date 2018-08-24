@@ -27,10 +27,12 @@ void FESystem::Init(int args, char **argv)
     inputSystem.InitInputSystem(args,argv);
     inputSystem.ReadInputFile(mesh,equationSystem,bcSystem,elementSystem.kernelBlockInfo,bcBlockList);
 
+
+
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Input system initialized!              ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
-    //dofHandler.CreateLocalToGlobalDofMap(mesh,equationSystem.GetDofsNumPerNode());
+    dofHandler.CreateLocalToGlobalDofMap(mesh,equationSystem.GetDofsNumPerNode());
 
 
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Start initializing equation system...  ***\n");
@@ -50,6 +52,9 @@ void FESystem::Init(int args, char **argv)
     elementSystem.Init();
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** UEL system initialized!                ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+    linearSolver.InitSolver();
+    nonlinearSolver.Init();
 
 
 }

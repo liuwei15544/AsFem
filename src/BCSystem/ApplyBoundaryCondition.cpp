@@ -19,14 +19,18 @@ void BCSystem::ApplyBoundaryCondition(Mesh &mesh,DofHandler &dofHandler,Equation
     string sidename;
     double value;
     int ind;
+
     for(int i=0;i<bcInfo.GetBCBlockNum();i++)
     {
         sidename=bcInfo.GetIthBCKernelSideName(i+1);
+
         value=bcInfo.GetIthBCKernelValue(i+1);
         ind=bcInfo.GetIthBCKernelDofIndex(i+1);
+        cout<<"dirichlet"<<endl;
         if(bcInfo.GetIthBCKernelName(i+1)=="dirichlet")
         {
             // Apply dirichlet boundary condition
+            cout<<"dirichlet"<<endl;
             ApplyDirichletBC(sidename,ind,value,mesh,dofHandler,equationSystem);
         }
         else if(SingleBCBlock.BCBlockKernelName=="neumann")

@@ -57,7 +57,7 @@ set(SRC ${SRC} src/Mesh/PrintAndSaveMesh.cpp)
 
 # For dof handler
 set(INC ${INC} include/DofHandler/DofHandler.h)
-set(SRC ${SRC} src/DofHandler/DofHandler.cpp src/DofHandler/DofHandlerSetting.cpp)
+set(SRC ${SRC} src/DofHandler/DofHandler.cpp src/DofHandler/DofHandlerSetting.cpp src/DofHandler/CreateLocalToGlobalDofMap.cpp)
 set(SRC ${SRC} src/DofHandler/GetDofHandlerInfo.cpp src/DofHandler/PrintDofHandlerInfo.cpp)
 
 # For equation system
@@ -114,6 +114,7 @@ set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/Newt
 # For FESystem info
 set(INC ${INC} include/FESystem/FESystemInfo.h)
 set(SRC ${SRC} src/FESystem/FESystemInfo.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} include/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/DofHandler/CreateLocalToGlobalDofMap.cpp)
+set(SRC ${SRC} include/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
+set(SRC ${SRC} )
 
 add_executable(ASFEM ${INC} ${SRC})

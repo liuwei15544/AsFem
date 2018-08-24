@@ -201,6 +201,7 @@ void BCInfo::PrintBCInfo() const
 //***********************************************
 int BCInfo::GetIthBCKernelDofIndex(int i) const
 {
+
     if(i<1||i>int(BCBlockList.size()))
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: i=%3d is out of bc kernel range!***\n");
@@ -210,6 +211,7 @@ int BCInfo::GetIthBCKernelDofIndex(int i) const
         PetscFinalize();
         abort();
     }
+    //TODO: Error , size of BCBlockDofIndex=0
 
     return BCBlockDofIndex[i-1];
 }
