@@ -127,6 +127,6 @@ set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
 
 # For ICSystem
 set(INC ${INC} include/ICSystem/ICBlockInfo.h)
-set(SRC ${SRC} src/InputSystem/ReadICBlock.cpp)
+set(SRC ${SRC} src/InputSystem/ReadICBlock.cpp include/ICSystem/ICSystem.h)
 
 add_executable(ASFEM ${INC} ${SRC})
