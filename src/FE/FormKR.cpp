@@ -42,9 +42,11 @@ void FE::FormKR(const int &iState, const double dt, const double t, const double
     int eEnd=(rank+1)*rankne;
     if(rank==size-1) eEnd=mesh.GetElmtsNum();
 
+    nDims=mesh.GetDims();
     for(e=eStart;e<eEnd;++e)
     {
         nNodesPerElmt=mesh.GetNodesNumPerElmt();
+        nDofsPerNode=dofHandler.GetDofsPerNode();
         dofHandler.GetLocalDofMap(e+1,nDofsPerElmt,elDofsConn);
         current_elmt_id=e+1;
 
@@ -63,6 +65,7 @@ void FE::FormKR(const int &iState, const double dt, const double t, const double
                 VecGetValues(Useq,1,&jInd,&elU[iInd][0]);
 
                 VecGetValues(Vseq,1,&jInd,&elU[iInd][1]);
+
             }
         }
 
@@ -72,10 +75,12 @@ void FE::FormKR(const int &iState, const double dt, const double t, const double
                                  dt,t,ctan,elCoords,elU,
                                  localK,localRHS,localProj);
 
+
         AssembleLocalToGlobal(iState,AMATRIX,RHS,Proj);
     }
 
     FinishAssemble(iState,AMATRIX,RHS,Proj);
+
 
     // delete scatter
     VecScatterDestroy(&scatteru);

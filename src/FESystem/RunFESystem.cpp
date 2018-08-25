@@ -16,7 +16,7 @@
 void FESystem::Run()
 {
     StaticAnalysis();
-    equationSystem.UpdateUplusdU();
-    outputSystem.WriteUToVTUFile(mesh,equationSystem,equationSystem.U0);
+
+    outputSystem.WriteUToVTUFile(mesh,equationSystem,equationSystem.U);
 }
 

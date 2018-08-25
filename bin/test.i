@@ -29,7 +29,7 @@ name = c
   [end]
 
   [right]
-   type=neumann
+   type=dirichlet
    dof=c
    value=2
    side=right

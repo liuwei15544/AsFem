@@ -27,13 +27,13 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
     iters=0;IsConvergent=false;
 
 
+
     while(iters<=MaxIters && !IsConvergent)
     {
         bcSystem.ApplyBoundaryCondition(mesh,dofHandler,equationSystem);
-
-
         fe.FormKR(istat,dt,t,ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.AMATRIX);
         bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem);
+
 
         linearSolver.Solve(equationSystem.AMATRIX,equationSystem.dU,equationSystem.RHS);
 
@@ -51,7 +51,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
 
 
 
-
+        PrintIterationInfo=true;
         if(PrintIterationInfo)
         {
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",iters);
@@ -64,7 +64,6 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
         iters+=1;
 
         if((Rnorm<=Rtol_R*Rnorm0 || Rnorm<=Atol_R)||
-           (dUnorm<=Rtol_dU*dUnorm0 || dUnorm<=Atol_dU)||
            (EnergyNorm<=Rtol_E*EnergyNorm0 || EnergyNorm<=Atol_E))
         {
             IsConvergent=true;

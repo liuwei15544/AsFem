@@ -44,6 +44,8 @@ void BCSystem::ApplyDirichletBC(string sidename,
         {
             VecSetValue(equationSystem.U,elDofsConn[i-1]-1,value,INSERT_VALUES);
         }
+
     }
+
 }
 
