@@ -122,7 +122,7 @@ set(SRC ${SRC} src/FESystem/FESystemInfo.cpp)
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/ElementSystem/ElementalProjection.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})

@@ -85,6 +85,10 @@ private:
                  const double (&Coords)[27][4],const double (&U)[270][2],
                  double (&K)[270][270],double (&rhs)[270],double (&proj)[27][12+1]);
 
+private:
+    void Projection(const int &nNodes,const double &xsj,
+                    double (&shp)[27][4],const double (&value)[12],
+                    double (&proj)[27][12+1]);
 
 private:
     int ActiveUelIndex=-10000;

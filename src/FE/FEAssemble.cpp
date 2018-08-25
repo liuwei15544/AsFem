@@ -13,9 +13,9 @@
 
 #include "FE/FE.h"
 
-void FE::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, Mat &Proj)
+void FE::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, Vec &Proj)
 {
-    int i,j;
+    int i,j,iInd;
     if(iState%3==0)
     {
         for(i=0;i<nDofsPerElmt;i++)
@@ -38,14 +38,15 @@ void FE::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, Mat &P
         {
             for(j=0;j<=12;j++)
             {
-                MatSetValue(Proj,elConn[i],j,localProj[i][j],ADD_VALUES);
+                iInd=elConn[i]*13+j;
+                VecSetValue(Proj,iInd,localProj[i][j],ADD_VALUES);
             }
         }
     }
 }
 
 //*****************************
-void FE::FinishAssemble(const int &iState,Mat &AMATRIX, Vec &RHS, Mat &Proj)
+void FE::FinishAssemble(const int &iState,Mat &AMATRIX, Vec &RHS, Vec &Proj)
 {
     if(iState%3==0)
     {
@@ -59,8 +60,8 @@ void FE::FinishAssemble(const int &iState,Mat &AMATRIX, Vec &RHS, Mat &Proj)
     }
     else if(iState==8)
     {
-        MatAssemblyBegin(Proj,MAT_FINAL_ASSEMBLY);
-        MatAssemblyEnd(Proj,MAT_FINAL_ASSEMBLY);
+        VecAssemblyBegin(Proj);
+        VecAssemblyEnd(Proj);
     }
 
 }

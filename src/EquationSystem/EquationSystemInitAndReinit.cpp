@@ -47,6 +47,14 @@ PetscErrorCode EquationSystem::Init()
         ierr=VecSet(V,0.0);//CHKERRQ(ierr);
 
         nDofsPerNode=int(solution_name_map.size());
+        int n=nDofs/nDofsPerNode;
+
+        VecCreate(PETSC_COMM_WORLD,&Proj);//CHKERRQ(ierr);
+        VecSetSizes(Proj,PETSC_DECIDE,n*13);//CHKERRQ(ierr);
+        VecSetFromOptions(Proj);//CHKERRQ(ierr);
+        VecSetUp(Proj);//CHKERRQ(ierr);
+        VecSet(Proj,0.0);
+
         return 1;
     }
 

@@ -57,7 +57,7 @@ void ElementSystem::Poisson(const int &iState, const int (&IX)[27], const int &n
     }
     //******************************************************
 
-    ngp=2;
+    ngp=3;
 
     if(nDim==1)
     {
@@ -137,6 +137,8 @@ void ElementSystem::Poisson(const int &iState, const int (&IX)[27], const int &n
             value[2-1]=gradu[1];
             value[3-1]=gradu[2];
             value[4-1]=gradu[3];
+
+            Projection(nNodes,xsj,shp,value,proj);
         }
         else if(iState==5)
         {

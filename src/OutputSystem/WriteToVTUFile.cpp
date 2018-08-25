@@ -206,7 +206,7 @@ void OutputSystem::WriteUAndProjToVTUFile(Mesh &mesh,
         PetscFPrintf(PETSC_COMM_SELF,fd,"</Cells>\n");
 
         PetscFPrintf(PETSC_COMM_SELF,fd,"<PointData Scalar=\"sol\">\n");
-        PetscScalar value;
+        PetscScalar value,weight;
         //*******************************
         //*** for solution
         //*******************************
@@ -230,9 +230,18 @@ void OutputSystem::WriteUAndProjToVTUFile(Mesh &mesh,
             PetscFPrintf(PETSC_COMM_SELF,fd,"<DataArray type=\"Float64\"  Name=\"Proj-%2d \"  NumberOfComponents=\"1\" format=\"ascii\">\n",j);
             for(i=0;i<mesh.GetNodesNum();++i)
             {
-                iInd=i*12+j-1;
+                iInd=i*13+j;
                 VecGetValues(PROJseq,1,&iInd,&value);
-                PetscFPrintf(PETSC_COMM_SELF,fd,"%14.6e\n",value);
+                iInd=i*13+0;
+                VecGetValues(PROJseq,1,&iInd,&weight);
+                if(fabs(value/weight)>1.0e-12)
+                {
+                    PetscFPrintf(PETSC_COMM_SELF,fd,"%14.6e\n",value/weight);
+                }
+                else
+                {
+                    PetscFPrintf(PETSC_COMM_SELF,fd,"%14.6e\n",1.0e-12);
+                }
             }
             PetscFPrintf(PETSC_COMM_SELF,fd,"</DataArray>\n\n");
         }

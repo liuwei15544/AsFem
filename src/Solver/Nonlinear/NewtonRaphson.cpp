@@ -36,7 +36,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
                   equationSystem.V,
                   equationSystem.AMATRIX,
                   equationSystem.RHS,
-                  equationSystem.AMATRIX);
+                  equationSystem.Proj);
 
         bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem.AMATRIX,equationSystem.RHS);
 

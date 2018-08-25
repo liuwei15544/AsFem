@@ -41,16 +41,16 @@ public:
     void FormKR(const int &iState,const double dt,const double t,const double (&ctan)[2],
                 Mesh &mesh,DofHandler &dofHandler,ElementSystem &elementSystem,
                 const Vec &U,const Vec &V,
-                Mat &AMATRIX,Vec &RHS,Mat &Proj);
+                Mat &AMATRIX,Vec &RHS,Vec &Proj);
 
 
 private:
     // Init related vector and matrix
-    void ZeroMatAndVec(const int &iState,Mat &AMATRIX,Mat &Proj,Vec &RHS);
+    void ZeroMatAndVec(const int &iState,Mat &AMATRIX,Vec &Proj,Vec &RHS);
 
     // For assemble
-    void AssembleLocalToGlobal(const int &iState,Mat &AMATRIX,Vec &RHS,Mat &Proj);
-    void FinishAssemble(const int &iState,Mat &AMATRIX,Vec &RHS,Mat &Proj);
+    void AssembleLocalToGlobal(const int &iState,Mat &AMATRIX,Vec &RHS,Vec &Proj);
+    void FinishAssemble(const int &iState,Mat &AMATRIX,Vec &RHS,Vec &Proj);
 
 private:
     bool IsInit;

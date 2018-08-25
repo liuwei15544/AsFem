@@ -72,6 +72,7 @@ public:
     Mat AMATRIX;
     Vec RHS,dU,U,V;
     Vec U0;
+    Vec Proj;
 
 private:
     const int MaxDofs=3000000;//I want to limite maximum dofs under 300W

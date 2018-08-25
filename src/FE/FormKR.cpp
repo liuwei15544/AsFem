@@ -16,7 +16,7 @@
 void FE::FormKR(const int &iState, const double dt, const double t, const double (&ctan)[2],
                 Mesh &mesh,DofHandler &dofHandler,ElementSystem &elementSystem,
                 const Vec &U, const Vec &V,
-                Mat &AMATRIX, Vec &RHS,Mat &Proj)
+                Mat &AMATRIX, Vec &RHS,Vec &Proj)
 {
     int iInd,jInd,e,i,j,k;
     PetscScalar value;

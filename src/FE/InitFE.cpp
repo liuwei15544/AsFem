@@ -24,7 +24,7 @@ void FE::Init(Mesh &mesh,DofHandler &dofHandler)
 }
 
 //**********************************
-void FE::ZeroMatAndVec(const int &iState, Mat &AMATRIX, Mat &Proj, Vec &RHS)
+void FE::ZeroMatAndVec(const int &iState, Mat &AMATRIX, Vec &Proj, Vec &RHS)
 {
     if(iState%3==0)
     {
@@ -36,7 +36,7 @@ void FE::ZeroMatAndVec(const int &iState, Mat &AMATRIX, Mat &Proj, Vec &RHS)
     }
     else if(iState==8)
     {
-        MatZeroEntries(Proj);
+        VecSet(Proj,0.0);
     }
 }
 
