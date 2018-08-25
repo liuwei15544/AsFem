@@ -26,6 +26,7 @@
 #include "EquationSystem/EquationSystem.h"
 #include "ElementSystem/KernelBlockInfo.h"
 #include "BCSystem/BCSystem.h"
+#include "ICSystem/ICBlockInfo.h"
 
 using namespace std;
 
@@ -50,6 +51,7 @@ private:
     bool ReadDofsName(EquationSystem &equationSystem);
     bool ReadKernelBlock(KernelBlockInfo &kernelBlockInfo);
     bool ReadBoundaryBlock(vector<BCBlockInfo> &bcBlockList);
+    bool ReadICBlock(vector<ICBlockInfo> &icBlockList);
 
 
 private:
