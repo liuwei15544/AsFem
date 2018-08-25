@@ -76,7 +76,8 @@ set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
 set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/InputSystem/ReadInputFile.cpp src/InputSystem/ReadMeshBlock.cpp)
-set(SRC ${SRC} src/InputSystem/ReadDofsName.cpp src/InputSystem/ReadKernelBlock.cpp src/InputSystem/ReadBoundaryBlock.cpp)
+set(SRC ${SRC} src/InputSystem/ReadDofsName.cpp src/InputSystem/ReadKernelBlock.cpp)
+set(SRC ${SRC} src/InputSystem/ReadBoundaryBlock.cpp src/InputSystem/ReadICBlock.cpp)
 
 # For element system (AsFem's uel)
 set(INC ${INC} include/ElementSystem/KernelBlockInfo.h)
@@ -126,9 +127,9 @@ set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
 set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
 
 # For ICSystem
-set(INC ${INC} include/ICSystem/ICBlockInfo.h)
-set(SRC ${SRC} src/InputSystem/ReadICBlock.cpp)
-set(INC ${INC} include/ICSystem/ICSystem.h include/ICSystem/ICInfo.h)
+set(INC ${INC} include/ICSystem/ICBlockInfo.h include/ICSystem/ICInfo.h)
 set(SRC ${SRC} src/ICSystem/ICInfo.cpp)
+set(INC ${INC} include/ICSystem/ICSystem.h)
+set(SRC ${SRC} src/ICSystem/ICSystem.cpp src/ICSystem/ApplyInitialCondition.cpp src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSystem/RandomIC.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

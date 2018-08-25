@@ -14,10 +14,50 @@
 #ifndef ASFEM_ICSYSTEM_H
 #define ASFEM_ICSYSTEM_H
 
+#include <iostream>
+#include <string>
+
+//*********************************
+// For AsFem's own header file
+//*********************************
+#include "ICInfo.h"
+#include "Mesh/Mesh.h"
+#include "DofHandler/DofHandler.h"
+#include "EquationSystem/EquationSystem.h"
 
 class ICSystem
 {
+public:
+    ICSystem();
+    void Init();
+    void SetDofsNumPerNode(int ndofspernode) {nDofsPerNode=ndofspernode;}
 
+    // For initializing
+    void AddICKernelBlock(ICBlockInfo &icBlockInfo);
+    void InitFromICBlockList(vector<ICBlockInfo> &icBlockList);
+
+    void SetUpICSystem(EquationSystem &equationSystem);
+
+    void ApplyInitialCondition(Mesh &mesh,Vec &U);
+
+
+
+    void PrintBCInfo() const;
+
+private:
+    void ConstantIC(ICBlockInfo &icBlock,Mesh &mesh,Vec &U);
+    void CircleIC(ICBlockInfo &icBlock,Mesh &mesh,Vec &U);
+    void RandomIC(ICBlockInfo &icBlock,Mesh &mesh,Vec &U);
+
+private:
+    int nDofsPerNode=1;
+    ICBlockInfo SingleICBlock;
+    ICInfo icInfo;
+    bool IsInit=false;
+    int nDims;
+
+    PetscMPIInt rank,size;
+    PetscRandom    rnd;
 };
 
 

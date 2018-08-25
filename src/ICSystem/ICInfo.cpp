@@ -177,6 +177,7 @@ void ICInfo::GenerateICKernelDofMap(EquationSystem &equationSystem)
             else
             {
                 ICBlockDofIndex.push_back(iInd);
+                ICBlockList[i].ICBlockDofsIndex=iInd;
             }
         }
     }
@@ -186,7 +187,7 @@ void ICInfo::PrintICInfo() const
 {
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Boundary block information:            ***\n");
-    for(size_t i=0;i<ICBlockList.size();i++)
+    for(unsigned int i=0;i<ICBlockList.size();i++)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   block name =%16s         ***\n",ICBlockList[i].ICBlockName.c_str());
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***     kernel name=%16s       ***\n",ICBlockList[i].ICBlockKernelName.c_str());
