@@ -84,6 +84,7 @@ set(SRC ${SRC} src/ElementSystem/KernelBlockInfo.cpp)
 set(INC ${INC} include/ElementSystem/ElementSystem.h)
 set(SRC ${SRC} src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSystemSetting.cpp)
 set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp src/ElementSystem/elements/Poisson.cpp)
+set(SRC ${SRC} src/ElementSystem/ElementalProjection.cpp)
 
 # For shapefuns
 set(INC ${INC} include/ShapeFuns/ShapeFuns.h)
@@ -122,7 +123,9 @@ set(SRC ${SRC} src/FESystem/FESystemInfo.cpp)
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/ElementSystem/ElementalProjection.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
 
+# For ICSystem
+set(INC ${INC} include/ICSystem/ICBlockInfo.h)
 
 add_executable(ASFEM ${INC} ${SRC})
