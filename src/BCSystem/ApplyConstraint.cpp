@@ -13,7 +13,9 @@
 
 #include "BCSystem/BCSystem.h"
 
-void BCSystem::ApplyConstraint(Mesh &mesh, DofHandler &dofHandler, EquationSystem &equationSystem)
+void BCSystem::ApplyConstraint(Mesh &mesh,
+                               DofHandler &dofHandler,
+                               Mat &AMATRIX,Vec &RHS)
 {
     PetscMPIInt rank,size;
     MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
@@ -43,17 +45,17 @@ void BCSystem::ApplyConstraint(Mesh &mesh, DofHandler &dofHandler, EquationSyste
                 dofHandler.GetLocalBCDofMap(sidename,e+1,nDofsPerElmt,elDofsConn);
                 for(i=iInd;i<=nDofsPerElmt;i+=nDofsPerNode)
                 {
-                    VecSetValue(equationSystem.RHS,elDofsConn[i-1]-1,0.0,INSERT_VALUES);
-                    MatSetValue(equationSystem.AMATRIX,elDofsConn[i-1]-1,elDofsConn[i-1]-1,PenaltyFactor,INSERT_VALUES);
+                    VecSetValue(RHS,elDofsConn[i-1]-1,0.0,INSERT_VALUES);
+                    MatSetValue(AMATRIX,elDofsConn[i-1]-1,elDofsConn[i-1]-1,PenaltyFactor,INSERT_VALUES);
                 }
             }
         }
     }
 
-    VecAssemblyBegin(equationSystem.RHS);
-    VecAssemblyEnd(equationSystem.RHS);
+    VecAssemblyBegin(RHS);
+    VecAssemblyEnd(RHS);
 
-    MatAssemblyBegin(equationSystem.AMATRIX,MAT_FINAL_ASSEMBLY);
-    MatAssemblyEnd(equationSystem.AMATRIX,MAT_FINAL_ASSEMBLY);
+    MatAssemblyBegin(AMATRIX,MAT_FINAL_ASSEMBLY);
+    MatAssemblyEnd(AMATRIX,MAT_FINAL_ASSEMBLY);
 }
 
