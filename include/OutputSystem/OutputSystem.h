@@ -39,13 +39,15 @@ public:
     void WriteUToVTUFile(Mesh &mesh,EquationSystem &equationSystem,Vec &U);
     void WriteUToVTUFile(Mesh &mesh,EquationSystem &equationSystem,Vec &U,int step);
 
+    void WriteUAndProjToVTUFile(Mesh &mesh,EquationSystem &equationSystem,Vec &U,Vec &Proj);
+
 private:
     bool IsInit;
     string InputFileName;
 
 private:
-    VecScatter scatter;
-    Vec Useq;
+    VecScatter scatter,scatterproj;
+    Vec Useq,PROJseq;
     FILE *fd;
     PetscMPIInt rank;
 
