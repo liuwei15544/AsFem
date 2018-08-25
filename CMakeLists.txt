@@ -118,6 +118,6 @@ set(SRC ${SRC} include/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
 
 # For output system
 set(INC ${INC} include/OutputSystem/OutputSystem.h)
-set(SRC ${SRC}  src/OutputSystem/OutputSystem.cpp src/OutputSystem/WriteToVTUFile.cpp)
+set(SRC ${SRC} src/OutputSystem/OutputSystem.cpp src/OutputSystem/WriteToVTUFile.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

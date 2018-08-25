@@ -32,6 +32,8 @@ void FESystem::Init(int args, char **argv)
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   input system initialized!            ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
+
+
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing dofhandler...     ***\n");
     dofHandler.CreateLocalToGlobalDofMap(mesh,equationSystem.GetDofsNumPerNode());
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   dofhandler initialized!              ***\n");
@@ -45,22 +47,44 @@ void FESystem::Init(int args, char **argv)
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   equation system initialized!         ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
+
+
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing bc system...      ***\n");
     bcSystem.InitFromBCBlockList(bcBlockList);
     bcSystem.SetDims(mesh.GetDims());
     bcSystem.SetUpBCSystem(equationSystem);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   bc system initialized!               ***\n");
-
-
-
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+
+
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing uel system...     ***\n");
     elementSystem.Init();
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   uel system initialized!              ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing linear solver...  ***\n");
     linearSolver.InitSolver();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   linear solver initialized!           ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing nonlinear solver..***\n");
     nonlinearSolver.Init();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nonlinear solver initialized!        ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing output system...  ***\n");
+    outputSystem.SetInputFileName(inputSystem.GetInputFileName());
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   output system initialized!           ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** FE system initialized!                 ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
 
 
 }

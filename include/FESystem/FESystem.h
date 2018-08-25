@@ -32,7 +32,7 @@
 #include "FE/FE.h"
 #include "EquationSystem/EquationSystem.h"
 #include "Solver/NonlinearSolver.h"
-
+#include "OutputSystem/OutputSystem.h"
 #include "FESystemInfo.h"
 
 using namespace std;
@@ -99,6 +99,7 @@ private:
     FE fe;
     LinearSolver linearSolver;
     NonlinearSolver nonlinearSolver;
+    OutputSystem outputSystem;
 
     FESystemInfo feSystemInfo;
 

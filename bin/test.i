@@ -7,7 +7,7 @@
   ymin=0.0
   ymax=1.0
   nx=10
-  ny=20
+  ny=10
   meshtype=quad4
 []
 

@@ -43,6 +43,8 @@ public:
                        KernelBlockInfo &kernelBlockInfo,
                        vector<BCBlockInfo> &bcBlockList);
 
+    string GetInputFileName() const { return InputFileName;}
+
 private:
     bool ReadMeshBlock(Mesh &mesh);
     bool ReadDofsName(EquationSystem &equationSystem);
