@@ -42,7 +42,8 @@ public:
                        EquationSystem &equationSystem,
                        BCSystem &bcSystem,
                        KernelBlockInfo &kernelBlockInfo,
-                       vector<BCBlockInfo> &bcBlockList);
+                       vector<BCBlockInfo> &bcBlockList,
+                       vector<ICBlockInfo> &icBlockList);
 
     string GetInputFileName() const { return InputFileName;}
 

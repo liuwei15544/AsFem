@@ -16,18 +16,16 @@
 bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
 {
     // format:
-    // [bcs]
-    //   [left]
-    //     type=dirichlet
+    // [ics]
+    //   [ic1]
+    //     type=constic
     //     dof=c1
     //     value=1.0
-    //     side=left
     //   [end]
     //   [right]
-    //     type=neumann
+    //     type=randomic
     //     dof=c2
-    //     value=2.0
-    //     side=right
+    //     params=valmin valmax
     //   [end]
     // []
 
@@ -40,7 +38,7 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
     vector<double> numbers;
     bool ReadKernelBlockSuccess=false;
 
-    bool HasDof=false,HasType=false;
+    bool HasDof=false,HasType=false,HasValue=false;
     // Read the first comment line
     getline(in,line);linenum+=1;
 
@@ -63,8 +61,8 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
             {
                 if(IsSubBracketMatch(in,str,blockstartlinenum))
                 {
-                    bcBlockInfo.Clear();
-                    bcBlockInfo.BCBlockName=str;
+                    icBlockInfo.Clear();
+                    icBlockInfo.ICBlockName=str;
 
                     GotoLine(in,blockstartlinenum);linenum=blockstartlinenum-1;
                     getline(in,line0);linenum+=1;// read [kernel1]
@@ -72,8 +70,6 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
 
                     HasType=false;
                     HasDof=false;
-                    HasValue=false;
-                    HasSideName=false;
 
                     // read type
                     getline(in,line0);linenum+=1;
@@ -83,7 +79,7 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
                         if(line.compare(0,5,"type=")==0)
                         {
                             HasType=true;
-                            bcBlockInfo.BCBlockKernelName=line.substr(5,line.size()-5+1);
+                            icBlockInfo.ICBlockKernelName=line.substr(5,line.size()-5+1);
                         }
                         else if(line.compare(0,4,"dof=")==0)
                         {
@@ -98,37 +94,22 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
                                 abort();
                             }
                             HasDof=true;
-                            bcBlockInfo.BCBlockDofsName=line.substr(4,line.size()-4+1);
+                            icBlockInfo.ICBlockDofsName=line.substr(4,line.size()-4+1);
                         }
-                        else if(line.compare(0,5,"side=")==0)
-                        {
-                            if(line.size()<8)
-                            {
-                                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find side name in line-%2d  ***\n",linenum);
-                                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give side=side_name! ***\n");
-                                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-                                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-                                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-                                PetscFinalize();
-                                abort();
-                            }
-                            HasSideName=true;
-                            bcBlockInfo.sidename=line.substr(5,line.size()-5+1);
-                        }
-                        else if(line.compare(0,6,"value=")==0)
+                        else if(line.compare(0,7,"params=")==0)
                         {
                             numbers=SplitNum(line);
                             if(numbers.size()<1)
                             {
                                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find value in line-%2d     ***\n",linenum);
-                                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give value=value!!!  ***\n");
+                                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give params=value!!! ***\n");
                                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                                 PetscFinalize();
                                 abort();
                             }
-                            bcBlockInfo.BCValue=numbers[0];
+                            icBlockInfo.ICParams=numbers;
                             HasValue=true;
                         }
 
@@ -138,8 +119,8 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
 
                     if(!HasType)
                     {
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find bc kernel type!!!    ***\n");
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give bc kernel name! ***\n");
+                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find ic kernel type!!!    ***\n");
+                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give ic kernel name! ***\n");
                         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -158,18 +139,8 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
                     }
                     else if(!HasValue)
                     {
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find value= info !!!      ***\n");
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give value=values !! ***\n");
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-                        PetscFinalize();
-                        abort();
-                    }
-                    else if(!HasSideName)
-                    {
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find side= info !!!       ***\n");
-                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give side=side_name! ***\n");
+                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find params= info !!!     ***\n");
+                        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give params=v1 v2..! ***\n");
                         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -178,7 +149,7 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
                     }
                     else
                     {
-                        bcBlockList.push_back(bcBlockInfo);
+                        icBlockList.push_back(icBlockInfo);
                         ReadKernelBlockSuccess=true;
                         getline(in,line);linenum+=1;// inside [materials]
                         str=RemoveSpace(line);

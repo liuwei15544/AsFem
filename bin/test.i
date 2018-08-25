@@ -34,11 +34,12 @@ name = c
    value=2
    side=right
   [end]
+[]
 
-  [right1]
-   type=dirichlet
-   dof=c
-   value=5
-   side=top
+[ics]
+  [ic1]
+    type=constic
+    dof=c
+    params=1.0
   [end]
 []

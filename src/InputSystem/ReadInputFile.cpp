@@ -17,7 +17,8 @@ bool InputSystem::ReadInputFile(Mesh &mesh,
                                 EquationSystem &equationSystem,
                                 BCSystem &bcSystem,
                                 KernelBlockInfo &kernelBlockInfo,
-                                vector<BCBlockInfo> &bcBlockList)
+                                vector<BCBlockInfo> &bcBlockList,
+                                vector<ICBlockInfo> &icBlockList)
 {
     if(!ReadMeshBlock(mesh))
     {
@@ -52,6 +53,16 @@ bool InputSystem::ReadInputFile(Mesh &mesh,
     if(!ReadBoundaryBlock(bcBlockList))
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: read boundary block failed!!!   ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    if(!ReadICBlock(icBlockList))
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: read IC block failed!!!         ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");

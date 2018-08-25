@@ -28,7 +28,11 @@ void FESystem::Init(int args, char **argv)
 
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing input system...   ***\n");
     inputSystem.InitInputSystem(args,argv);
-    inputSystem.ReadInputFile(mesh,equationSystem,bcSystem,elementSystem.kernelBlockInfo,bcBlockList);
+    inputSystem.ReadInputFile(mesh,
+                              equationSystem,
+                              bcSystem,
+                              elementSystem.kernelBlockInfo,
+                              bcBlockList,icBlockList);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   input system initialized!            ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
