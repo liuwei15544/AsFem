@@ -35,6 +35,7 @@ public:
     double current_time;
     int totalstep;
     int iState;
+    double ctan[2]={1.0};
 
     bool IsProjOutput;
 

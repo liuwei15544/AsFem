@@ -15,5 +15,10 @@
 
 void FESystem::StaticAnalysis()
 {
-    nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver);
+    feSystemInfo.current_dt=1.0;
+    feSystemInfo.old_dt=1.0;
+    feSystemInfo.ctan[0]=1.0;
+    feSystemInfo.ctan[1]=1.0;
+
+    nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
 }

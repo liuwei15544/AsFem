@@ -34,6 +34,8 @@ void FESystemInfo::Init()
     totalstep=0;
     iState=6;
 
+    ctan[0]=1.0;ctan[1]=1.0;
+
     IsProjOutput=false;
 
     jobtype="static";

@@ -102,9 +102,13 @@ set(INC ${INC} include/Solver/LinearSolver.h)
 set(SRC ${SRC} src/Solver/Linear/LinearSolver.cpp src/Solver/Linear/LinearSolverSetting.cpp)
 set(SRC ${SRC} src/Solver/Linear/GetLinearSolverInfo.cpp)
 
-# For FESystem
-set(INC ${INC} include/FESystem/FESystem.h)
-set(SRC ${SRC} src/FESystem/FESystem.cpp include/Solver/LinearSolver.h)
+
+# For output system
+set(INC ${INC} include/OutputSystem/OutputSystem.h)
+set(SRC ${SRC} src/OutputSystem/OutputSystem.cpp src/OutputSystem/WriteToVTUFile.cpp)
+
+# For linear solver
+set(INC ${INC} include/Solver/LinearSolver.h)
 
 # For nonlinear solver
 set(INC ${INC} include/Solver/NonlinearSolver.h)
@@ -113,11 +117,12 @@ set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/Newt
 
 # For FESystem info
 set(INC ${INC} include/FESystem/FESystemInfo.h)
-set(SRC ${SRC} src/FESystem/FESystemInfo.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} include/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
+set(SRC ${SRC} src/FESystem/FESystemInfo.cpp)
 
-# For output system
-set(INC ${INC} include/OutputSystem/OutputSystem.h)
-set(SRC ${SRC} src/OutputSystem/OutputSystem.cpp src/OutputSystem/WriteToVTUFile.cpp)
+# For FESystem
+set(INC ${INC} include/FESystem/FESystem.h)
+set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
+
 
 add_executable(ASFEM ${INC} ${SRC})

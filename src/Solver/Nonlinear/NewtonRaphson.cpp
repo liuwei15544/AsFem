@@ -19,18 +19,25 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
                                     EquationSystem &equationSystem,
                                     ElementSystem &elementSystem,
                                     FE &fe,
-                                    LinearSolver &linearSolver)
+                                    LinearSolver &linearSolver,
+                                    FESystemInfo &feSystemInfo)
 {
-    double ctan[2]={1.0};
-    const int istat=6;
-    const double t=1.0,dt=1.0;
     iters=0;IsConvergent=false;
 
 
     while(iters<=MaxIters && !IsConvergent)
     {
         bcSystem.ApplyDirichletBC(mesh,dofHandler,equationSystem.U);
-        fe.FormKR(istat,dt,t,ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.AMATRIX);
+        fe.FormKR(feSystemInfo.iState,
+                  feSystemInfo.current_dt,feSystemInfo.current_time,
+                  feSystemInfo.ctan,
+                  mesh,dofHandler,
+                  elementSystem,equationSystem.U,
+                  equationSystem.V,
+                  equationSystem.AMATRIX,
+                  equationSystem.RHS,
+                  equationSystem.AMATRIX);
+
         bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem.AMATRIX,equationSystem.RHS);
 
 

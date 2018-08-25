@@ -19,12 +19,13 @@ void NonlinearSolver::Solve(Mesh &mesh,
                             EquationSystem &equationSystem,
                             ElementSystem &elementSystem,
                             FE &fe,
-                            LinearSolver &linearSolver)
+                            LinearSolver &linearSolver,
+                            FESystemInfo &feSystemInfo)
 {
     switch (SolverType)
     {
         case newtonraphson:
-            if(!NewtonRaphson(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver))
+            if(!NewtonRaphson(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo))
             {
 
             }

@@ -28,6 +28,7 @@
 #include "BCSystem/BCSystem.h"
 #include "BCSystem/BCInfo.h"
 #include "Solver/LinearSolver.h"
+#include "FESystem/FESystemInfo.h"
 
 
 using namespace std;
@@ -68,7 +69,8 @@ public:
                EquationSystem &equationSystem,
                ElementSystem &elementSystem,
                FE &fe,
-               LinearSolver &linearSolver);
+               LinearSolver &linearSolver,
+               FESystemInfo &feSystemInfo);
 
     void PrintNonlinearSolverInfo() const;
 
@@ -79,7 +81,8 @@ private:
                        EquationSystem &equationSystem,
                        ElementSystem &elementSystem,
                        FE &fe,
-                       LinearSolver &linearSolver);
+                       LinearSolver &linearSolver,
+                       FESystemInfo &feSystemInfo);
 
     bool ModifyNewtonRaphson(Mesh &mesh,DofHandler &dofHandler,BCSystem &bcSystem,EquationSystem &equationSystem,LinearSolver &linearSolver);
 
