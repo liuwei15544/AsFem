@@ -27,15 +27,15 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
     iters=0;IsConvergent=false;
 
 
-
     while(iters<=MaxIters && !IsConvergent)
     {
-        bcSystem.ApplyBoundaryCondition(mesh,dofHandler,equationSystem);
+        bcSystem.ApplyDirichletBC(mesh,dofHandler,equationSystem.U);
         fe.FormKR(istat,dt,t,ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.AMATRIX);
-        bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem);
+        bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem.AMATRIX,equationSystem.RHS);
 
 
         linearSolver.Solve(equationSystem.AMATRIX,equationSystem.dU,equationSystem.RHS);
+
 
         VecNorm(equationSystem.RHS,NORM_2,&Rnorm);
         VecNorm(equationSystem.dU,NORM_2,&dUnorm);
@@ -71,6 +71,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
         }
 
     }
+
 
     return IsConvergent;
 }

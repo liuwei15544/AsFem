@@ -17,12 +17,11 @@ void BCSystem::ApplyConstraint(Mesh &mesh,
                                DofHandler &dofHandler,
                                Mat &AMATRIX,Vec &RHS)
 {
-    PetscMPIInt rank,size;
     MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
     MPI_Comm_size(PETSC_COMM_WORLD,&size);
 
     int rankne,eStart,eEnd;
-    int nDofsPerElmt,i,e,iInd,nDofsPerNode;
+    int nDofsPerElmt,i,j,e,iInd,nDofsPerNode;
     int elDofsConn[270]={0};
     string sidename;
     const double PenaltyFactor=1.0e14;
@@ -43,10 +42,10 @@ void BCSystem::ApplyConstraint(Mesh &mesh,
             for(e=eStart;e<eEnd;e++)
             {
                 dofHandler.GetLocalBCDofMap(sidename,e+1,nDofsPerElmt,elDofsConn);
-                for(i=iInd;i<=nDofsPerElmt;i+=nDofsPerNode)
+                for(j=iInd;j<=nDofsPerElmt;j+=nDofsPerNode)
                 {
-                    VecSetValue(RHS,elDofsConn[i-1]-1,0.0,INSERT_VALUES);
-                    MatSetValue(AMATRIX,elDofsConn[i-1]-1,elDofsConn[i-1]-1,PenaltyFactor,INSERT_VALUES);
+                    VecSetValue(RHS,elDofsConn[j-1]-1,0.0,INSERT_VALUES);
+                    MatSetValue(AMATRIX,elDofsConn[j-1]-1,elDofsConn[j-1]-1,PenaltyFactor,INSERT_VALUES);
                 }
             }
         }

@@ -34,4 +34,11 @@ name = c
    value=2
    side=right
   [end]
+
+  [right1]
+   type=dirichlet
+   dof=c
+   value=5
+   side=top
+  [end]
 []

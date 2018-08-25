@@ -16,11 +16,9 @@
 void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
 {
 
-
     int e,rankne,eStart,eEnd;
 
-
-    int nDofsPerElmt,i,nDofsPerNode,iInd;
+    int nDofsPerElmt,i,j,nDofsPerNode,iInd;
     int elDofsConn[270]={0};
     //*****************************************
     string sidename;
@@ -28,13 +26,16 @@ void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
 
     nDofsPerNode=dofHandler.GetDofsPerNode();
 
+
     for(i=0;i<bcInfo.GetBCBlockNum();i++)
     {
-
         if(bcInfo.GetIthBCKernelName(i+1)=="dirichlet")
         {
+            MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
+            MPI_Comm_size(PETSC_COMM_WORLD,&size);
             value=bcInfo.GetIthBCKernelValue(i+1);
             sidename=bcInfo.GetIthBCKernelSideName(i+1);
+
             iInd=bcInfo.GetIthBCKernelDofIndex(i+1);
 
             rankne=dofHandler.GetBCSideElmtsNum(sidename)/size;
@@ -46,9 +47,9 @@ void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
             for(e=eStart;e<eEnd;e++)
             {
                 dofHandler.GetLocalBCDofMap(sidename,e+1,nDofsPerElmt,elDofsConn);
-                for(i=iInd;i<=nDofsPerElmt;i+=nDofsPerNode)
+                for(j=iInd;j<=nDofsPerElmt;j+=nDofsPerNode)
                 {
-                    VecSetValue(U,elDofsConn[i-1]-1,value,INSERT_VALUES);
+                    VecSetValue(U,elDofsConn[j-1]-1,value,INSERT_VALUES);
                 }
             }
         }

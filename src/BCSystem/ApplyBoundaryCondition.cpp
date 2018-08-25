@@ -30,7 +30,7 @@ void BCSystem::ApplyBoundaryCondition(Mesh &mesh,DofHandler &dofHandler,Equation
         if(bcInfo.GetIthBCKernelName(i+1)=="dirichlet")
         {
             // Apply dirichlet boundary condition
-            ApplyDirichletBC(sidename,ind,value,mesh,dofHandler,equationSystem);
+            //ApplyDirichletBC(sidename,ind,value,mesh,dofHandler,equationSystem);
         }
         else if(SingleBCBlock.BCBlockKernelName=="neumann")
         {
