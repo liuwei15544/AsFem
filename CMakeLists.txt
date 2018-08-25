@@ -115,6 +115,9 @@ set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/Newt
 set(INC ${INC} include/FESystem/FESystemInfo.h)
 set(SRC ${SRC} src/FESystem/FESystemInfo.cpp src/FESystem/FESystemSetting.cpp)
 set(SRC ${SRC} include/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
-set(SRC ${SRC} )
+
+# For output system
+set(INC ${INC} include/OutputSystem/OutputSystem.h)
+set(SRC ${SRC}  src/OutputSystem/OutputSystem.cpp src/OutputSystem/WriteToVTUFile.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
