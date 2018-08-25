@@ -12,7 +12,7 @@
 []
 
 [dofs]
-name = ux   uy   uz
+name = c
 []
 
 [kernel]
@@ -30,7 +30,7 @@ name = ux   uy   uz
 
   [right]
    type=neumann
-   dof=u
+   dof=c
    value=2
    side=right
   [end]

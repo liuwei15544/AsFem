@@ -30,7 +30,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
     while(iters<=MaxIters && !IsConvergent)
     {
         bcSystem.ApplyBoundaryCondition(mesh,dofHandler,equationSystem);
-        cout<<"work"<<endl;
+
 
         fe.FormKR(istat,dt,t,ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.AMATRIX);
         bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem);
