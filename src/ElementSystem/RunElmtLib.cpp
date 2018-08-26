@@ -32,6 +32,7 @@ void ElementSystem::RunElmtLib(const int &iState, const int (&IX)[27], const int
         case UelList::thermalmechanics:
             break;
         case UelList::uel1:
+            elmt01(iState,IX,nDim,nNodes,nDofs,dt,t,ctan,Coords,U,K,rhs,proj);
             break;
         case UelList::uel2:
             break;

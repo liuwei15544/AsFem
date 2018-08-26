@@ -6,8 +6,8 @@
   xmax=1.0
   ymin=0.0
   ymax=1.0
-  nx=80
-  ny=80
+  nx=20
+  ny=20
   meshtype=quad9
 []
 
@@ -16,30 +16,35 @@ name = u v
 []
 
 [kernel]
-  type=poisson
+  type=uel1
   params= 1 2 4.0
 []
 
 [bcs]
-  [left]
+  [leftu]
     type=dirichlet
-    dof=c
+    dof=u
     value=1
     side=left
   [end]
-
-  [right]
+  [rightu]
    type=dirichlet
-   dof=c
-   value=2
+   dof=u
+   value=0
+   side=right
+  [end]
+  [leftv]
+    type=dirichlet
+    dof=v
+    value=2
+    side=left
+  [end]
+  [rightv]
+   type=dirichlet
+   dof=v
+   value=0
    side=right
   [end]
 []
 
-[ics]
-  [ic1]
-    type=constic
-    dof=c
-    params=1.0
-  [end]
-[]
+

@@ -17,7 +17,7 @@ void FESystem::Run()
 {
     StaticAnalysis();
     //outputSystem.WriteUToVTUFile(mesh,equationSystem,equationSystem.U);
-    //fe.FormKR(8,feSystemInfo.current_dt,feSystemInfo.current_time,feSystemInfo.ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.Proj);
-    //outputSystem.WriteUAndProjToVTUFile(mesh,equationSystem,equationSystem.U,equationSystem.Proj);
+    fe.FormKR(8,feSystemInfo.current_dt,feSystemInfo.current_time,feSystemInfo.ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.Proj);
+    outputSystem.WriteUAndProjToVTUFile(mesh,equationSystem,equationSystem.U,equationSystem.Proj);
 }
 

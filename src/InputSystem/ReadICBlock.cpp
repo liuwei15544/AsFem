@@ -197,16 +197,6 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
             }
         }
     }
-    else
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***---cant find matched [kernels][] block--***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***--- please check your input file!!!   --***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!!!                          ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
 
     return ReadKernelBlockSuccess;
 }

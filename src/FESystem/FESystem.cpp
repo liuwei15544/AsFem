@@ -53,20 +53,26 @@ void FESystem::Init(int args, char **argv)
 
 
 
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing bc system...      ***\n");
-    bcSystem.InitFromBCBlockList(bcBlockList);
-    bcSystem.SetDims(mesh.GetDims());
-    bcSystem.SetUpBCSystem(equationSystem);
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   bc system initialized!               ***\n");
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    if(bcBlockList.size()>0)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing bc system...      ***\n");
+        bcSystem.InitFromBCBlockList(bcBlockList);
+        bcSystem.SetDims(mesh.GetDims());
+        bcSystem.SetUpBCSystem(equationSystem);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   bc system initialized!               ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    }
 
 
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing ic system...      ***\n");
-    icSystem.InitFromICBlockList(icBlockList);
-    icSystem.SetDofsNumPerNode(dofHandler.GetDofsPerNode());
-    icSystem.SetUpICSystem(equationSystem);
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   ic system initialized!               ***\n");
-    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    if(icBlockList.size()>0)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing ic system...      ***\n");
+        icSystem.InitFromICBlockList(icBlockList);
+        icSystem.SetDofsNumPerNode(dofHandler.GetDofsPerNode());
+        icSystem.SetUpICSystem(equationSystem);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   ic system initialized!               ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+    }
 
 
 

@@ -60,15 +60,17 @@ bool InputSystem::ReadInputFile(Mesh &mesh,
         abort();
     }
 
-    if(!ReadICBlock(icBlockList))
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: read IC block failed!!!         ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
+//    if(!ReadICBlock(icBlockList))
+//    {
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: read IC block failed!!!         ***\n");
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+//        PetscFinalize();
+//        abort();
+//    }
+
+    ReadICBlock(icBlockList);
 
 }
 

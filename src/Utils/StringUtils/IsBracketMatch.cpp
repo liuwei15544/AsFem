@@ -30,11 +30,14 @@ bool IsBracketMatch(ifstream &in,string &bracketstr,int &startline)
         if(str.compare(line0)==0)
         {
             FoundHead=true;
+
+
             startline=linenum;
             while(!in.eof())
             {
                 getline(in,line);linenum+=1;
                 str=RemoveSpace(line);
+
                 if(str.compare("[]")==0)
                 {
                     FoundEnd= true;
