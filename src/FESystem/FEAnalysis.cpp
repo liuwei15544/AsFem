@@ -29,4 +29,5 @@ void FESystem::TransientAnalysis()
     feSystemInfo.current_time=0.0;
     feSystemInfo.current_dt=feSystemInfo.old_dt;
     feSystemInfo.currentstep=0;
+    BackwardEulerMethod();
 }

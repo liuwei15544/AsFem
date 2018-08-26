@@ -56,7 +56,7 @@ void FESystemInfo::PrintFESystemInfo() const
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** job type= transient analysis           ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** total step= %6d                     ***\n",totalstep);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** delta t   =%14.6e                   ***\n",old_dt);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** delta t   =%14.6e              ***\n",old_dt);
     }
 
     if(IsProjOutput==true)

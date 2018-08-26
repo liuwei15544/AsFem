@@ -50,15 +50,17 @@ bool InputSystem::ReadInputFile(Mesh &mesh,
         abort();
     }
 
-    if(!ReadBoundaryBlock(bcBlockList))
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: read boundary block failed!!!   ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
+//    if(!ReadBoundaryBlock(bcBlockList))
+//    {
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: read boundary block failed!!!   ***\n");
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+//        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+//        PetscFinalize();
+//        abort();
+//    }
+
+    ReadBoundaryBlock(bcBlockList);
 
 //    if(!ReadICBlock(icBlockList))
 //    {

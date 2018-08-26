@@ -18,8 +18,11 @@ void FESystem::BackwardEulerMethod()
     feSystemInfo.ctan[0]=1.0;feSystemInfo.ctan[1]=1.0/feSystemInfo.current_dt;
 
     feSystemInfo.iState=6;
+    icSystem.ApplyInitialCondition(mesh,equationSystem.U0);
+    outputSystem.WriteUToVTUFile(0,mesh,equationSystem,equationSystem.U0);
     for(int step=1;step<=feSystemInfo.totalstep;step++)
     {
+        feSystemInfo.currentstep=step;
         VecCopy(equationSystem.U0,equationSystem.U);
         nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
         if(feSystemInfo.IsProjOutput)
@@ -31,7 +34,9 @@ void FESystem::BackwardEulerMethod()
         }
         else
         {
-            outputSystem.WriteUToVTUFile(mesh,equationSystem,equationSystem.U);
+            outputSystem.WriteUToVTUFile(step,mesh,equationSystem,equationSystem.U);
         }
+
+        equationSystem.UpdateU0(equationSystem.U);
     }
 }

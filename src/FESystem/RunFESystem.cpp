@@ -32,7 +32,7 @@ void FESystem::Run()
     }
     else
     {
-
+        TransientAnalysis();
     }
 
 }

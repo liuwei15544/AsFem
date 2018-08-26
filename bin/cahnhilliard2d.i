@@ -6,8 +6,8 @@
   xmax=1.0
   ymin=0.0
   ymax=1.0
-  nx=20
-  ny=20
+  nx=100
+  ny=100
   meshtype=quad9
 []
 
@@ -22,7 +22,7 @@ name = c mu
 
 [ics]
   [random]
-    type=randomnoise
+    type=randomnoiseic
     dof=c
     params=0.63 0.02
   [end]
@@ -31,8 +31,9 @@ name = c mu
 [run]
   type=transient
   proj=false
+  debug=true
   dt=5.0e-6
-  step=10
+  step=15000
   output=10
 []
 
