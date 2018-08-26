@@ -30,11 +30,11 @@ NonlinearSolver::NonlinearSolver()
 void NonlinearSolver::Init()
 {
     SolverType=newtonraphson;
-    Rtol_R =1.0e-7; Atol_R=5.0e-10;
+    Rtol_R =1.0e-8; Atol_R=8.0e-10;
 
     Rtol_dU=1.0e-8;Atol_dU=1.0e-11;
 
-    Rtol_E =1.0e-12;Atol_E=1.0e-16;
+    Rtol_E =1.0e-15;Atol_E=1.0e-16;
 
     MaxIters=50;iters=0;
     IsInit=true;

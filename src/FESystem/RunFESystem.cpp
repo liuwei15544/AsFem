@@ -15,9 +15,25 @@
 
 void FESystem::Run()
 {
-    StaticAnalysis();
-    //outputSystem.WriteUToVTUFile(mesh,equationSystem,equationSystem.U);
-    fe.FormKR(8,feSystemInfo.current_dt,feSystemInfo.current_time,feSystemInfo.ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.Proj);
-    outputSystem.WriteUAndProjToVTUFile(mesh,equationSystem,equationSystem.U,equationSystem.Proj);
+    if(feSystemInfo.jobtype=="static")
+    {
+        nonlinearSolver.SetPrintFlag(feSystemInfo.IsDebugOn);
+        StaticAnalysis();
+        if(feSystemInfo.IsProjOutput)
+        {
+            feSystemInfo.iState=8;
+            fe.FormKR(feSystemInfo.iState,feSystemInfo.current_dt,feSystemInfo.current_time,feSystemInfo.ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.Proj);
+            outputSystem.WriteUAndProjToVTUFile(mesh,equationSystem,equationSystem.U,equationSystem.Proj);
+        }
+        else
+        {
+            outputSystem.WriteUToVTUFile(mesh,equationSystem,equationSystem.U);
+        }
+    }
+    else
+    {
+
+    }
+
 }
 

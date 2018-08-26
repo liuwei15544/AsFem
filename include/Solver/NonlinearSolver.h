@@ -103,7 +103,7 @@ private:
     bool IsInit=false;
     double Atol_R,Rtol_R;   // absolute and relative error of residual
     double Atol_dU,Rtol_dU; // error of delta U
-    double Atol_E,Rtol_E;   // error of energy(=R*dU)
+    long double Atol_E,Rtol_E;   // error of energy(=R*dU)
 
     bool IsConvergent;
     double      Rnorm,     Rnorm0;

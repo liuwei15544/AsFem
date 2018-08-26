@@ -58,7 +58,6 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
 
 
 
-        PrintIterationInfo=true;
         if(PrintIterationInfo)
         {
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",iters);
@@ -78,6 +77,15 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
         }
 
     }
+
+    if(!PrintIterationInfo)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",iters);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | R0|=%11.5e, | R|=%11.5e  ***\n",Rnorm0,Rnorm);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   |dU0|=%11.5e, |dU|=%11.5e  ***\n",dUnorm0,dUnorm);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | E0|=%11.5e, | E|=%11.5e  ***\n",EnergyNorm0,EnergyNorm);
+    }
+
 
 
     return IsConvergent;
