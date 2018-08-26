@@ -1,4 +1,4 @@
-# test input file
+# test input file for 2-dofs coupled example
 [mesh]
   type=asfem
   dim=2
@@ -6,13 +6,13 @@
   xmax=1.0
   ymin=0.0
   ymax=1.0
-  nx=50
-  ny=50
+  nx=80
+  ny=80
   meshtype=quad9
 []
 
 [dofs]
-name = c
+name = u v
 []
 
 [kernel]
@@ -41,10 +41,5 @@ name = c
     type=constic
     dof=c
     params=1.0
-  [end]
-  [ic2]
-    type=randomnoiseic
-    dof=c
-    params=0.5 0.1
   [end]
 []

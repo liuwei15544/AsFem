@@ -20,5 +20,7 @@ void FESystem::StaticAnalysis()
     feSystemInfo.ctan[0]=1.0;
     feSystemInfo.ctan[1]=1.0;
 
+    icSystem.ApplyInitialCondition(mesh,equationSystem.U0);
+    outputSystem.WriteUToVTUFile(mesh,equationSystem,equationSystem.U0);
     nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
 }

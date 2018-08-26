@@ -98,8 +98,9 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
                         }
                         else if(line.compare(0,7,"params=")==0)
                         {
-                            numbers=SplitNum(line);
-                            if(numbers.size()<1)
+                            int i=line0.find("=")+1;
+                            icBlockInfo.ICParams=SplitNum(line0.substr(i,line0.size()-i+1));
+                            if(icBlockInfo.ICParams.size()<1)
                             {
                                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find value in line-%2d     ***\n",linenum);
                                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        you should give params=value!!! ***\n");
@@ -109,7 +110,6 @@ bool InputSystem::ReadICBlock(vector<ICBlockInfo> &icBlockList)
                                 PetscFinalize();
                                 abort();
                             }
-                            icBlockInfo.ICParams=numbers;
                             HasValue=true;
                         }
 

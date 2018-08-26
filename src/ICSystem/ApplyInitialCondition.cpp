@@ -31,6 +31,10 @@ void ICSystem::ApplyInitialCondition(Mesh &mesh, Vec &U)
         {
             RandomIC(SingleICBlock,mesh,U);
         }
+        else if(icInfo.GetIthICKernelName(i+1)=="randomnoiseic")
+        {
+            RandomNoiseIC(SingleICBlock,mesh,U);
+        }
     }
 
 

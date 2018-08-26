@@ -29,6 +29,7 @@
 #include "DofHandler/DofHandler.h"
 #include "BCSystem/BCSystem.h"
 #include "BCSystem/BCBlockInfo.h"
+#include "ICSystem/ICSystem.h"
 #include "ICSystem/ICBlockInfo.h"
 #include "ElementSystem/ElementSystem.h"
 #include "FE/FE.h"
@@ -94,6 +95,8 @@ private:
     Mesh mesh;
     DofHandler dofHandler;
     BCSystem bcSystem;
+    ICSystem icSystem;
+
     vector<BCBlockInfo> bcBlockList;
     vector<ICBlockInfo> icBlockList;
 

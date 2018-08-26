@@ -24,7 +24,7 @@ void ICSystem::RandomIC(ICBlockInfo &icBlock, Mesh &mesh, Vec &U)
     double xmin,xmax,value;
     if(icBlock.ICParams.size()<2)
     {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: 2d CircleIC need 5 parameters!  ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: 2d RandomIC need 2 parameters!  ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");

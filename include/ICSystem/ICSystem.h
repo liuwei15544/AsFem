@@ -48,6 +48,7 @@ private:
     void ConstantIC(ICBlockInfo &icBlock,Mesh &mesh,Vec &U);
     void CircleIC(ICBlockInfo &icBlock,Mesh &mesh,Vec &U);
     void RandomIC(ICBlockInfo &icBlock,Mesh &mesh,Vec &U);
+    void RandomNoiseIC(ICBlockInfo &icBlock,Mesh &mesh,Vec &U);
 
 private:
     int nDofsPerNode=1;

@@ -61,6 +61,14 @@ void FESystem::Init(int args, char **argv)
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
 
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing ic system...      ***\n");
+    icSystem.InitFromICBlockList(icBlockList);
+    icSystem.SetDofsNumPerNode(dofHandler.GetDofsPerNode());
+    icSystem.SetUpICSystem(equationSystem);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   ic system initialized!               ***\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
+
+
 
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing uel system...     ***\n");
     elementSystem.Init();

@@ -130,6 +130,7 @@ set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp)
 set(INC ${INC} include/ICSystem/ICBlockInfo.h include/ICSystem/ICInfo.h)
 set(SRC ${SRC} src/ICSystem/ICInfo.cpp)
 set(INC ${INC} include/ICSystem/ICSystem.h)
-set(SRC ${SRC} src/ICSystem/ICSystem.cpp src/ICSystem/ApplyInitialCondition.cpp src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSystem/RandomIC.cpp)
+set(SRC ${SRC} src/ICSystem/ICSystem.cpp src/ICSystem/ApplyInitialCondition.cpp)
+set(SRC ${SRC} src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSystem/RandomIC.cpp src/ICSystem/RandomNoiseIC.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

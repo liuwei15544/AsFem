@@ -9,38 +9,41 @@
 //******************************************************
 //
 // Created by walkandthinker on 25.08.18.
-// apply circle type initial condition system in AsFem
+// apply random initial value with noise in AsFem
 
 #include "ICSystem/ICSystem.h"
 
-void ICSystem::CircleIC(ICBlockInfo &icBlock, Mesh &mesh, Vec &U)
+void ICSystem::RandomNoiseIC(ICBlockInfo &icBlock, Mesh &mesh, Vec &U)
 {
-    // params=x0 y0 r v0 v1
+    // params=value noisevalue
     MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
     MPI_Comm_size(PETSC_COMM_WORLD,&size);
+    PetscRandomCreate(PETSC_COMM_WORLD,&rnd);
 
-    if(icBlock.ICParams.size()<5)
+
+    double xmin,xmax,value,noise;
+    if(icBlock.ICParams.size()<2)
     {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: 2d CircleIC need 5 parameters!  ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: RandomNoiseIC need 2 parameters!***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
         PetscFinalize();
         abort();
     }
+    value=icBlock.ICParams[0];
+    noise=icBlock.ICParams[1];
 
-    double x0,y0,r,v0,v1;
-    x0=icBlock.ICParams[0];
-    y0=icBlock.ICParams[1];
-    r =icBlock.ICParams[2];
-    v0=icBlock.ICParams[3];
-    v1=icBlock.ICParams[4];
+    xmin=value-noise;
+    xmax=value+noise;
+
+    PetscRandomSetInterval(rnd,xmin,xmax);
 
 
     int i,j;
     int iStart,iEnd,rankn;
     int iInd;
-    double dist,x,y;
+
 
 
     iInd=icBlock.ICBlockDofsIndex;
@@ -54,18 +57,7 @@ void ICSystem::CircleIC(ICBlockInfo &icBlock, Mesh &mesh, Vec &U)
     for(i=iStart;i<iEnd;i++)
     {
         j=i*nDofsPerNode+iInd-1;
-        x=mesh.GetIthNodeJthCoord(i+1,1);
-        y=mesh.GetIthNodeJthCoord(i+1,2);
-        dist=(x-x0)*(x-x0)+(y-y0)*(y-y0);
-        dist=sqrt(dist);
-
-        if(dist<=r)
-        {
-            VecSetValue(U,j,v0,ADD_VALUES);
-        }
-        else
-        {
-            VecSetValue(U,j,v1,ADD_VALUES);
-        }
+        PetscRandomGetValue(rnd,&value);
+        VecSetValue(U,j,value,ADD_VALUES);
     }
 }
