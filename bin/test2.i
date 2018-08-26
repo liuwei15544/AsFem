@@ -47,4 +47,10 @@ name = u v
   [end]
 []
 
+[run]
+  type=static
+  proj=true
+  output=10
+[]
+
 

@@ -27,6 +27,7 @@
 #include "ElementSystem/KernelBlockInfo.h"
 #include "BCSystem/BCSystem.h"
 #include "ICSystem/ICBlockInfo.h"
+#include "FESystem/FESystemInfo.h"
 
 using namespace std;
 
@@ -53,6 +54,7 @@ private:
     bool ReadKernelBlock(KernelBlockInfo &kernelBlockInfo);
     bool ReadBoundaryBlock(vector<BCBlockInfo> &bcBlockList);
     bool ReadICBlock(vector<ICBlockInfo> &icBlockList);
+    bool ReadFESystemInfo(FESystemInfo &feSystemInfo);
 
 
 private:
