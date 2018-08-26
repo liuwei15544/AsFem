@@ -26,6 +26,7 @@ void ElementSystem::Init()
 {
     SetUmatIndex();
     SetUelIndex();
+    Parameters=kernelBlockInfo.params;
     IsInit=true;
 }
 
