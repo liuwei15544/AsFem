@@ -37,9 +37,10 @@ public:
     string GetInputFileName() const { return InputFileName;}
 
     void WriteUToVTUFile(Mesh &mesh,EquationSystem &equationSystem,Vec &U);
-    void WriteUToVTUFile(Mesh &mesh,EquationSystem &equationSystem,Vec &U,int step);
+    void WriteUToVTUFile(int step,Mesh &mesh,EquationSystem &equationSystem,Vec &U);
 
     void WriteUAndProjToVTUFile(Mesh &mesh,EquationSystem &equationSystem,Vec &U,Vec &Proj);
+    void WriteUAndProjToVTUFile(int step,Mesh &mesh,EquationSystem &equationSystem,Vec &U,Vec &Proj);
 
 private:
     bool IsInit;
