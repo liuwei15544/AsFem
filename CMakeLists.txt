@@ -139,5 +139,6 @@ set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESy
 # For math utils
 set(INC ${INC} include/Utils/RankOneTensor.h)
 set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
+set(INC ${INC} include/Utils/RankTwoTensor.h src/Utils/MathUtils/RankTwoTensor.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
