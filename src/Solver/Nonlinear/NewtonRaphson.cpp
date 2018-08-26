@@ -67,6 +67,11 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
         }
 
         equationSystem.UpdateUplusdU();
+        //VecWAXPY(Vec w,PetscScalar a,Vec x,Vec y); w = a ∗ x + y
+        VecWAXPY(equationSystem.V,-1.0,equationSystem.U0,equationSystem.U);//V=-U0+U
+        //VecScale(Vec x, PetscScalar a); x = a ∗ x
+        VecScale(equationSystem.V,feSystemInfo.ctan[1]);//V=V*(1.0/dt)
+
         iters+=1;
 
         if((Rnorm<=Rtol_R*Rnorm0 || Rnorm<=Atol_R)||
@@ -80,10 +85,13 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
 
     if(!PrintIterationInfo)
     {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",iters);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | R0|=%11.5e, | R|=%11.5e  ***\n",Rnorm0,Rnorm);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   |dU0|=%11.5e, |dU|=%11.5e  ***\n",dUnorm0,dUnorm);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | E0|=%11.5e, | E|=%11.5e  ***\n",EnergyNorm0,EnergyNorm);
+        if(feSystemInfo.jobtype=="static")
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",iters);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | R0|=%11.5e, | R|=%11.5e  ***\n",Rnorm0,Rnorm);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   |dU0|=%11.5e, |dU|=%11.5e  ***\n",dUnorm0,dUnorm);
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | E0|=%11.5e, | E|=%11.5e  ***\n",EnergyNorm0,EnergyNorm);
+        }
     }
 
 

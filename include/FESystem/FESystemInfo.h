@@ -33,7 +33,7 @@ public:
 
     double current_dt,old_dt;
     double current_time;
-    int totalstep;
+    int totalstep,currentstep;
     int iState;
     double ctan[2]={1.0};
 

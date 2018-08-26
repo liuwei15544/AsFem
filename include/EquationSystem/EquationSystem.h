@@ -49,6 +49,8 @@ public:
 
     // update and reinitializing functions
     void UpdateUplusdU();
+    void UpdateU0(Vec &u);
+    void UpdateV(Vec &v);
     void ReInitKandR();
     void ReInitVec(Vec &v);
     void ReInitMat(Mat &a);

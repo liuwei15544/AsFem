@@ -90,6 +90,17 @@ void EquationSystem::UpdateUplusdU()
 {
     VecAXPY(U,1.0,dU);
 }
+//****************************************
+void EquationSystem::UpdateU0(Vec &u)
+{
+    //VecCopy(Vec x, Vec y); y = x
+    VecCopy(u,U0);
+}
+//*****************************************
+void EquationSystem::UpdateV(Vec &v)
+{
+    VecCopy(v,V);
+}
 
 
 

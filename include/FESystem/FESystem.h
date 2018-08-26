@@ -49,7 +49,9 @@ public:
 
 private:
     void StaticAnalysis();
+
     void TransientAnalysis();
+    void BackwardEulerMethod();
 
     //****************************************
 private:
