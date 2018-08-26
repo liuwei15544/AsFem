@@ -32,6 +32,9 @@ bool InputSystem::ReadFESystemInfo(FESystemInfo &feSystemInfo)
     if(IsBracketMatch(in,line0,blockstartlinenum))
     {
         feSystemInfo.jobtype="";
+        feSystemInfo.IsDebugOn=false;
+        feSystemInfo.IsProjOutput=false;
+
         HasType=false;
         // goes inside [kernels]/[] block pair
         GotoLine(in,blockstartlinenum);linenum=blockstartlinenum-1;
@@ -156,6 +159,34 @@ bool InputSystem::ReadFESystemInfo(FESystemInfo &feSystemInfo)
                     return false;
                 }
                 feSystemInfo.totalstep=int(numbers[0]);
+            }
+            else if(str.compare(0,6,"debug=")==0)
+            {
+                if(str.size()<10)
+                {
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find debug= option  !!!   ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        debug=true or false is required!***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+                    return false;
+                }
+                int i=line.find("=")+1;
+                substr=line.substr(i,line.size()-i+1);
+                if(substr.size()<4)
+                {
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find debug= option  !!!   ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        debug=true or false is required!***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+                    return false;
+                }
+
+                if(substr.compare(0,4,"true")==0)
+                {
+                    feSystemInfo.IsDebugOn=true;
+                }
+                else if(substr.compare(0,5,"false")==0)
+                {
+                    feSystemInfo.IsDebugOn=false;
+                }
             }
 
 

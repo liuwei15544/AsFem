@@ -41,7 +41,7 @@ public:
 
     bool ReadInputFile(Mesh &mesh,
                        EquationSystem &equationSystem,
-                       BCSystem &bcSystem,
+                       FESystemInfo &feSystemInfo,
                        KernelBlockInfo &kernelBlockInfo,
                        vector<BCBlockInfo> &bcBlockList,
                        vector<ICBlockInfo> &icBlockList);

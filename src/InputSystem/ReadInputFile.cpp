@@ -15,7 +15,7 @@
 
 bool InputSystem::ReadInputFile(Mesh &mesh,
                                 EquationSystem &equationSystem,
-                                BCSystem &bcSystem,
+                                FESystemInfo &feSystemInfo,
                                 KernelBlockInfo &kernelBlockInfo,
                                 vector<BCBlockInfo> &bcBlockList,
                                 vector<ICBlockInfo> &icBlockList)
@@ -71,6 +71,16 @@ bool InputSystem::ReadInputFile(Mesh &mesh,
 //    }
 
     ReadICBlock(icBlockList);
+
+    if(!ReadFESystemInfo(feSystemInfo))
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: read run block failed!!!        ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
 
 }
 

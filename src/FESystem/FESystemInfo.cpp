@@ -45,8 +45,38 @@ void FESystemInfo::Init()
 //***********************************
 void FESystemInfo::PrintFESystemInfo() const
 {
-   PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: no impelementation !\n");
-   PetscFinalize();
-   abort();
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** FE system information:                 ***\n");
+    if(jobtype=="static")
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** job type= static analysis              ***\n");
+    }
+    else if(jobtype=="transient")
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** job type= transient analysis           ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** total step= %6d                     ***\n",totalstep);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** delta t   =%14.6e                   ***\n",old_dt);
+    }
+
+    if(IsProjOutput==true)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** projection output=true                 ***\n");
+    }
+    else
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** projection output=false                ***\n");
+    }
+
+    if(IsDebugOn)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** debug mode=true                        ***\n");
+    }
+    else
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** debug mode=false                       ***\n");
+    }
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
 }
 

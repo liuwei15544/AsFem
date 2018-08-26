@@ -42,6 +42,8 @@ public:
     string jobtype;
     string inputfilename;
 
+    bool IsDebugOn=false;
+
 };
 
 
