@@ -5,7 +5,10 @@
 
 //**********************
 #include "FESystem/FESystem.h"
-#include "FE/FE.h"
+
+#include "Utils/RankOneTensor.h"
+
+
 using namespace std;
 int main(int args,char *argv[])
 {
@@ -13,9 +16,13 @@ int main(int args,char *argv[])
 
     ierr=PetscInitialize(&args,&argv,NULL,NULL);CHKERRQ(ierr);
 
-    FESystem feSystem;
-    feSystem.Init(args,argv);
-    feSystem.Run();
+    //FESystem feSystem;
+    //feSystem.Init(args,argv);
+    //feSystem.Run();
+
+
+
+
 
 
     ierr=PetscFinalize();CHKERRQ(ierr);
