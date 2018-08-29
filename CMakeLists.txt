@@ -143,6 +143,7 @@ set(INC ${INC} include/Utils/RankOneTensor.h)
 set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
 set(INC ${INC} include/Utils/RankTwoTensor.h)
 set(SRC ${SRC} src/Utils/MathUtils/RankTwoTensor.cpp)
-set(INC ${INC} )
+set(INC ${INC} include/Utils/RankFourTensor.h)
+set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
