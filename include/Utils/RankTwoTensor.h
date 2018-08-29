@@ -24,6 +24,8 @@
 using namespace std;
 
 
+class RankFourTensor;
+
 class RankTwoTensor
 {
 public:
@@ -69,8 +71,27 @@ public:
     RankTwoTensor & operator*=(const double & a);
     RankTwoTensor & operator*=(const RankTwoTensor & a);
 
-    // math operation for rank-4 tensor
+    bool operator==(const RankTwoTensor &a) const;
 
+    // other mathematical functions
+    RankTwoTensor transpose() const;
+    void vectorOuterProduct(vector<double> v1,vector<double> v2);
+    double doubleDot(const RankTwoTensor &a) const;
+    double trace() const;
+    double det() const;
+    RankTwoTensor inverse() const;
+
+    //*********************************************
+    //*** operator for rank-4 tensor calculation
+    //*********************************************
+    RankFourTensor AIkBJl(const RankTwoTensor &b) const;
+    RankFourTensor AIlBJk(const RankTwoTensor &b) const;
+    RankFourTensor AJkBIl(const RankTwoTensor &b) const;
+    RankFourTensor OuterProduct(const RankTwoTensor &b) const;
+    RankFourTensor Otimes(const RankTwoTensor &b) const;
+
+    //******************************************
+    void PrintTensor() const;
 
 private:
     int nDim;
