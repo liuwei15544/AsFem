@@ -137,8 +137,12 @@ set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
 set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp)
 
 # For math utils
+set(INC ${INC} include/Utils/MatrixTools.h)
+set(SRC ${SRC} src/Utils/MathUtils/MatrixTools.cpp)
 set(INC ${INC} include/Utils/RankOneTensor.h)
 set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
-set(INC ${INC} include/Utils/RankTwoTensor.h src/Utils/MathUtils/RankTwoTensor.cpp)
+set(INC ${INC} include/Utils/RankTwoTensor.h)
+set(SRC ${SRC} src/Utils/MathUtils/RankTwoTensor.cpp)
+set(INC ${INC} )
 
 add_executable(ASFEM ${INC} ${SRC})

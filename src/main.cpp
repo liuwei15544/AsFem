@@ -21,12 +21,13 @@ int main(int args,char *argv[])
     //feSystem.Init(args,argv);
     //feSystem.Run();
 
-    RankTwoTensor a(2,0.0);
+    RankTwoTensor a(3,0.0);
 
     a(1,1)=1.0;
     a(2,1)=21;
     a(1,2)=12;
     a(2,2)=20.0;
+    a(3,3)=10.0;
     a.PrintTensor();
 
     RankTwoTensor inva=a.inverse();
@@ -39,7 +40,7 @@ int main(int args,char *argv[])
 
     inva.PrintTensor();
 
-    RankTwoTensor I=inva*a;
+    RankTwoTensor I=a*inva;
 
     I.PrintTensor();
 
