@@ -6,8 +6,8 @@
   xmax=1.0
   ymin=0.0
   ymax=1.0
-  nx=100
-  ny=100
+  nx=80
+  ny=80
   meshtype=quad9
 []
 
@@ -32,7 +32,7 @@ name = c mu
   type=transient
   proj=false
   debug=true
-  dt=5.0e-6
+  dt=1.0e-6
   step=15000
   output=10
 []

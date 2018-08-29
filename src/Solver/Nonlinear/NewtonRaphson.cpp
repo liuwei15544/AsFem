@@ -29,10 +29,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
     {
         bcSystem.ApplyDirichletBC(mesh,dofHandler,equationSystem.U);
 
-        //VecWAXPY(Vec w,PetscScalar a,Vec x,Vec y); w = a ∗ x + y
-        VecWAXPY(equationSystem.V,-1.0,equationSystem.U0,equationSystem.U);//V=-U0+U
-        //VecScale(Vec x, PetscScalar a); x = a ∗ x
-        VecScale(equationSystem.V,feSystemInfo.ctan[1]);//V=V*(1.0/dt)
+
 
         fe.FormKR(feSystemInfo.iState,
                   feSystemInfo.current_dt,feSystemInfo.current_time,
@@ -73,16 +70,28 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
         }
 
         equationSystem.UpdateUplusdU();
+        //VecWAXPY(Vec w,PetscScalar a,Vec x,Vec y); w = a ∗ x + y
+        VecWAXPY(equationSystem.V,-1.0,equationSystem.U0,equationSystem.U);//V=-U0+U
+        //VecScale(Vec x, PetscScalar a); x = a ∗ x
+        VecScale(equationSystem.V,feSystemInfo.ctan[1]);//V=V*(1.0/dt)
 
 
         iters+=1;
 
+        if(Rnorm<=Atol_R)
+        {
+            IsConvergent=true;
+            break;
+        }
+
+        /*
         if((Rnorm<=Rtol_R*Rnorm0 || Rnorm<=Atol_R)||
            (EnergyNorm<=Rtol_E*EnergyNorm0 || EnergyNorm<=Atol_E))
         {
             IsConvergent=true;
             break;
         }
+         */
 
     }
 

@@ -31,14 +31,16 @@ bool LinearSolver::InitSolver()
 {
     if(IsSolverInit)
     {
-        ierr=KSPSetTolerances(ksp,RelativeError,AbsoluteError,DError,MaxIterations);CHKERRQ(ierr);
+        //ierr=KSPSetTolerances(ksp,RelativeError,AbsoluteError,DError,MaxIterations);CHKERRQ(ierr);
+        ierr=KSPSetTolerances(ksp,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT);CHKERRQ(ierr);
         ierr=KSPSetFromOptions(ksp);CHKERRQ(ierr);
         return ierr;
     }
     else
     {
         ierr=KSPCreate(PETSC_COMM_WORLD,&ksp);CHKERRQ(ierr);
-        ierr=KSPSetTolerances(ksp,RelativeError,AbsoluteError,DError,MaxIterations);CHKERRQ(ierr);
+        ierr=KSPSetTolerances(ksp,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT);CHKERRQ(ierr);
+        //ierr=KSPSetTolerances(ksp,RelativeError,AbsoluteError,DError,MaxIterations);CHKERRQ(ierr);
         ierr=KSPSetFromOptions(ksp);CHKERRQ(ierr);
 
         IsSolverInit=true;

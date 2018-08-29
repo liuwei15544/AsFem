@@ -23,7 +23,8 @@ void FESystem::BackwardEulerMethod()
     for(int step=1;step<=feSystemInfo.totalstep;step++)
     {
         feSystemInfo.currentstep=step;
-        VecCopy(equationSystem.U0,equationSystem.U);
+        //VecCopy(equationSystem.U0,equationSystem.U);
+        VecSet(equationSystem.V,0.0);
         nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
         if(feSystemInfo.IsProjOutput)
         {

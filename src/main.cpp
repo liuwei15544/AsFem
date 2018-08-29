@@ -17,32 +17,11 @@ int main(int args,char *argv[])
 
     ierr=PetscInitialize(&args,&argv,NULL,NULL);CHKERRQ(ierr);
 
-    //FESystem feSystem;
-    //feSystem.Init(args,argv);
-    //feSystem.Run();
+    FESystem feSystem;
+    feSystem.Init(args,argv);
+    feSystem.Run();
 
-    RankTwoTensor a(3,0.0);
 
-    a(1,1)=1.0;
-    a(2,1)=21;
-    a(1,2)=12;
-    a(2,2)=20.0;
-    a(3,3)=10.0;
-    a.PrintTensor();
-
-    RankTwoTensor inva=a.inverse();
-
-    RankTwoTensor aT=a.transpose();
-
-    aT.PrintTensor();
-
-    cout<<"det aT="<<aT.det()<<", det a="<<a.det()<<", tr(a)="<<a.trace()<<endl;
-
-    inva.PrintTensor();
-
-    RankTwoTensor I=a*inva;
-
-    I.PrintTensor();
 
 
 

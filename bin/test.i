@@ -6,8 +6,8 @@
   xmax=1.0
   ymin=0.0
   ymax=1.0
-  nx=50
-  ny=50
+  nx=40
+  ny=40
   meshtype=quad9
 []
 
@@ -36,15 +36,8 @@ name = c
   [end]
 []
 
-[ics]
-  [ic1]
-    type=constic
-    dof=c
-    params=1.0
-  [end]
-  [ic2]
-    type=randomnoiseic
-    dof=c
-    params=0.5 0.1
-  [end]
+[run]
+  type=static
+  proj=false
+  debug=true
 []
