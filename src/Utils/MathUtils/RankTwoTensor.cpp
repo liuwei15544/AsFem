@@ -616,3 +616,141 @@ void RankTwoTensor::PrintTensor() const
     }
 }
 
+//****************************************
+//*** For rank-4 tensor                ***
+//****************************************
+RankFourTensor RankTwoTensor::OuterProduct(const RankTwoTensor &b) const
+{
+    int i,j,k,l;
+    if(GetDim()!=b.GetDim())
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: (x) rank2 tensor size isn't match!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    RankFourTensor temp(nDim,0.0);
+    for(i=1;i<=nDim;i++)
+    {
+        for(j=1;j<=nDim;j++)
+        {
+            for(k=1;k<=nDim;k++)
+            {
+                for(l=1;l<=nDim;l++)
+                {
+                    temp(i,j,k,l)=(*this)(i,j)*b(k,l);
+                }
+            }
+        }
+    }
+
+    return temp;
+}
+
+//****** For AIkBJl
+RankFourTensor RankTwoTensor::AIkBJl(const RankTwoTensor &b) const
+{
+    int i,j,k,l;
+    if(GetDim()!=b.GetDim())
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: (x) rank2 tensor size isn't match!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    RankFourTensor temp(nDim,0.0);
+    for(i=1;i<=nDim;i++)
+    {
+        for(j=1;j<=nDim;j++)
+        {
+            for(k=1;k<=nDim;k++)
+            {
+                for(l=1;l<=nDim;l++)
+                {
+                    temp(i,j,k,l)=(*this)(i,k)*b(j,l);
+                }
+            }
+        }
+    }
+
+    return temp;
+}
+//**** For AIlBJk
+RankFourTensor RankTwoTensor::AIlBJk(const RankTwoTensor &b) const
+{
+    int i,j,k,l;
+    if(GetDim()!=b.GetDim())
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: (x) rank2 tensor size isn't match!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    RankFourTensor temp(nDim,0.0);
+    for(i=1;i<=nDim;i++)
+    {
+        for(j=1;j<=nDim;j++)
+        {
+            for(k=1;k<=nDim;k++)
+            {
+                for(l=1;l<=nDim;l++)
+                {
+                    temp(i,j,k,l)=(*this)(i,l)*b(j,k);
+                }
+            }
+        }
+    }
+
+    return temp;
+}
+//*** For AJkBIl
+RankFourTensor RankTwoTensor::AJkBIl(const RankTwoTensor &b) const
+{
+    int i,j,k,l;
+    if(GetDim()!=b.GetDim())
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: (x) rank2 tensor size isn't match!\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    RankFourTensor temp(nDim,0.0);
+    for(i=1;i<=nDim;i++)
+    {
+        for(j=1;j<=nDim;j++)
+        {
+            for(k=1;k<=nDim;k++)
+            {
+                for(l=1;l<=nDim;l++)
+                {
+                    temp(i,j,k,l)=(*this)(j,k)*b(i,l);
+                }
+            }
+        }
+    }
+
+    return temp;
+}
+
+//*** For Otimes
+RankFourTensor RankTwoTensor::Otimes(const RankTwoTensor &b) const
+{
+    //AOtimeB=0.5*(AikBjl+AilBjk)
+    return ((*this).AIkBJl(b)+(*this).AIlBJk(b))*0.5;
+}

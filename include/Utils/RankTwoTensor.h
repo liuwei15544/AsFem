@@ -21,6 +21,8 @@
 
 #include "petsc.h"
 
+#include "RankFourTensor.h"
+
 using namespace std;
 
 
