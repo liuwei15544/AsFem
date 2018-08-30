@@ -18,18 +18,12 @@ void FE::AssembleLocalToGlobal(const int &iState, Mat &AMATRIX, Vec &RHS, Vec &P
     int i,j,iInd;
     if(iState%3==0)
     {
-        for(i=0;i<nDofsPerElmt;i++)
-        {
-            // Assemble local residual to global one
-            VecSetValue(RHS,elDofsConn[i]-1,localRHS[i],ADD_VALUES);
 
-            if(iState==6)
-            {
-                for(j=0;j<nDofsPerElmt;j++)
-                {
-                    MatSetValue(AMATRIX,elDofsConn[i]-1,elDofsConn[j]-1,localK[i][j],ADD_VALUES);
-                }
-            }
+        // Assemble local residual to global one
+        VecSetValues(RHS,nDofsPerElmt,elDofsConn,localRHS,ADD_VALUES);
+        if(iState==6)
+        {
+            MatSetValues(AMATRIX,nDofsPerElmt,elDofsConn,nDofsPerElmt,elDofsConn,localK,ADD_VALUES);
         }
     }
     else if(iState==8)

@@ -18,7 +18,7 @@
 
 void ElementSystem::elmt01(const int &iState, const int (&IX)[27],const int &nDim,const int &nNodes,
                            const int &nDofs, const double &dt, const double &t, const double (&ctan)[2],
-                           const double (&Coords)[27][4],const double (&U)[270][2], double (&K)[270][270],
+                           const double (&Coords)[27][4],const double (&U)[270][2], double (&K)[270*270],
                            double (&rhs)[270], double (&proj)[27][13])
 {
     //**************************************************
@@ -49,17 +49,20 @@ void ElementSystem::elmt01(const int &iState, const int (&IX)[27],const int &nDi
                 // initializing locak k
                 for(j=0;j<nDofs;j++)
                 {
-                    K[i][j]=0.0;
+                    K[i*nDofs+j]=0.0;
                 }
             }
         }
     }
-    // initializing projection array
-    for(i=0;i<27;i++)
+    else if(iState==8)
     {
-        if(i<12) value[i]=0.0;
-        for(j=0;j<=12;j++)
-            proj[i][j]=0.0;
+        // initializing projection array
+        for(i=0;i<27;i++)
+        {
+            if(i<12) value[i]=0.0;
+            for(j=0;j<=12;j++)
+                proj[i][j]=0.0;
+        }
     }
     //******************************************************
 
@@ -139,13 +142,13 @@ void ElementSystem::elmt01(const int &iState, const int (&IX)[27],const int &nDi
                         for(k=1;k<=nDim;k++)
                         {
                             // Kuu
-                            K[2*iInd  ][2*jInd  ]+=-shp[jInd][k]*shp[iInd][k]*JxW*ctan[0]
+                            K[(2*iInd  )*nDofs+2*jInd  ]+=-shp[jInd][k]*shp[iInd][k]*JxW*ctan[0]
                                                    -(gradv[k]*shp[jInd][k])*shp[iInd][0]*ctan[0]*JxW;
                             // Kuv
-                            K[2*iInd  ][2*jInd+1]+=-(shp[jInd][k]*gradu[k])*shp[iInd][0]*ctan[0]*JxW;
+                            K[(2*iInd  )*nDofs+2*jInd+1]+=-(shp[jInd][k]*gradu[k])*shp[iInd][0]*ctan[0]*JxW;
 
                             // Kvv
-                            K[2*iInd+1][2*jInd+1]+=-shp[jInd][k]*shp[iInd][k]*ctan[0]*JxW;
+                            K[(2*iInd+1)*nDofs+2*jInd+1]+=-shp[jInd][k]*shp[iInd][k]*ctan[0]*JxW;
                         }
                     }
                 }

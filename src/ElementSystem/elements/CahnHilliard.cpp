@@ -18,7 +18,7 @@
 
 void ElementSystem::CahnHilliard(const int &iState, const int (&IX)[27], const int &nDim, const int &nNodes,
                             const int &nDofs, const double &dt, const double &t, const double (&ctan)[2],
-                            const double (&Coords)[27][4], const double (&U)[270][2], double (&K)[270][270],
+                            const double (&Coords)[27][4], const double (&U)[270][2], double (&K)[270*270],
                             double (&rhs)[270], double (&proj)[27][13])
 {
     int i,j,k;
@@ -46,24 +46,30 @@ void ElementSystem::CahnHilliard(const int &iState, const int (&IX)[27], const i
                 // initializing locak k
                 for(j=0;j<nDofs;j++)
                 {
-                    K[i][j]=0.0;
+                    K[i*nDofs+j]=0.0;
                 }
             }
         }
     }
-    // initializing projection array
-    for(i=0;i<27;i++)
+    else if(iState==8)
     {
-        if(i<12) value[i]=0.0;
-        for(j=0;j<=12;j++)
-            proj[i][j]=0.0;
+        // initializing projection array
+        for(i=0;i<27;i++)
+        {
+            if(i<12) value[i]=0.0;
+            for(j=0;j<=12;j++)
+                proj[i][j]=0.0;
+        }
     }
+
     //******************************************************
 
     ngp=3;
 
     M=Parameters[0];
     kappa=Parameters[1];
+
+
 
     if(nDim==1)
     {
@@ -145,19 +151,19 @@ void ElementSystem::CahnHilliard(const int &iState, const int (&IX)[27], const i
                     for(jInd=0;jInd<nNodes;jInd++)
                     {
                         // Kc,cdot
-                        K[2*iInd  ][2*jInd  ]+=-shp[jInd][0]*shp[iInd][0]*JxW*ctan[1];
+                        K[(2*iInd  )*nDofs+2*jInd  ]+=-shp[jInd][0]*shp[iInd][0]*JxW*ctan[1];
 
                         // Kmu,c
-                        K[2*iInd+1][2*jInd  ]+=d2fdc2*shp[jInd][0]*shp[iInd][0]*JxW*ctan[0];
+                        K[(2*iInd+1)*nDofs+2*jInd  ]+=d2fdc2*shp[jInd][0]*shp[iInd][0]*JxW*ctan[0];
                         // Kmu,mu
-                        K[2*iInd+1][2*jInd+1]+=-shp[jInd][0]*shp[iInd][0]*JxW*ctan[0];
+                        K[(2*iInd+1)*nDofs+2*jInd+1]+=-shp[jInd][0]*shp[iInd][0]*JxW*ctan[0];
                         for(k=1;k<=nDim;k++)
                         {
                             // Kc,mu
-                            K[2*iInd  ][2*jInd+1]+=-M*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
+                            K[(2*iInd  )*nDofs+2*jInd+1]+=-M*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
 
                             // Kmu,c
-                            K[2*iInd+1][2*jInd  ]+=kappa*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
+                            K[(2*iInd+1)*nDofs+2*jInd  ]+=kappa*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
                         }
                     }
                 }

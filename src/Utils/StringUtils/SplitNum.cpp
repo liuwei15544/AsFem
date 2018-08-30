@@ -20,6 +20,12 @@ vector<double> SplitNum(string instr)
     n=instr.size();
     int start,end;
     start=-1;end=-2;
+
+    if(n==1)
+    {
+        result.push_back(atof(instr.c_str()));
+        return result;
+    }
     for(i=0;i<n;i++)
     {
         if(i==0)

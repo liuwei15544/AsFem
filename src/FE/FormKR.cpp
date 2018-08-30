@@ -61,7 +61,7 @@ void FE::FormKR(const int &iState, const double dt, const double t, const double
             for(k=1;k<=nDofsPerNode;k++)
             {
                 iInd=(i-1)*nDofsPerNode+k-1;
-                jInd=elDofsConn[iInd]-1;
+                jInd=elDofsConn[iInd];
                 VecGetValues(Useq,1,&jInd,&elU[iInd][0]);
 
                 VecGetValues(Vseq,1,&jInd,&elU[iInd][1]);
@@ -80,6 +80,9 @@ void FE::FormKR(const int &iState, const double dt, const double t, const double
     }
 
     FinishAssemble(iState,AMATRIX,RHS,Proj);
+
+    //VecView(RHS,PETSC_VIEWER_STDOUT_WORLD);
+    //MatView(AMATRIX,PETSC_VIEWER_STDOUT_WORLD);
 
 
     // delete scatter

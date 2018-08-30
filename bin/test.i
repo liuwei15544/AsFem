@@ -6,9 +6,9 @@
   xmax=1.0
   ymin=0.0
   ymax=1.0
-  nx=40
-  ny=40
-  meshtype=quad9
+  nx=20
+  ny=20
+  meshtype=quad4
 []
 
 [dofs]

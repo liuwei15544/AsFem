@@ -32,8 +32,8 @@ name = c mu
   type=transient
   proj=false
   debug=true
-  dt=1.0e-6
-  step=15000
+  dt=5.0e-6
+  step=5000
   output=10
 []
 

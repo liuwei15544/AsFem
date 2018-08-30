@@ -18,7 +18,7 @@
 
 void ElementSystem::Poisson(const int &iState, const int (&IX)[27], const int &nDim, const int &nNodes,
                             const int &nDofs, const double &dt, const double &t, const double (&ctan)[2],
-                            const double (&Coords)[27][4], const double (&U)[270][2], double (&K)[270][270],
+                            const double (&Coords)[27][4], const double (&U)[270][2], double (&K)[270*270],
                             double (&rhs)[270], double (&proj)[27][13])
 {
     int i,j,k;
@@ -43,7 +43,7 @@ void ElementSystem::Poisson(const int &iState, const int (&IX)[27], const int &n
                 // initializing locak k
                 for(j=0;j<nDofs;j++)
                 {
-                    K[i][j]=0.0;
+                    K[i*nDofs+j]=0.0;
                 }
             }
         }
@@ -124,7 +124,7 @@ void ElementSystem::Poisson(const int &iState, const int (&IX)[27], const int &n
                     {
                         for(k=1;k<=nDim;k++)
                         {
-                            K[iInd][jInd]+=shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
+                            K[iInd*nDofs+jInd]+=shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
                         }
                     }
                 }

@@ -32,7 +32,7 @@ void DofHandler::GetLocalDofMap(const int e, int &ndofsperelmt, int (&rInd)[270]
     int i;
     for(i=1;i<=nDofsPerElmt;i++)
     {
-        rInd[i-1]=GlobalDofMap[(e-1)*nDofsPerElmt+i-1];
+        rInd[i-1]=GlobalDofMap[(e-1)*nDofsPerElmt+i-1]-1;
     }
 }
 
