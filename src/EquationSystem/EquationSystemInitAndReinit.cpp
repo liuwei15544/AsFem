@@ -15,6 +15,7 @@
 
 PetscErrorCode EquationSystem::Init()
 {
+    MPI_Comm_size(PETSC_COMM_WORLD,&size);
     if(IsInit)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Warning: equation system is already initialized!\n");
@@ -25,6 +26,19 @@ PetscErrorCode EquationSystem::Init()
     {
         ierr=MatCreate(PETSC_COMM_WORLD,&AMATRIX);CHKERRQ(ierr);
         ierr=MatSetSizes(AMATRIX,PETSC_DECIDE,PETSC_DECIDE,nDofs,nDofs);CHKERRQ(ierr);
+        NNZ_InExact=PetscInt(12*27*nDofsPerNode);// here I assume the each row
+                                                 // has maximum 12 neighoured elmt,
+                                                 // each elmt has maximum 27 node
+        if(size>1)
+        {
+            MatSetType(AMATRIX,MATMPIAIJ);
+            MatMPIAIJSetPreallocation(AMATRIX,NNZ_InExact,NULL,NNZ_InExact,NULL);
+        }
+        else
+        {
+            MatSetType(AMATRIX,MATSEQAIJ);
+            MatSeqAIJSetPreallocation(AMATRIX,NNZ_InExact,NULL);
+        }
         ierr=MatSetFromOptions(AMATRIX);CHKERRQ(ierr);
         ierr=MatSetUp(AMATRIX);CHKERRQ(ierr);
 

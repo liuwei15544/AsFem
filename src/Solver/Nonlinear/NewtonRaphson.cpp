@@ -44,6 +44,10 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
         bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem.AMATRIX,equationSystem.RHS);
 
 
+        if(iters==0 && feSystemInfo.currentstep==1)
+        {
+            MatSetOption(equationSystem.AMATRIX,MAT_NEW_NONZERO_LOCATIONS,PETSC_FALSE);
+        }
         linearSolver.Solve(equationSystem.AMATRIX,equationSystem.dU,equationSystem.RHS);
 
 

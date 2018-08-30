@@ -85,6 +85,8 @@ private:
     vector<int> solution_index_list;
     vector<pair<string,int>> solution_name_map;
     bool SolutionHasName=false;
+    PetscMPIInt size;
+    int NNZ_InExact;
 };
 
 
