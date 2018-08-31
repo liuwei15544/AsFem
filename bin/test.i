@@ -6,8 +6,8 @@
   xmax=1.0
   ymin=0.0
   ymax=1.0
-  nx=500
-  ny=500
+  nx=100
+  ny=100
   meshtype=quad9
 []
 

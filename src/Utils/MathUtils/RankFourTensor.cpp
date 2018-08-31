@@ -442,3 +442,92 @@ RankFourTensor& RankFourTensor::operator*=(const RankFourTensor &a)
     return (*this);
 }
 
+//***************************************
+//*** Fill method                     ***
+//***************************************
+void RankFourTensor::FillFromEandNu(double E, double nu)
+{
+    // fill out the rank-4 tensor from Young's modulus and nu
+    const double Lambda=E*nu/((1.0+nu)*(1.0-2.0*nu));
+    const double G=E/(2.0*(1.0+nu));
+    int i,j,k,l;
+    for(i=1;i<=nDim;i++)
+    {
+        for(j=1;j<=nDim;j++)
+        {
+            for(k=1;k<=nDim;k++)
+            {
+                for(l=1;l<=nDim;l++)
+                {
+                    (*this)(i,j,k,l)=
+                            Lambda*(i==j)*(k==l)
+                            +G*(i==k)*(j==l)
+                            +G*(i==l)*(j==k);
+                }
+            }
+        }
+    }
+}
+//***
+void RankFourTensor::FillFromKandG(double K, double G)
+{
+    // fill out the rank-4 tensor from Bulk modulus K and shear modulus G
+    const double Lambda=K-2.0*G/3.0;
+    int i,j,k,l;
+    for(i=1;i<=nDim;i++)
+    {
+        for(j=1;j<=nDim;j++)
+        {
+            for(k=1;k<=nDim;k++)
+            {
+                for(l=1;l<=nDim;l++)
+                {
+                    (*this)(i,j,k,l)=
+                            Lambda*(i==j)*(k==l)
+                            +G*(i==k)*(j==l)
+                            +G*(i==l)*(j==k);
+                }
+            }
+        }
+    }
+}
+
+//*************************************
+//*** utils functions               ***
+//*************************************
+void RankFourTensor::ZeroEntities()
+{
+    for(int i=0;i<=Dim4;i++) elements[i]=0.0;
+}
+
+void RankFourTensor::IdentityEntities()
+{
+    for(int i=0;i<81;i++) elements[i]=0.0;
+    for(int i=1;i<=nDim;i++)
+    {
+        (*this)(i,i,i,i)=1.0;
+    }
+}
+void RankFourTensor::IdentityRank4Entities()
+{
+    for(int i=1;i<=nDim;i++)
+    {
+        for(int j=1;j<=nDim;j++)
+        {
+            for(int k=1;k<=nDim;k++)
+            {
+                for(int l=1;l<=nDim;l++)
+                {
+                    if(i==k && j==l)
+                    {
+                        (*this)(i,j,k,l)=1.0;
+                    }
+                    else
+                    {
+                        (*this)(i,j,k,l)=0.0;
+                    }
+                }
+            }
+        }
+    }
+}

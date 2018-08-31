@@ -87,6 +87,7 @@ set(SRC ${SRC} src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSyst
 set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp)
 set(SRC ${SRC} src/ElementSystem/ElementalProjection.cpp)
 set(SRC ${SRC} src/ElementSystem/elements/Poisson.cpp src/ElementSystem/elements/CahnHilliard.cpp)
+set(SRC ${SRC} src/ElementSystem/elements/SolidMechanics.cpp src/ElementSystem/elements/SolidMechanicsTools.cpp)
 set(SRC ${SRC} src/ElementSystem/uel/elmt01.cpp)
 
 # For shapefuns
@@ -144,6 +145,6 @@ set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
 set(INC ${INC} include/Utils/RankTwoTensor.h)
 set(SRC ${SRC} src/Utils/MathUtils/RankTwoTensor.cpp)
 set(INC ${INC} include/Utils/RankFourTensor.h)
-set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp src/ElementSystem/elements/SolidMechanics.cpp src/ElementSystem/elements/SolidMechanicsTools.cpp)
+set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
