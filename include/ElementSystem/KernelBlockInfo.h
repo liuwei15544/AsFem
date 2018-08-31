@@ -31,6 +31,7 @@ public:
     string ElementName;
     string MaterialKernelName;
     vector<double> params;// directly read from input file
+    string strain="small";
 
     //*********************************
     //*** functions

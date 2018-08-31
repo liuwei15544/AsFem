@@ -17,7 +17,9 @@ name = ux uy
 
 [kernel]
   type=mechanics
+  strain=small
   params= 10.0e5 0.3
+  mate=linearelastic
 []
 
 [bcs]
