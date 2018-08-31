@@ -63,7 +63,7 @@ public:
     double GetAtolOfEnergy() const { return Atol_E;}
     double GetRtolOfEnergy() const { return Rtol_E;}
 
-    void Solve(Mesh &mesh,
+    bool Solve(Mesh &mesh,
                DofHandler &dofHandler,
                BCSystem &bcSystem,
                EquationSystem &equationSystem,
@@ -88,6 +88,9 @@ private:
 
     // TODO: arc-length method for multiple load step
     bool ArcLength();
+
+private:
+    bool ConvergenceCheck();
 
 private:
     enum solvertype

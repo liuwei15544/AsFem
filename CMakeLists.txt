@@ -145,6 +145,6 @@ set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
 set(INC ${INC} include/Utils/RankTwoTensor.h)
 set(SRC ${SRC} src/Utils/MathUtils/RankTwoTensor.cpp)
 set(INC ${INC} include/Utils/RankFourTensor.h)
-set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp)
+set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp src/Solver/Nonlinear/NonLinearConvergenceCheck.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

@@ -13,7 +13,7 @@
 
 #include "Solver/NonlinearSolver.h"
 
-void NonlinearSolver::Solve(Mesh &mesh,
+bool NonlinearSolver::Solve(Mesh &mesh,
                             DofHandler &dofHandler,
                             BCSystem &bcSystem,
                             EquationSystem &equationSystem,
@@ -25,10 +25,7 @@ void NonlinearSolver::Solve(Mesh &mesh,
     switch (SolverType)
     {
         case newtonraphson:
-            if(!NewtonRaphson(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo))
-            {
-
-            }
+            return NewtonRaphson(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
             break;
         case modifynewtonraphson:
             break;

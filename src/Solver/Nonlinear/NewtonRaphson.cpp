@@ -82,20 +82,12 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
 
         iters+=1;
 
-        if(Rnorm<=Atol_R)
+        if(ConvergenceCheck())
         {
             IsConvergent=true;
             break;
         }
 
-        /*
-        if((Rnorm<=Rtol_R*Rnorm0 || Rnorm<=Atol_R)||
-           (EnergyNorm<=Rtol_E*EnergyNorm0 || EnergyNorm<=Atol_E))
-        {
-            IsConvergent=true;
-            break;
-        }
-         */
 
     }
 
