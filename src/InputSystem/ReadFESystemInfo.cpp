@@ -188,6 +188,26 @@ bool InputSystem::ReadFESystemInfo(FESystemInfo &feSystemInfo)
                     feSystemInfo.IsDebugOn=false;
                 }
             }
+            else if(str.compare(0,8,"maxiter=")==0)
+            {
+                int i=line.find("=")+1;
+                numbers=SplitNum(line.substr(i,line.size()-i+1));
+                if(numbers.size()<1)
+                {
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find dt= value  !!!       ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        dt=val1... is required !!!      ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+                    return false;
+                }
+                if(numbers[0]<1)
+                {
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: step=%6d is two small  !!!   ***\n",int(numbers[0]));
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        step>=1... is required !!!      ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+                    return false;
+                }
+                feSystemInfo.MaxNonlinearIter=int(numbers[0]);
+            }
 
 
             getline(in,line);linenum+=1;// inside [kernels]

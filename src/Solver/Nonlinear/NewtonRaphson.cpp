@@ -65,7 +65,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
 
 
 
-        if(PrintIterationInfo)
+        if(PrintIterationInfo && iters>0)
         {
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",iters);
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | R0|=%11.5e, | R|=%11.5e  ***\n",Rnorm0,Rnorm);

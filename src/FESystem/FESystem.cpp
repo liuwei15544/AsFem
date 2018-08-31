@@ -44,6 +44,9 @@ void FESystem::Init(int args, char **argv)
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 
 
+    feSystemInfo.nDofs=dofHandler.GetDofsNum();
+    feSystemInfo.nNodes=mesh.GetNodesNum();
+    feSystemInfo.nElmts=mesh.GetElmtsNum();
 
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing equation system...***\n");
     equationSystem.SetDofsNum(dofHandler.GetDofsNum());
@@ -91,6 +94,7 @@ void FESystem::Init(int args, char **argv)
 
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing nonlinear solver..***\n");
     nonlinearSolver.Init();
+    nonlinearSolver.SetMaxIters(feSystemInfo.MaxNonlinearIter);
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   nonlinear solver initialized!        ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
 

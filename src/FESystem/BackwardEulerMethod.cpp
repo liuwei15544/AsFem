@@ -24,9 +24,21 @@ void FESystem::BackwardEulerMethod()
     for(int step=1;step<=feSystemInfo.totalstep;step++)
     {
         feSystemInfo.currentstep=step;
-        //VecCopy(equationSystem.U0,equationSystem.U);
         VecSet(equationSystem.V,0.0);
-        nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
+        if(!nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo))
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: static nonlinear solve failed!!!***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** step=%6d, iter=%6d               ***\n",step,nonlinearSolver.GetCurrentIters());
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | R0|=%11.5e, | R|=%11.5e  ***\n",nonlinearSolver.GetR0Norm(),nonlinearSolver.GetRnorm());
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   |dU0|=%11.5e, |dU|=%11.5e  ***\n",nonlinearSolver.GetdU0Norm(),nonlinearSolver.GetdUNorm());
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | E0|=%11.5e, | E|=%11.5e  ***\n",nonlinearSolver.GetE0Norm(),nonlinearSolver.GetENorm());
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscFinalize();
+            abort();
+        }
         if(feSystemInfo.IsProjOutput)
         {
             feSystemInfo.iState=8;

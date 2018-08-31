@@ -20,7 +20,20 @@ void FESystem::StaticAnalysis()
     feSystemInfo.ctan[0]=1.0;
     feSystemInfo.ctan[1]=1.0;
 
-    nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
+    if(!nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo))
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: static nonlinear solve failed!!!***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",nonlinearSolver.GetCurrentIters());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | R0|=%11.5e, | R|=%11.5e  ***\n",nonlinearSolver.GetR0Norm(),nonlinearSolver.GetRnorm());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   |dU0|=%11.5e, |dU|=%11.5e  ***\n",nonlinearSolver.GetdU0Norm(),nonlinearSolver.GetdUNorm());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | E0|=%11.5e, | E|=%11.5e  ***\n",nonlinearSolver.GetE0Norm(),nonlinearSolver.GetENorm());
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
 }
 
 //*********************************

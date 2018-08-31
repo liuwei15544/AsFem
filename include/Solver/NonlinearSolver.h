@@ -58,6 +58,15 @@ public:
     double GetAtolOfdU() const { return Atol_dU;}
     double GetRtolOfdU() const { return Rtol_dU;}
 
+    double GetR0Norm() const { return Rnorm0;}
+    double GetRnorm() const { return Rnorm;}
+
+    double GetdU0Norm() const { return dUnorm0;}
+    double GetdUNorm() const { return dUnorm;}
+
+    double GetE0Norm() const { return EnergyNorm0;}
+    double GetENorm() const { return EnergyNorm;}
+
     void SetAtolOfEnergy(double atol);
     void SetRtolOfEnergy(double rtol);
     double GetAtolOfEnergy() const { return Atol_E;}

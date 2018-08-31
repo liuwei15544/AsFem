@@ -38,6 +38,9 @@ void FESystemInfo::Init()
 
     IsProjOutput=false;
 
+    nDofs=0;nNodes=0;nElmts=0;
+    MaxNonlinearIter=50;
+
     jobtype="static";
     inputfilename="";
 }
@@ -71,6 +74,8 @@ void FESystemInfo::PrintFESystemInfo() const
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** projection output=false                ***\n");
     }
+
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** maximum iters=%3d                      ***\n",MaxNonlinearIter);
 
     if(IsDebugOn)
     {
