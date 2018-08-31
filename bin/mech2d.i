@@ -28,18 +28,18 @@ name = ux uy
     side=left
   [end]
 
-  [left_uy]
+  [bottom_uy]
    type=dirichlet
    dof=uy
    value=0.0
-   side=right
+   side=bottom
   [end]
   
   [right_ux]
     type=dirichlet
     dof=ux
     value=0.1
-    side=right
+    side=top
   [end]
 []
 

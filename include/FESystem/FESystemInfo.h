@@ -37,6 +37,9 @@ public:
     int iState;
     double ctan[2]={1.0};
 
+    int nDofs=0,nNodes=0,nElmts=0;
+    int MaxNonlinearIter=50;
+
     bool IsProjOutput;
 
     string jobtype;

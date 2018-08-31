@@ -119,6 +119,7 @@ set(INC ${INC} include/Solver/LinearSolver.h)
 set(INC ${INC} include/Solver/NonlinearSolver.h)
 set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolver.cpp src/Solver/Nonlinear/NonlinearSolverSetting.cpp)
 set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/NewtonRaphson.cpp)
+set(SRC ${SRC} src/Solver/Nonlinear/NonLinearConvergenceCheck.cpp)
 
 # For FESystem info
 set(INC ${INC} include/FESystem/FESystemInfo.h)
@@ -145,6 +146,6 @@ set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
 set(INC ${INC} include/Utils/RankTwoTensor.h)
 set(SRC ${SRC} src/Utils/MathUtils/RankTwoTensor.cpp)
 set(INC ${INC} include/Utils/RankFourTensor.h)
-set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp src/Solver/Nonlinear/NonLinearConvergenceCheck.cpp)
+set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})

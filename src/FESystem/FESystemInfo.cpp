@@ -59,6 +59,10 @@ void FESystemInfo::PrintFESystemInfo() const
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** delta t   =%14.6e              ***\n",old_dt);
     }
 
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** number of dofs =%8d               ***\n",nDofs);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** number of nodes=%8d               ***\n",nNodes);
+    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** number of elmts=%8d               ***\n",nElmts);
+
     if(IsProjOutput==true)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** projection output=true                 ***\n");
