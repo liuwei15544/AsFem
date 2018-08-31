@@ -41,6 +41,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
                   equationSystem.RHS,
                   equationSystem.Proj);
 
+        bcSystem.ApplyNeumannBC(mesh,dofHandler,equationSystem.RHS);
         bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem.AMATRIX,equationSystem.RHS);
 
 

@@ -22,16 +22,17 @@ void BCSystem::ApplyNeumannBC(Mesh &mesh,
 {
     int e,rankne,eStart,eEnd;
 
-    int nDofsPerElmt,i,j,nDofsPerNode,iInd;
+    int nDofsPerElmt,i,j,nDofsPerNode,iInd,jInd;
     int elDofsConn[270]={0};
     bool HasNeumannBC=false;
     double elCoords[27][4];
     double shp[27][4],gs[125][4],xsj,JxW;
-    double xi,eta,zeta;
-    int ngp,Lint;
+    double xi,eta;
+    int ngp,Lint,gpInd;
+    int nNodesPerBCElmt;
     //*****************************************
     string sidename;
-    double value;
+    double value,gpvalue;
 
     nDofsPerNode=dofHandler.GetDofsPerNode();
 
@@ -39,6 +40,18 @@ void BCSystem::ApplyNeumannBC(Mesh &mesh,
     if(bcInfo.GetBCBlockNum()<1) return;
 
     HasNeumannBC=false;
+
+    ngp=3;
+    // For 2D case, do 1D line integration
+    if(nDims==2)
+    {
+        Int1D(ngp,Lint,gs);
+    }
+    else if(nDims==3)
+    {
+        Int2D(ngp,Lint,gs);
+    }
+
     for(i=0;i<bcInfo.GetBCBlockNum();i++)
     {
         if(bcInfo.GetIthBCKernelName(i+1)=="neumann")
@@ -61,6 +74,8 @@ void BCSystem::ApplyNeumannBC(Mesh &mesh,
             {
                 dofHandler.GetLocalBCDofMap(sidename,e+1,nDofsPerElmt,elDofsConn);
                 mesh.GetLocalBCCoords(sidename,e+1,elCoords);
+                nNodesPerBCElmt=mesh.GetNodesNumPerBCElmt();
+
                 if(nDims==1)
                 {
                     // For 1D case, surface element is just node, so
@@ -72,10 +87,34 @@ void BCSystem::ApplyNeumannBC(Mesh &mesh,
                 }
                 else if(nDims==2)
                 {
-                    ngp=3;
-                    // For 2D case, do 1D line integration
-                    Int1D(ngp,Lint,gs);
-
+                    for(gpInd=0;gpInd<Lint;gpInd++)
+                    {
+                        xi=gs[gpInd][1];
+                        Shp1D(2,nNodesPerBCElmt,xi,elCoords,shp,xsj);
+                        JxW=xsj*gs[gpInd][0];
+                        for(jInd=0;jInd<nNodesPerBCElmt;jInd++)
+                        {
+                            j=jInd*nDofsPerNode+iInd-1;
+                            gpvalue=value*shp[jInd][0]*JxW;
+                            VecSetValue(RHS,elDofsConn[j]-1,gpvalue,ADD_VALUES);
+                        }
+                    }
+                }
+                else if(nDims==3)
+                {
+                    for(gpInd=0;gpInd<Lint;gpInd++)
+                    {
+                        xi =gs[gpInd][1];
+                        eta=gs[gpInd][2];
+                        Shp2D(nDims,nNodesPerBCElmt,xi,eta,elCoords,shp,xsj);
+                        JxW=xsj*gs[gpInd][0];
+                        for(jInd=0;jInd<nNodesPerBCElmt;jInd++)
+                        {
+                            j=jInd*nDofsPerNode+iInd-1;
+                            gpvalue=value*shp[jInd][0]*JxW;
+                            VecSetValue(RHS,elDofsConn[j]-1,gpvalue,ADD_VALUES);
+                        }
+                    }
                 }
             }
         }
