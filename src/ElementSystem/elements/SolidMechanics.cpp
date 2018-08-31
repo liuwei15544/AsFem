@@ -34,6 +34,10 @@ void ElementSystem::SolidMechanics(const int &iState, const int (&IX)[27], const
     RankTwoTensor stress(nDim,0.0),strain(nDim,0.0),grad(nDim,0.0);
     RankFourTensor Jacobian(nDim,0.0);
 
+    const double E=Parameters[0];
+    const double nu=Parameters[1];
+    Jacobian.FillFromEandNu(E,nu);
+
     //******************************
     //*** Initializing
     //******************************
@@ -110,24 +114,38 @@ void ElementSystem::SolidMechanics(const int &iState, const int (&IX)[27], const
         gradUz[0]=0.0;gradUz[1]=0.0;gradUz[2]=0.0;
         for(i=0;i<nNodes;i++)
         {
-            for(k=1;k<=nDim;k++)
+            if(nDim==2)
             {
-                gradUx[k-1]+=shp[i][k]*U[nDim*i][0];
-                if(nDim==2) gradUy[k-1]+=shp[i][k]*U[nDim*i+1][0];
-                if(nDim==3) gradUz[k-1]+=shp[i][k]*U[nDim*i+2][0];
+                for(k=1;k<=nDim;k++)
+                {
+                    gradUx[k-1]+=shp[i][k]*U[2*i  ][0];
+                    gradUy[k-1]+=shp[i][k]*U[2*i+1][0];
+                }
+            }
+            else if(nDim==3)
+            {
+                for(k=1;k<=nDim;k++)
+                {
+                    gradUx[k-1]+=shp[i][k]*U[3*i  ][0];
+                    gradUy[k-1]+=shp[i][k]*U[3*i+1][0];
+                    gradUz[k-1]+=shp[i][k]*U[3*i+2][0];
+                }
             }
         }
 
+
         if(nDim==2)
         {
-            RankTwoTensor grad(gradUx,gradUy);
+            grad.FillFromDispGradient(gradUx,gradUy);
         }
         else if(nDim==3)
         {
-            RankTwoTensor grad(gradUx,gradUy,gradUz);
+            grad.FillFromDispGradient(gradUx,gradUy,gradUz);
         }
 
         strain=(grad+grad.transpose())*0.5;
+
+
         stress=Jacobian*strain;
 
 

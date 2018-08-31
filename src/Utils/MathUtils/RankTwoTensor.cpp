@@ -100,6 +100,55 @@ RankTwoTensor::RankTwoTensor(double (&gradUx)[3],double (&gradUy)[3],double (&gr
     (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];(*this)(2,3)=gradUy[2];
     (*this)(3,1)=gradUz[0];(*this)(3,2)=gradUz[1];(*this)(3,3)=gradUz[2];
 }
+//*** Fill method
+void RankTwoTensor::FillFromDispGradient(double (&gradUx)[3],double (&gradUy)[3])
+{
+    if(nDim!=2)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: fill a non-2d grad tensor!!!    ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];
+    (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];
+}
+void RankTwoTensor::FillFromDispGradient(double (&gradUx)[3],double (&gradUy)[3],double (&gradUz)[3])
+{
+    if(nDim!=3)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: fill a non-3d grad tensor!!!    ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+    (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];(*this)(1,3)=gradUx[2];
+    (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];(*this)(2,3)=gradUy[2];
+    (*this)(3,1)=gradUz[0];(*this)(3,2)=gradUz[1];(*this)(3,3)=gradUz[2];
+}
+//**************
+void RankTwoTensor::ZeroEntities()
+{
+    for(int i=0;i<81;i++) elements[i]=0.0;
+}
+void RankTwoTensor::IdentityEntities()
+{
+    for(int i=1;i<=nDim;i++)
+    {
+        for(int j=1;j<=nDim;j++)
+        {
+            (*this)(i,j)=1.0*(i==j);
+        }
+    }
+}
+
 //******************************************************
 //*** Operator overload
 //******************************************************

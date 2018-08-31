@@ -44,6 +44,9 @@ public:
     RankTwoTensor(double &s11,double &s22,double &s12); // 2D case
     RankTwoTensor(double &s11,double &s22,double &s33,double &s23,double &s13,double &s12);// 3D case
 
+    void FillFromDispGradient(double (&gradUx)[3],double (&gradUy)[3]);
+    void FillFromDispGradient(double (&gradUx)[3],double (&gradUy)[3],double (&gradUz)[3]);
+
     void ZeroEntities();
     void IdentityEntities();
 

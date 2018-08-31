@@ -29,6 +29,7 @@ void ElementSystem::RunElmtLib(const int &iState, const int (&IX)[27], const int
             CahnHilliard(iState,IX,nDim,nNodes,nDofs,dt,t,ctan,Coords,U,K,rhs,proj);
             break;
         case UelList::mechanics:
+            SolidMechanics(iState,IX,nDim,nNodes,nDofs,dt,t,ctan,Coords,U,K,rhs,proj);
             break;
         case UelList::thermalmechanics:
             break;
