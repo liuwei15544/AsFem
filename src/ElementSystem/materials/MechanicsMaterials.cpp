@@ -13,7 +13,7 @@
 
 #include "ElementSystem/ElementSystem.h"
 
-void ElementSystem::MechanicsMaterial(const int &nDim,const RankTwoTensor &grad,
+void ElementSystem::MechanicsMaterials(const int &nDim,const RankTwoTensor &grad,
                                       RankTwoTensor &strain,
                                       RankTwoTensor &stress,
                                       RankFourTensor &Jacobian)

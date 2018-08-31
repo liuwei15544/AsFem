@@ -99,6 +99,8 @@ set(SRC ${SRC} src/ElementSystem/ElementalProjection.cpp)
 set(SRC ${SRC} src/ElementSystem/elements/Poisson.cpp src/ElementSystem/elements/CahnHilliard.cpp)
 set(SRC ${SRC} src/ElementSystem/elements/SolidMechanics.cpp src/ElementSystem/elements/SolidMechanicsTools.cpp)
 set(SRC ${SRC} src/ElementSystem/uel/elmt01.cpp)
+# For material system (AsFem's umat)
+set(SRC ${SRC} src/ElementSystem/materials/MechanicsMaterials.cpp src/ElementSystem/materials/LinearElasticMaterial.cpp)
 
 # For shapefuns
 set(INC ${INC} include/ShapeFuns/ShapeFuns.h)
@@ -146,7 +148,7 @@ set(SRC ${SRC} src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSyste
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp src/ElementSystem/materials/MechanicsMaterials.cpp src/ElementSystem/materials/LinearElasticMaterial.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})

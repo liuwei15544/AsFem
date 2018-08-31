@@ -139,7 +139,7 @@ void ElementSystem::SolidMechanics(const int &iState, const int (&IX)[27], const
             grad.FillFromDispGradient(gradUx,gradUy,gradUz);
         }
 
-        MechanicsMaterial(nDim,grad,strain,stress,Jacobian);
+        MechanicsMaterials(nDim,grad,strain,stress,Jacobian);
 
 
         // Calculate local K and RHS

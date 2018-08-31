@@ -125,7 +125,7 @@ private:
     //**************************************************
     //*** For Umat system                            ***
     //**************************************************
-    void MechanicsMaterial(const int &nDim,const RankTwoTensor &grad,
+    void MechanicsMaterials(const int &nDim,const RankTwoTensor &grad,
                            RankTwoTensor &strain,
                            RankTwoTensor &stress,
                            RankFourTensor &Jacobian);
@@ -136,6 +136,7 @@ private:
                                RankFourTensor &Jacobian);
 
 
+    void FreeEnergyMaterials(const double &conc,double &f,double &dfdc,double &d2fdc2);
     void FreeEnergyForCahnHilliard(const double &conc,double &f,double &dfdc,double &d2fdc2);
 
 private:
