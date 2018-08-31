@@ -20,6 +20,7 @@ void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
 
     int nDofsPerElmt,i,j,nDofsPerNode,iInd;
     int elDofsConn[270]={0};
+    bool HasDirichletBC=false;
     //*****************************************
     string sidename;
     double value;
@@ -27,10 +28,14 @@ void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
     nDofsPerNode=dofHandler.GetDofsPerNode();
 
 
+    if(bcInfo.GetBCBlockNum()<1) return;
+
+    HasDirichletBC=false;
     for(i=0;i<bcInfo.GetBCBlockNum();i++)
     {
         if(bcInfo.GetIthBCKernelName(i+1)=="dirichlet")
         {
+            HasDirichletBC=true;
             MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
             MPI_Comm_size(PETSC_COMM_WORLD,&size);
             value=bcInfo.GetIthBCKernelValue(i+1);
@@ -55,8 +60,10 @@ void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
         }
     }
 
-    VecAssemblyBegin(U);
-    VecAssemblyEnd(U);
-
+    if(HasDirichletBC)
+    {
+        VecAssemblyBegin(U);
+        VecAssemblyEnd(U);
+    }
 }
 
