@@ -16,10 +16,10 @@
 void Shp1D(const int &ndim,const int &nnodes,const double &xi,const double (&Coords)[27][4],
            double (&shp)[27][4],double &DetJac)
 {
-    double dxdxi;
+    double dxdxi,dydxi,dzdxi;
     int i;
 
-    if (ndim!=1)
+    if (ndim<1)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: Wrong dimension case !!!        ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        error happen in Shp1D!!!        ***\n");
@@ -79,12 +79,14 @@ void Shp1D(const int &ndim,const int &nnodes,const double &xi,const double (&Coo
     // actually, there should be positive and negative
     // but I want user to decide the direction of normal vector
     // so the DetJac is always positive here
-    dxdxi=0.0;
+    dxdxi=0.0;dydxi=0.0;dzdxi=0.0;
     for (i=0;i<nnodes;++i)
     {
         dxdxi+=Coords[i][1]*shp[i][1];
+        dydxi+=Coords[i][2]*shp[i][1];
+        dzdxi+=Coords[i][3]*shp[i][1];
     }
-    DetJac=fabs(dxdxi);
+    DetJac=sqrt(dxdxi*dxdxi+dydxi*dydxi+dzdxi*dzdxi);
 
 
     if (fabs(DetJac)<1.e-13)

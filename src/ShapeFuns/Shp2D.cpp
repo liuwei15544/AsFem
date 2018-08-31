@@ -19,11 +19,12 @@ void Shp2D(const int &ndim,const int &nnodes,const double &xi,const double &eta,
     int i;
     double dxdxi, dydxi;
     double dxdeta, dydeta;
+    double dzdxi,dzdeta;
     double temp;
     double XJac[2][2],Jac[2][2];
 
 
-    if (ndim!=2)
+    if (ndim<2)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: Wrong dimension case !!!        ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: Wrong dimension(dim=%d)!!!",ndim);
@@ -144,6 +145,7 @@ void Shp2D(const int &ndim,const int &nnodes,const double &xi,const double &eta,
     // compute jacob transform matrix
     dxdxi=0.0;dxdeta=0.0;
     dydxi=0.0;dydeta=0.0;
+    dzdxi=0.0;dzdeta=0.0;
     for(i=0;i<nnodes;i++)
     {
         dxdxi +=Coords[i][1]*shp[i][1];
@@ -151,6 +153,9 @@ void Shp2D(const int &ndim,const int &nnodes,const double &xi,const double &eta,
 
         dydxi +=Coords[i][2]*shp[i][1];
         dydeta+=Coords[i][2]*shp[i][2];
+
+        dzdxi +=Coords[i][3]*shp[i][1];
+        dzdeta+=Coords[i][3]*shp[i][2];
     }
 
 
@@ -158,7 +163,17 @@ void Shp2D(const int &ndim,const int &nnodes,const double &xi,const double &eta,
     Jac[1][0]=dxdeta;Jac[1][1]=dydeta;
 
 
-    DetJac=Jac[0][0]*Jac[1][1]-Jac[0][1]*Jac[1][0];
+    if(ndim==2)
+    {
+        DetJac=Jac[0][0]*Jac[1][1]-Jac[0][1]*Jac[1][0];
+    }
+    else if(ndim==3)
+    {
+        DetJac=(dydxi*dzdeta-dydeta*dzdxi)*(dydxi*dzdeta-dydeta*dzdxi)
+              +(dzdxi*dxdeta-dzdeta*dxdxi)*(dzdxi*dxdeta-dzdeta*dxdxi)
+              +(dxdxi*dydeta-dxdeta*dydxi)*(dxdxi*dydeta-dxdeta*dydxi);
+        DetJac=sqrt(DetJac);
+    }
 
     if(fabs(DetJac)<1.e-13)
     {
