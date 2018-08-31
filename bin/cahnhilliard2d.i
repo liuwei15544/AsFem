@@ -18,6 +18,7 @@ name = c mu
 [kernel]
   type=cahnhilliard
   params=1.0 2.0e-2
+  mate=freeenergy
 []
 
 [ics]

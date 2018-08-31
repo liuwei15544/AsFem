@@ -100,7 +100,10 @@ set(SRC ${SRC} src/ElementSystem/elements/Poisson.cpp src/ElementSystem/elements
 set(SRC ${SRC} src/ElementSystem/elements/SolidMechanics.cpp src/ElementSystem/elements/SolidMechanicsTools.cpp)
 set(SRC ${SRC} src/ElementSystem/uel/elmt01.cpp)
 # For material system (AsFem's umat)
+# for mechanics constitutive law
 set(SRC ${SRC} src/ElementSystem/materials/MechanicsMaterials.cpp src/ElementSystem/materials/LinearElasticMaterial.cpp)
+# for phase field free energy
+set(SRC ${SRC} src/ElementSystem/materials/FreeEnergyMaterials.cpp src/ElementSystem/materials/FreeEnergyForCahnHilliard.cpp)
 
 # For shapefuns
 set(INC ${INC} include/ShapeFuns/ShapeFuns.h)

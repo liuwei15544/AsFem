@@ -121,10 +121,7 @@ void ElementSystem::CahnHilliard(const int &iState, const int (&IX)[27], const i
             }
         }
 
-        // For free energy and its derivative
-        f=100*conc*conc*(1-conc)*(1-conc);
-        dfdc=200*conc*(conc -1)*(2*conc-1); // chemical potential
-        d2fdc2=1200*conc*conc-1200*conc+200;
+        FreeEnergyMaterials(conc,f,dfdc,d2fdc2);
 
         // Calculate local K and RHS
         if(iState%3==0)
