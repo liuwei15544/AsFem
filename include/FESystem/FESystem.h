@@ -48,6 +48,9 @@ public:
     void Run();
 
 private:
+    void PrintProc(int step,int totalstep);
+
+private:
     void StaticAnalysis();
 
     void TransientAnalysis();

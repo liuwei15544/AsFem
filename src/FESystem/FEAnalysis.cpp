@@ -44,3 +44,13 @@ void FESystem::TransientAnalysis()
     feSystemInfo.currentstep=0;
     BackwardEulerMethod();
 }
+
+//**********************************
+void FESystem::PrintProc(int step, int totalstep)
+{
+    int dstep=int(totalstep/10);
+    if(step%dstep==0)
+    {
+
+    }
+}

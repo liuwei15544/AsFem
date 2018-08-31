@@ -48,6 +48,16 @@ set(SRC ${SRC} src/Utils/StringUtils/SplitNum.cpp src/Utils/StringUtils/SplitNum
 set(SRC ${SRC} src/Utils/StringUtils/IsBracketMatch.cpp src/Utils/StringUtils/IsSubBracketMatch.cpp)
 set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUtils/GotoLine.cpp)
 
+#  for math utils
+set(INC ${INC} include/Utils/MatrixTools.h)
+set(SRC ${SRC} src/Utils/MathUtils/MatrixTools.cpp)
+set(INC ${INC} include/Utils/RankOneTensor.h)
+set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
+set(INC ${INC} include/Utils/RankTwoTensor.h)
+set(SRC ${SRC} src/Utils/MathUtils/RankTwoTensor.cpp)
+set(INC ${INC} include/Utils/RankFourTensor.h)
+set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp)
+
 # For mesh
 set(INC include/Mesh/Mesh.h)
 set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/MeshSettings.cpp)
@@ -138,14 +148,5 @@ set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
 set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp)
 
-# For math utils
-set(INC ${INC} include/Utils/MatrixTools.h)
-set(SRC ${SRC} src/Utils/MathUtils/MatrixTools.cpp)
-set(INC ${INC} include/Utils/RankOneTensor.h)
-set(SRC ${SRC} src/Utils/MathUtils/RankOneTensor.cpp)
-set(INC ${INC} include/Utils/RankTwoTensor.h)
-set(SRC ${SRC} src/Utils/MathUtils/RankTwoTensor.cpp)
-set(INC ${INC} include/Utils/RankFourTensor.h)
-set(SRC ${SRC} src/Utils/MathUtils/RankFourTensor.cpp)
 
 add_executable(ASFEM ${INC} ${SRC})
