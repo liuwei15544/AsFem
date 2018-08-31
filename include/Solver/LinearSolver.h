@@ -55,11 +55,12 @@ private:
     KSP ksp;
     PetscErrorCode ierr;
 
-    // TODO: Use precondition from input file, not command line
-    //PC pc;
+
+    PC pc;
 
     string PreconditionType;
     PetscInt MaxIterations;
+    PetscInt MaxGMRSRestat;
     PetscReal AbsoluteError,RelativeError,DError;
 };
 

@@ -20,6 +20,7 @@ LinearSolver::LinearSolver()
     MaxIterations=2000000;
     AbsoluteError=1.0e-12;
     RelativeError=1.0e-7;
+    MaxGMRSRestat=1201;
     DError=1.0e5;
 
     IsSolverInit=false;
@@ -34,6 +35,9 @@ bool LinearSolver::InitSolver()
         //ierr=KSPSetTolerances(ksp,RelativeError,AbsoluteError,DError,MaxIterations);CHKERRQ(ierr);
         ierr=KSPSetTolerances(ksp,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT);CHKERRQ(ierr);
         ierr=KSPSetFromOptions(ksp);CHKERRQ(ierr);
+        ierr=KSPGMRESSetRestart(ksp,MaxGMRSRestat);
+        ierr=KSPGetPC(ksp,&pc);CHKERRQ(ierr);
+        ierr=PCSetType(pc,PCLU);CHKERRQ(ierr);
         return ierr;
     }
     else
@@ -42,6 +46,10 @@ bool LinearSolver::InitSolver()
         ierr=KSPSetTolerances(ksp,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT,PETSC_DEFAULT);CHKERRQ(ierr);
         //ierr=KSPSetTolerances(ksp,RelativeError,AbsoluteError,DError,MaxIterations);CHKERRQ(ierr);
         ierr=KSPSetFromOptions(ksp);CHKERRQ(ierr);
+
+        ierr=KSPGMRESSetRestart(ksp,MaxGMRSRestat);
+        ierr=KSPGetPC(ksp,&pc);CHKERRQ(ierr);
+        ierr=PCSetType(pc,PCLU);CHKERRQ(ierr);
 
         IsSolverInit=true;
 
