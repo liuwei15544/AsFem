@@ -34,10 +34,6 @@ void ElementSystem::SolidMechanics(const int &iState, const int (&IX)[27], const
     RankTwoTensor stress(nDim,0.0),strain(nDim,0.0),grad(nDim,0.0);
     RankFourTensor Jacobian(nDim,0.0);
 
-    const double E=Parameters[0];
-    const double nu=Parameters[1];
-    Jacobian.FillFromEandNu(E,nu);
-
     //******************************
     //*** Initializing
     //******************************
@@ -143,10 +139,7 @@ void ElementSystem::SolidMechanics(const int &iState, const int (&IX)[27], const
             grad.FillFromDispGradient(gradUx,gradUy,gradUz);
         }
 
-        strain=(grad+grad.transpose())*0.5;
-
-
-        stress=Jacobian*strain;
+        MechanicsMaterial(nDim,grad,strain,stress,Jacobian);
 
 
         // Calculate local K and RHS

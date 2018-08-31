@@ -1,0 +1,36 @@
+//*****************************************************
+//*** AsFem: a simple finite element method program ***
+//*** Copyright (C) 2018 walkandthinker             ***
+//*** Contact: walkandthinker@gmail.com             ***
+//*****************************************************
+//* This file is part of the ASFEM framework
+//* All rights reserved, see COPYRIGHT for full restrictions
+//* Licensed under GPL 3.0, please see LICENSE for details
+//******************************************************
+//
+// Created by walkandthinker on 30.08.18.
+// define the material system for mechanical problems in AsFem
+
+#include "ElementSystem/ElementSystem.h"
+
+void ElementSystem::MechanicsMaterial(const int &nDim,const RankTwoTensor &grad,
+                                      RankTwoTensor &strain,
+                                      RankTwoTensor &stress,
+                                      RankFourTensor &Jacobian)
+{
+    switch (ActiveUmatIndex)
+    {
+        case linearelastic:
+            LinearElasticMaterial(nDim,grad,strain,stress,Jacobian);
+            break;
+        case neohookean:
+            break;
+        default:
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported umat for mechanics!!***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscFinalize();
+            abort();
+    }
+}

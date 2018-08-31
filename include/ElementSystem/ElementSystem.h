@@ -76,10 +76,18 @@ private:
         linearelastic,
         neohookean,
         freeenergy,
-        conductivity
+        conductivity,
+        umat1,
+        umat2,
+        umat3,
+        umat4,
+        umat5
     };
 
 private:
+    //**********************************************************
+    //*** For UEL subroutines                                ***
+    //**********************************************************
     void Poisson(const int &iState,const int (&IX)[27],
                  const int &nDim,const int &nNodes,const int &nDofs,
                  const double &dt,const double &t,const double (&ctan)[2],
@@ -112,6 +120,23 @@ private:
     void Projection(const int &nNodes,const double &xsj,
                     double (&shp)[27][4],const double (&value)[12],
                     double (&proj)[27][12+1]);
+
+private:
+    //**************************************************
+    //*** For Umat system                            ***
+    //**************************************************
+    void MechanicsMaterial(const int &nDim,const RankTwoTensor &grad,
+                           RankTwoTensor &strain,
+                           RankTwoTensor &stress,
+                           RankFourTensor &Jacobian);
+
+    void LinearElasticMaterial(const int &nDim,const RankTwoTensor &grad,
+                               RankTwoTensor &strain,
+                               RankTwoTensor &stress,
+                               RankFourTensor &Jacobian);
+
+
+    void FreeEnergyForCahnHilliard(const double &conc,double &f,double &dfdc,double &d2fdc2);
 
 private:
     int ActiveUelIndex=-10000;
