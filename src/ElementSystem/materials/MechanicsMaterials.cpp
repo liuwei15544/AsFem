@@ -24,6 +24,7 @@ void ElementSystem::MechanicsMaterials(const int &nDim,const RankTwoTensor &grad
             LinearElasticMaterial(nDim,grad,strain,stress,Jacobian);
             break;
         case neohookean:
+            NeoHookeanMaterial(nDim,grad,strain,stress,Jacobian);
             break;
         default:
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unsupported umat for mechanics!!***\n");

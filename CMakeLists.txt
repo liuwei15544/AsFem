@@ -151,7 +151,7 @@ set(SRC ${SRC} src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSyste
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp src/BCSystem/userbc/ubc1.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp src/BCSystem/userbc/ubc1.cpp src/ElementSystem/materials/NeoHookeanMaterial.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})
