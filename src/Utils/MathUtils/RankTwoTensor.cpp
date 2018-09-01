@@ -136,7 +136,7 @@ void RankTwoTensor::FillFromDispGradient(double (&gradUx)[3],double (&gradUy)[3]
 //**************
 void RankTwoTensor::ZeroEntities()
 {
-    for(int i=0;i<81;i++) elements[i]=0.0;
+    for(int i=0;i<9;i++) elements[i]=0.0;
 }
 void RankTwoTensor::IdentityEntities()
 {
