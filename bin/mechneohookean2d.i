@@ -12,7 +12,7 @@
 []
 
 [dofs]
-name = ux uy
+name = disp_x disp_y
 []
 
 [kernel]
@@ -25,28 +25,22 @@ name = ux uy
 [bcs]
   [left_ux]
     type=dirichlet
-    dof=ux
+    dof=disp_x
     value=0.0
     side=left
   [end]
 
   [bottom_uy]
    type=dirichlet
-   dof=uy
+   dof=disp_y
    value=0.0
    side=bottom
   [end]
   
   [right_ux]
     type=tdirichlet
-    dof=ux
-    value=0.01
-    side=right
-  [end]
-  [right_uy]
-    type=tdirichlet
-    dof=uy
-    value=0.04
+    dof=disp_x
+    value=0.1
     side=right
   [end]
 []

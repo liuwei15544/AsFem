@@ -47,11 +47,11 @@ void ElementSystem::NeoHookeanMaterial(const int &nDim,
 
     pk2=0.5*Lambda*(J*J-1.0)*Cinv+Mu*(I-Cinv);
 
-    stress=F*pk2;
+    stress=pk2;
 
     // here the jacobian is inexact!!!
-//    Jacobian=Lambda*J*J*Cinv.OuterProduct(Cinv)
-//            +(2.0*Mu-Lambda*(J*J-1.0))*Cinv.Otimes(Cinv);
-//
-    Jacobian.FillFromEandNu(E,nu);
+    Jacobian=Lambda*J*J*Cinv.OuterProduct(Cinv)
+            +(2.0*Mu-Lambda*(J*J-1.0))*Cinv.Otimes(Cinv);
+
+
 }
