@@ -56,9 +56,10 @@ PetscErrorCode EquationSystem::Init()
         VecDuplicate(U0,&V);//CHKERRQ(ierr);
 
         // initialize
-        ierr=VecSet(U0,0.0);//CHKERRQ(ierr);
-        ierr=VecSet(RHS,0.0);//CHKERRQ(ierr);
-        ierr=VecSet(V,0.0);//CHKERRQ(ierr);
+        const PetscScalar val=1.0e-14;
+        ierr=VecSet(U0,val);//CHKERRQ(ierr);
+        ierr=VecSet(RHS,val);//CHKERRQ(ierr);
+        ierr=VecSet(V,val);//CHKERRQ(ierr);
 
         nDofsPerNode=int(solution_name_map.size());
         int n=nDofs/nDofsPerNode;
@@ -67,7 +68,7 @@ PetscErrorCode EquationSystem::Init()
         VecSetSizes(Proj,PETSC_DECIDE,n*13);//CHKERRQ(ierr);
         VecSetFromOptions(Proj);//CHKERRQ(ierr);
         VecSetUp(Proj);//CHKERRQ(ierr);
-        VecSet(Proj,0.0);
+        VecSet(Proj,val);
 
         return 1;
     }

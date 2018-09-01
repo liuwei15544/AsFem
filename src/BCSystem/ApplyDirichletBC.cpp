@@ -13,7 +13,8 @@
 
 #include "BCSystem/BCSystem.h"
 
-void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
+void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,
+                                const double &t,const double &dt,Vec &U)
 {
 
     int e,rankne,eStart,eEnd;
@@ -39,6 +40,31 @@ void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U)
             MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
             MPI_Comm_size(PETSC_COMM_WORLD,&size);
             value=bcInfo.GetIthBCKernelValue(i+1);
+            sidename=bcInfo.GetIthBCKernelSideName(i+1);
+
+            iInd=bcInfo.GetIthBCKernelDofIndex(i+1);
+
+            rankne=dofHandler.GetBCSideElmtsNum(sidename)/size;
+            eStart=rank*rankne;
+            eEnd=(rank+1)*rankne;
+
+            if(rank==size-1) eEnd=dofHandler.GetBCSideElmtsNum(sidename);
+
+            for(e=eStart;e<eEnd;e++)
+            {
+                dofHandler.GetLocalBCDofMap(sidename,e+1,nDofsPerElmt,elDofsConn);
+                for(j=iInd;j<=nDofsPerElmt;j+=nDofsPerNode)
+                {
+                    VecSetValue(U,elDofsConn[j-1]-1,value,INSERT_VALUES);
+                }
+            }
+        }
+        else if(bcInfo.GetIthBCKernelName(i+1)=="tdirichlet")
+        {
+            HasDirichletBC=true;
+            MPI_Comm_rank(PETSC_COMM_WORLD,&rank);
+            MPI_Comm_size(PETSC_COMM_WORLD,&size);
+            value=bcInfo.GetIthBCKernelValue(i+1)*t;
             sidename=bcInfo.GetIthBCKernelSideName(i+1);
 
             iInd=bcInfo.GetIthBCKernelDofIndex(i+1);

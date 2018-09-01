@@ -27,8 +27,9 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
 
     while(iters<=MaxIters && !IsConvergent)
     {
-        bcSystem.ApplyDirichletBC(mesh,dofHandler,equationSystem.U);
-
+        bcSystem.ApplyDirichletBC(mesh,dofHandler,
+                                  feSystemInfo.current_time,feSystemInfo.current_dt,
+                                  equationSystem.U);
 
 
         fe.FormKR(feSystemInfo.iState,
@@ -41,7 +42,10 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
                   equationSystem.RHS,
                   equationSystem.Proj);
 
-        bcSystem.ApplyNeumannBC(mesh,dofHandler,equationSystem.RHS);
+
+        bcSystem.ApplyNeumannBC(mesh,dofHandler,
+                                feSystemInfo.current_time,feSystemInfo.current_dt,
+                                equationSystem.AMATRIX,equationSystem.RHS);
         bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem.AMATRIX,equationSystem.RHS);
 
 

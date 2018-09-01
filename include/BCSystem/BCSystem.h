@@ -39,7 +39,10 @@ public:
     void SetUpBCSystem(EquationSystem &equationSystem);
 
     void ApplyBoundaryCondition(Mesh &mesh,DofHandler &dofHandler,EquationSystem &equationSystem);
-    void ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U);
+
+    void ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,
+                          const double &t,const double &dt,Vec &U);
+
     void ApplyNeumannBC(Mesh &mesh,DofHandler &dofHandler,
                         const double &t,const double &dt,
                         Mat &AMATRIX,Vec &RHS);

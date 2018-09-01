@@ -28,7 +28,7 @@ void FESystem::BackwardEulerMethod()
         if(!nonlinearSolver.Solve(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo))
         {
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: static nonlinear solve failed!!!***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: transient nonlinear solve failed***\n");
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** step=%6d, iter=%6d               ***\n",step,nonlinearSolver.GetCurrentIters());
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | R0|=%11.5e, | R|=%11.5e  ***\n",nonlinearSolver.GetR0Norm(),nonlinearSolver.GetRnorm());
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   |dU0|=%11.5e, |dU|=%11.5e  ***\n",nonlinearSolver.GetdU0Norm(),nonlinearSolver.GetdUNorm());
@@ -43,7 +43,7 @@ void FESystem::BackwardEulerMethod()
         {
             feSystemInfo.iState=8;
             fe.FormKR(feSystemInfo.iState,feSystemInfo.current_dt,feSystemInfo.current_time,feSystemInfo.ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.Proj);
-            outputSystem.WriteUAndProjToVTUFile(mesh,equationSystem,equationSystem.U,equationSystem.Proj);
+            outputSystem.WriteUAndProjToVTUFile(step,mesh,equationSystem,equationSystem.U,equationSystem.Proj);
             feSystemInfo.iState=6;
         }
         else
@@ -52,5 +52,6 @@ void FESystem::BackwardEulerMethod()
         }
 
         equationSystem.UpdateU0(equationSystem.U);
+        feSystemInfo.current_time+=feSystemInfo.current_dt;
     }
 }

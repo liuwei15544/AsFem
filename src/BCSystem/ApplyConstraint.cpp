@@ -25,13 +25,37 @@ void BCSystem::ApplyConstraint(Mesh &mesh,
     int elDofsConn[270]={0};
     string sidename;
     const double PenaltyFactor=1.0e14;
+    bool HasConstrainBC=false;
 
+    if(bcInfo.GetBCBlockNum()<1) return;
 
     nDofsPerNode=dofHandler.GetDofsPerNode();
+    HasConstrainBC=false;
     for(i=0;i<bcInfo.GetBCBlockNum();i++)
     {
         if(bcInfo.GetIthBCKernelName(i+1)=="dirichlet")
         {
+            HasConstrainBC=true;
+            sidename=bcInfo.GetIthBCKernelSideName(i+1);
+            iInd=bcInfo.GetIthBCKernelDofIndex(i+1);
+            rankne=dofHandler.GetBCSideElmtsNum(sidename)/size;
+            eStart=rank*rankne;
+            eEnd=(rank+1)*rankne;
+            if(rank==size-1) eEnd=dofHandler.GetBCSideElmtsNum(sidename);
+
+            for(e=eStart;e<eEnd;e++)
+            {
+                dofHandler.GetLocalBCDofMap(sidename,e+1,nDofsPerElmt,elDofsConn);
+                for(j=iInd;j<=nDofsPerElmt;j+=nDofsPerNode)
+                {
+                    VecSetValue(RHS,elDofsConn[j-1]-1,0.0,INSERT_VALUES);
+                    MatSetValue(AMATRIX,elDofsConn[j-1]-1,elDofsConn[j-1]-1,PenaltyFactor,INSERT_VALUES);
+                }
+            }
+        }
+        else if(bcInfo.GetIthBCKernelName(i+1)=="tdirichlet")
+        {
+            HasConstrainBC=true;
             sidename=bcInfo.GetIthBCKernelSideName(i+1);
             iInd=bcInfo.GetIthBCKernelDofIndex(i+1);
             rankne=dofHandler.GetBCSideElmtsNum(sidename)/size;
@@ -51,10 +75,14 @@ void BCSystem::ApplyConstraint(Mesh &mesh,
         }
     }
 
-    VecAssemblyBegin(RHS);
-    VecAssemblyEnd(RHS);
+    if(HasConstrainBC)
+    {
+        VecAssemblyBegin(RHS);
+        VecAssemblyEnd(RHS);
 
-    MatAssemblyBegin(AMATRIX,MAT_FINAL_ASSEMBLY);
-    MatAssemblyEnd(AMATRIX,MAT_FINAL_ASSEMBLY);
+        MatAssemblyBegin(AMATRIX,MAT_FINAL_ASSEMBLY);
+        MatAssemblyEnd(AMATRIX,MAT_FINAL_ASSEMBLY);
+    }
+
 }
 
