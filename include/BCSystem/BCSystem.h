@@ -40,7 +40,12 @@ public:
 
     void ApplyBoundaryCondition(Mesh &mesh,DofHandler &dofHandler,EquationSystem &equationSystem);
     void ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,Vec &U);
-    void ApplyNeumannBC(Mesh &mesh,DofHandler &dofHandler,Vec &RHS);
+    void ApplyNeumannBC(Mesh &mesh,DofHandler &dofHandler,
+                        const double &t,const double &dt,
+                        Mat &AMATRIX,Vec &RHS);
+    void ubc1(Mesh &mesh,DofHandler &dofHandler,
+                             const double &t,const double &dt,
+                             Mat &AMATRIX,Vec &RHS);
 
     void ApplyConstraint(Mesh &mesh,DofHandler &dofHandler,Mat &AMATRIX,Vec &RHS);
 

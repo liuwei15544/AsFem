@@ -16,9 +16,9 @@
 #include "GaussPoint/GaussPoint.h"
 #include "ShapeFuns/ShapeFuns.h"
 
-void BCSystem::ApplyNeumannBC(Mesh &mesh,
-                              DofHandler &dofHandler,
-                              Vec &RHS)
+void BCSystem::ApplyNeumannBC(Mesh &mesh,DofHandler &dofHandler,
+                              const double &t,const double &dt,
+                              Mat &AMATRIX,Vec &RHS)
 {
     int e,rankne,eStart,eEnd;
 
@@ -117,6 +117,10 @@ void BCSystem::ApplyNeumannBC(Mesh &mesh,
                     }
                 }
             }
+        }
+        else if(bcInfo.GetIthBCKernelName(i+1)=="ubc1")
+        {
+
         }
     }
 
