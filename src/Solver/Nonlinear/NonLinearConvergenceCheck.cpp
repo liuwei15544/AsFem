@@ -15,7 +15,7 @@
 
 bool NonlinearSolver::ConvergenceCheck()
 {
-    if(Rnorm<Atol_R || EnergyNorm<Atol_E)
+    if(Rnorm<Atol_R || dUnorm<Atol_dU || EnergyNorm<Atol_E)
     {
         return true;
     }

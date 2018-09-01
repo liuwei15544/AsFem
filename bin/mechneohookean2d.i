@@ -40,7 +40,13 @@ name = disp_x disp_y
   [right_ux]
     type=tdirichlet
     dof=disp_x
-    value=0.1
+    value=0.02
+    side=right
+  [end]
+  [right_uy]
+    type=tdirichlet
+    dof=disp_y
+    value=0.01
     side=right
   [end]
 []
@@ -50,5 +56,6 @@ name = disp_x disp_y
   proj=true
   debug=true
   dt=1.0
-  step=10
+  step=20
+  maxiter=200
 []
