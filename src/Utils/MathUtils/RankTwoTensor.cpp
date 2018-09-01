@@ -803,3 +803,11 @@ RankFourTensor RankTwoTensor::Otimes(const RankTwoTensor &b) const
     //AOtimeB=0.5*(AikBjl+AilBjk)
     return ((*this).AIkBJl(b)+(*this).AIlBJk(b))*0.5;
 }
+
+//*** for lhs * operator
+RankTwoTensor operator*(const double &lhs, const RankTwoTensor &a)
+{
+    RankTwoTensor temp(a.GetDim(),0.0);
+    for(int i=0;i<9;i++) temp.elements[i]=lhs*a.elements[i];
+    return temp;
+}

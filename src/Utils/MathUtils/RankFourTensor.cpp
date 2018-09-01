@@ -531,3 +531,11 @@ void RankFourTensor::IdentityRank4Entities()
         }
     }
 }
+
+//******************************
+RankFourTensor operator*(const double &lhs, const RankFourTensor &a)
+{
+    RankFourTensor temp(a.GetDim(),0.0);
+    for(int i=0;i<81;i++) temp.elements[i]=lhs*a.elements[i];
+    return temp;
+}

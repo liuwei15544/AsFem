@@ -70,9 +70,11 @@ public:
     RankFourTensor  operator*(const double & a) const;
     RankTwoTensor   operator*(const RankTwoTensor & a) const;
     RankFourTensor  operator*(const RankFourTensor & a) const;
+    friend RankFourTensor operator*(const double &lhs,const RankFourTensor &a);
 
     RankFourTensor& operator*=(const double & a);
     RankFourTensor& operator*=(const RankFourTensor &a);
+
 
     bool operator==(const RankFourTensor &a) const;
 

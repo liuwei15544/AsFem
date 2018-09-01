@@ -73,6 +73,8 @@ public:
     vector<double> operator*(const vector<double> &a) const;
     RankTwoTensor  operator*(const RankTwoTensor & a) const;
 
+    friend RankTwoTensor operator * (const double &lhs,const RankTwoTensor &a);
+
     RankTwoTensor & operator*=(const double & a);
     RankTwoTensor & operator*=(const RankTwoTensor & a);
 
