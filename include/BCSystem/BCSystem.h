@@ -43,9 +43,10 @@ public:
     void ApplyNeumannBC(Mesh &mesh,DofHandler &dofHandler,
                         const double &t,const double &dt,
                         Mat &AMATRIX,Vec &RHS);
-    void ubc1(Mesh &mesh,DofHandler &dofHandler,
-                             const double &t,const double &dt,
-                             Mat &AMATRIX,Vec &RHS);
+    void ubc1(string sidename,const double value,const int &dofindex,
+              Mesh &mesh,DofHandler &dofHandler,
+              const double &t,const double &dt,
+              Mat &AMATRIX,Vec &RHS);
 
     void ApplyConstraint(Mesh &mesh,DofHandler &dofHandler,Mat &AMATRIX,Vec &RHS);
 

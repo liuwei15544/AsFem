@@ -120,7 +120,10 @@ void BCSystem::ApplyNeumannBC(Mesh &mesh,DofHandler &dofHandler,
         }
         else if(bcInfo.GetIthBCKernelName(i+1)=="ubc1")
         {
+            value=bcInfo.GetIthBCKernelValue(i+1);
+            sidename=bcInfo.GetIthBCKernelSideName(i+1);
 
+            iInd=bcInfo.GetIthBCKernelDofIndex(i+1);
         }
     }
 
