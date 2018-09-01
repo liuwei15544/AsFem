@@ -19,8 +19,10 @@ void ElementSystem::NeoHookeanMaterial(const int &nDim,
                                        RankTwoTensor &stress,
                                        RankFourTensor &Jacobian)
 {
-    static const double Lambda=Parameters[0];
-    static const double Mu=Parameters[1];
+    static const double E=Parameters[0];
+    static const double nu=Parameters[1];
+    const double Lambda=E*nu/(1.+nu)/(1.-2.*nu);
+    const double Mu=0.5*E/(1.+nu);
     if(Parameters.size()<2)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: for mechanics, you need E,nu!!!  ***\n");
@@ -35,6 +37,7 @@ void ElementSystem::NeoHookeanMaterial(const int &nDim,
 
     I.IdentityEntities();// set as diagonal unit tensor
 
+
     F=grad+I;// F=\nabla U+I
     Ft=F.transpose();
     C=Ft*F;
@@ -42,14 +45,13 @@ void ElementSystem::NeoHookeanMaterial(const int &nDim,
 
     J=F.det();
 
-    pk2=I*Mu-Cinv*Mu+Cinv*Lambda*log(J);
+    pk2=0.5*Lambda*(J*J-1.0)*Cinv+Mu*(I-Cinv);
 
-    //stress=F*pk2;// use pk1 not pk2
-
-    stress=pk2;
+    stress=F*pk2;
 
     // here the jacobian is inexact!!!
-    Jacobian=(Cinv.Otimes(Cinv))*2.0*Mu
-            +Cinv.OuterProduct(Cinv)*Lambda
-            -Cinv.Otimes(Cinv)*2.0*Lambda*log(J);
+//    Jacobian=Lambda*J*J*Cinv.OuterProduct(Cinv)
+//            +(2.0*Mu-Lambda*(J*J-1.0))*Cinv.Otimes(Cinv);
+//
+    Jacobian.FillFromEandNu(E,nu);
 }

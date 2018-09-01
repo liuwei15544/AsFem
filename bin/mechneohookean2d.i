@@ -43,6 +43,12 @@ name = ux uy
     value=0.01
     side=right
   [end]
+  [right_uy]
+    type=tdirichlet
+    dof=uy
+    value=0.04
+    side=right
+  [end]
 []
 
 [run]
