@@ -1,2 +1,2 @@
 # IgaExercise
-My iga-fem exercise code
+Waiting for release version.
