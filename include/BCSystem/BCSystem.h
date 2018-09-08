@@ -54,11 +54,11 @@ public:
     void ApplyConstraint(Mesh &mesh,DofHandler &dofHandler,Mat &AMATRIX,Vec &RHS);
 
     void PrintBCInfo() const;
-
+    BCInfo bcInfo;
 
 private:
     BCBlockInfo SingleBCBlock;
-    BCInfo bcInfo;
+
     bool IsInit=false;
     int nDims;
 

@@ -31,6 +31,7 @@ bool DofHandler::CreateLocalToGlobalDofMap(Mesh &mesh, int ndofspernode)
 
     GlobalDofMap.resize(nElmts*nDofsPerElmt,0);
 
+
     int e,i,j,k,iInd;
     for(e=1;e<=nElmts;e++)
     {
@@ -271,5 +272,44 @@ bool DofHandler::CreateLocalToGlobalDofMap(Mesh &mesh, int ndofspernode)
 
         HasBCDofMap=true;
     }
+
+
+
     return HasBCDofMap;
+}
+
+bool DofHandler::SetNodalDofActiveState(Mesh &mesh, BCInfo &bcInfo)
+{
+    if(!HasDofMap)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't set nodal dof state  !!!  ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        dof maps isn't generated !!!    ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    NodalDofState.resize(nNodes*nDofsPerNode,1.0);
+    int i,j,iInd,e,ibc;
+    string sidename;
+
+    for(ibc=1;ibc<=bcInfo.GetBCBlockNum();ibc++)
+    {
+        if(bcInfo.GetIthBCKernelName(ibc)=="dirichlet")
+        {
+            sidename=bcInfo.GetIthBCKernelSideName(ibc);
+            iInd=bcInfo.GetIthBCKernelDofIndex(ibc);
+
+            for(e=1;e<=mesh.GetSideBCElmtNum(sidename);e++)
+            {
+                for(i=1;i<=mesh.GetNodesNumPerBCElmt();i++)
+                {
+                    j=mesh.GetSideBCIthConnJthIndex(sidename,e,i);
+                    NodalDofState[(j-1)*nDofsPerNode+iInd-1]=0.0;
+                }
+            }
+        }
+    }
 }

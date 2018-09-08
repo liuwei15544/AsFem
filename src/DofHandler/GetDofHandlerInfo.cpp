@@ -259,4 +259,29 @@ int DofHandler::GetBCSideDofsNum(string sidename) const
     return 0;
 }
 
+//*********************************************************
+double DofHandler::GetIthNodalJthDofState(const int &i, const int &j) const
+{
+    if(i<1||i>nNodes)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: i=%8d is out of range!!! ***\n",i);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        can't get nodal dof state   !!! ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+    if(j<1||j>nDofsPerNode)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: j=%8d is out of range!!! ***\n",j);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        can't get nodal dof state   !!! ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
 
+    return NodalDofState[(i-1)*nDofsPerNode+j-1];
+}

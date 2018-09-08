@@ -21,6 +21,7 @@
 
 // AsFem's own header file
 #include "Mesh/Mesh.h"
+#include "BCSystem/BCInfo.h"
 
 using namespace std;
 
@@ -34,6 +35,7 @@ public:
     int GetDofsNum() const { return nDofs;}
 
     bool CreateLocalToGlobalDofMap(Mesh &mesh,int ndofspernode);
+    bool SetNodalDofActiveState(Mesh &mesh,BCInfo &bcInfo);
 
 
     // TODO:implement gmsh dof map generation
@@ -42,6 +44,7 @@ public:
 
     int GetBCSideDofsNum(string sidename) const;
     int GetBCSideElmtsNum(string sidename) const { return GetBCSideDofsNum(sidename)/nDofsPerBCElmt;}
+    double GetIthNodalJthDofState(const int &i,const int &j) const;
 
     void GetLocalDofMap(const int e,int &ndofsperelmt,int (&rInd)[270]) const;
     void GetLocalBCDofMap(string sidename,const int e,int &ndofsperbcelmt,int (&Ind)[270]) const;
@@ -58,6 +61,7 @@ private:
     int nDofsPerElmt;
 
     vector<int> GlobalDofMap;
+    vector<double> NodalDofState;
     vector<pair<string,vector<int>>> GlobalBCDofMap;
     vector<int> LeftBCDofs,RightBCDofs;
     vector<int> BottomBCDofs,TopBCDofs;
