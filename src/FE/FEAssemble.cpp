@@ -59,3 +59,32 @@ void FE::FinishAssemble(const int &iState,Mat &AMATRIX, Vec &RHS, Vec &Proj)
     }
 
 }
+
+//**************************************************
+void FE::ModifyLocalKandRHS(DofHandler &dofHandler)
+{
+    // here we modify the local K and RHS
+    // for dirichlet boundary condition during N-R iteration
+    // if i-th dof is dirichlet bc, then [i,:]=[:,i]=0 [i,i]=1 RHS[i]=0
+    int i,j,iInd,jInd;
+    int i1,j1;
+    for(i=1;i<=nNodesPerElmt;i++)
+    {
+        iInd=elConn[i-1];
+        for(j=1;j<=nDofsPerNode;j++)
+        {
+            if(dofHandler.GetIthNodalJthDofState(iInd+1,j)==0)
+            {
+                // if dirichlet bc applied
+                jInd=(i-1)*nDofsPerNode+j-1;
+                for(i1=0;i1<nNodesPerElmt;i1++)
+                {
+                    localK[i1*nDofsPerElmt+jInd]=0.0;
+                    localK[jInd*nDofsPerElmt+i1]=0.0;
+                }
+                localK[jInd*nDofsPerElmt+jInd]=1.0;
+                localRHS[jInd]=0.0;
+            }
+        }
+    }
+}

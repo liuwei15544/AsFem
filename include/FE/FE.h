@@ -48,6 +48,8 @@ private:
     // Init related vector and matrix
     void ZeroMatAndVec(const int &iState,Mat &AMATRIX,Vec &Proj,Vec &RHS);
 
+    void ModifyLocalKandRHS(DofHandler &dofHandler);
+
     // For assemble
     void AssembleLocalToGlobal(const int &iState,Mat &AMATRIX,Vec &RHS,Vec &Proj);
     void FinishAssemble(const int &iState,Mat &AMATRIX,Vec &RHS,Vec &Proj);
