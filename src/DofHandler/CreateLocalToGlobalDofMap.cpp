@@ -297,7 +297,8 @@ bool DofHandler::SetNodalDofActiveState(Mesh &mesh, BCInfo &bcInfo)
 
     for(ibc=1;ibc<=bcInfo.GetBCBlockNum();ibc++)
     {
-        if(bcInfo.GetIthBCKernelName(ibc)=="dirichlet")
+        if(bcInfo.GetIthBCKernelName(ibc)=="dirichlet"||
+           bcInfo.GetIthBCKernelName(ibc)=="dirichlet")
         {
             sidename=bcInfo.GetIthBCKernelSideName(ibc);
             iInd=bcInfo.GetIthBCKernelDofIndex(ibc);
