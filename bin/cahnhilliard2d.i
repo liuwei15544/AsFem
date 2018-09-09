@@ -45,6 +45,7 @@ name = c mu
   dt=5.0e-6
   step=5000
   output=10
+  nr=linesearch
 []
 
 

@@ -6,47 +6,41 @@
   xmax=10.0
   ymin=0.0
   ymax=2.0
-  nx=100
-  ny=20
-  meshtype=quad4
+  nx=50
+  ny=10
+  meshtype=quad9
 []
 
 [dofs]
-name = disp_x disp_y
+name = ux uy
 []
 
 [kernel]
   type=mechanics
-  strain=finite
+  strain=small
   params= 10.0e5 0.3
-  mate=neohookean
+  mate=linearelastic
 []
 
 [bcs]
   [left_ux]
     type=dirichlet
-    dof=disp_x
+    dof=ux
     value=0.0
     side=left
   [end]
 
-  [bottom_uy]
+  [left_uy]
    type=dirichlet
-   dof=disp_y
+   dof=uy
    value=0.0
    side=left
   [end]
   
   [right_ux]
     type=dirichlet
-    dof=disp_x
-    value=-0.03
-    side=right
-  [end]
-  [right_uy]
-    type=dirichlet
-    dof=disp_y
-    value=-0.03
+    dof=ux
+    value=0.1
     side=right
   [end]
 []
@@ -55,5 +49,5 @@ name = disp_x disp_y
   type=static
   proj=true
   debug=true
-  nr=linesearch
+  maxiter=2
 []

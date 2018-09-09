@@ -22,3 +22,12 @@ bool NonlinearSolver::ConvergenceCheck()
     return false;
 }
 
+//************************************
+bool NonlinearSolver::ConvergenceCheckForLineSearch(double &sn, double &s0)
+{
+    if((sn/s0)<Atol_dU*0.01)
+    {
+        return true;
+    }
+    return false;
+}

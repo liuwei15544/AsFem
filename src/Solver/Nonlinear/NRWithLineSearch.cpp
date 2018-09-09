@@ -75,15 +75,15 @@ bool NonlinearSolver::NRWithLineSearch(Mesh &mesh,
         {
             eta0=1.0;
             VecDot(equationSystem.dU,equationSystem.RHS,&s0);
+            s1=s0;
             equationSystem.UpdateUplusdU();// U=U+dU
-            eta1=1.0;s1=s0;
         }
         else
         {
-            eta0=eta1;
-            s0=s1;
             VecDot(equationSystem.dU,equationSystem.RHS,&s1);
+
             eta1=eta0*s0/(s0-s1);
+            eta0=eta1;
             VecAXPY(equationSystem.U,eta1,equationSystem.dU);//U=U+eta1*dU
         }
 
@@ -104,7 +104,7 @@ bool NonlinearSolver::NRWithLineSearch(Mesh &mesh,
 
         iters+=1;
 
-        if(ConvergenceCheck())
+        if(ConvergenceCheckForLineSearch(s1,s0))
         {
             IsConvergent=true;
             break;

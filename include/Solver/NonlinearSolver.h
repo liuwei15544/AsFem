@@ -109,6 +109,7 @@ private:
 
 private:
     bool ConvergenceCheck();
+    bool ConvergenceCheckForLineSearch(double &sn,double &s0);
 
 private:
     enum solvertype
