@@ -39,6 +39,7 @@ public:
 
     int nDofs=0,nNodes=0,nElmts=0;
     int MaxNonlinearIter=50;
+    string NonLinearSolver="newtonraphson";
 
     bool IsProjOutput;
 

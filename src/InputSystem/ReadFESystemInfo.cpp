@@ -34,6 +34,7 @@ bool InputSystem::ReadFESystemInfo(FESystemInfo &feSystemInfo)
         feSystemInfo.jobtype="";
         feSystemInfo.IsDebugOn=false;
         feSystemInfo.IsProjOutput=false;
+        feSystemInfo.NonLinearSolver="newtonraphson";
 
         HasType=false;
         // goes inside [kernels]/[] block pair
@@ -207,6 +208,20 @@ bool InputSystem::ReadFESystemInfo(FESystemInfo &feSystemInfo)
                     return false;
                 }
                 feSystemInfo.MaxNonlinearIter=int(numbers[0]);
+            }
+            else if(str.compare(0,3,"nr=")==0)
+            {
+                int i=line.find("=")+1;
+                substr=line.substr(i,line.size()-i+1);
+                if(substr.size()<4)
+                {
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find nr= value  !!!       ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        nr=val1... is required !!!      ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+                    return false;
+                }
+
+                feSystemInfo.NonLinearSolver=substr;
             }
 
 

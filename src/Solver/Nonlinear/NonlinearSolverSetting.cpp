@@ -44,6 +44,10 @@ void NonlinearSolver::SetSolverType(string solvertype)
     {
         SolverType=arclength;
     }
+    else if(solvertype=="linesearch")
+    {
+        SolverType=netownwithlinesearch;
+    }
     else
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: unknown nonlinear solver type!! ***\n");

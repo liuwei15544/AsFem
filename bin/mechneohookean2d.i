@@ -40,7 +40,7 @@ name = disp_x disp_y
   [right_ux]
     type=dirichlet
     dof=disp_x
-    value=0.02
+    value=0.01
     side=right
   [end]
 []
@@ -49,4 +49,5 @@ name = disp_x disp_y
   type=static
   proj=true
   debug=true
+  nr=linesearch
 []
