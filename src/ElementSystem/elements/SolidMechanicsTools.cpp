@@ -28,13 +28,14 @@ double ElementSystem::ElasticityTensorComponent(int i, int k, const int &nDim,
     // stress itself=(C_ijmn*dum/dxn)
     // so we can have jacob=d(C_ijmn*dum/dxn*dtest/dxj)/duk
     // i->1 for sigma_xj, then k=2 for d()/duy=Kux,uy
+    // K^{IJ}_{uiuk}=C_ijkl*N^{I}_{,j}*N^{J}_{,l}
     double val=0.0;
     int j,l;
     for(j=1;j<=nDim;j++)
     {
         for(l=1;l<=nDim;l++)
         {
-            val+=elasticity_tensor(i,j,k,l)*shp[jInd][l]*shp[iInd][j];
+            val+=elasticity_tensor.voigt(i,j,k,l)*shp[jInd][l]*shp[iInd][j];
         }
     }
     return val;

@@ -53,6 +53,7 @@ public:
     //**********************************
     double operator()(int i,int j,int k,int l) const;
     double& operator()(int i,int j,int k,int l);
+    double voigt(int i,int j,int k,int l) const;
 
     RankFourTensor & operator=(const double & a);
     RankFourTensor & operator=(const RankFourTensor & a);

@@ -97,7 +97,7 @@ RankFourTensor::RankFourTensor(int dim, RankFourTensor::InitMethod method)
 //*****************************************************
 double RankFourTensor::operator()(int i, int j, int k, int l) const
 {
-    static int iInd,jInd;
+    int iInd,jInd;
 
     if(i<1||i>nDim)
     {
@@ -140,13 +140,15 @@ double RankFourTensor::operator()(int i, int j, int k, int l) const
         abort();
     }
 
-    iInd=(i-1)*nDim+j;
-    jInd=(iInd-1)*nDim+k;
-    return elements[(jInd-1)*nDim+l-1];
+    return elements[(((i-1)*nDim+j-1)*nDim+k-1)*nDim+l-1];
+
+//    iInd=(i-1)*nDim+j;
+//    jInd=(iInd-1)*nDim+k;
+//    return elements[(jInd-1)*nDim+l-1];
 }
 double& RankFourTensor::operator()(int i, int j, int k, int l)
 {
-    static int iInd,jInd;
+    int iInd,jInd;
 
     if(i<1||i>nDim)
     {
@@ -191,7 +193,83 @@ double& RankFourTensor::operator()(int i, int j, int k, int l)
 
     iInd=(i-1)*nDim+j;
     jInd=(iInd-1)*nDim+k;
+
+    return elements[(((i-1)*nDim+j-1)*nDim+k-1)*nDim+l-1];
     return elements[(jInd-1)*nDim+l-1];
+}
+
+double RankFourTensor::voigt(int i,int j,int k,int l) const
+{
+    int iInd,jInd;
+
+    if(i<1||i>nDim)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: i=%3d is out of range in rank4  ***\n",i);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+    if(j<1||j>nDim)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: j=%3d is out of range in rank4  ***\n",j);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+    if(k<1||k>nDim)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: k=%3d is out of range in rank4  ***\n",i);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+    if(l<1||l>nDim)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: l=%3d is out of range in rank4  ***\n",j);
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+        PetscFinalize();
+        abort();
+    }
+
+    if((i==2&&j==3)||(i==3&&j==2))
+    {
+        i=1;j=2;
+    }
+    else if((i==1&&j==3)||(i==3&&j==1))
+    {
+        i=2;j=3;
+    }
+    else if((i==1&&j==2)||(i==2&&j==1))
+    {
+        i=1;j=3;
+    }
+
+    if((k==2&&l==3)||(k==3&&l==2))
+    {
+        k=1;l=2;
+    }
+    else if((k==1&&l==3)||(k==3&&l==1))
+    {
+        k=2;l=3;
+    }
+    else if((k==1&&l==2)||(k==2&&l==1))
+    {
+        k=1;l=3;
+    }
+
+    return (*this)(i,j,k,l);
 }
 //*** For = operator
 RankFourTensor& RankFourTensor::operator=(const double &a)

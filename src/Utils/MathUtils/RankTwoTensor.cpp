@@ -801,7 +801,9 @@ RankFourTensor RankTwoTensor::AJkBIl(const RankTwoTensor &b) const
 RankFourTensor RankTwoTensor::Otimes(const RankTwoTensor &b) const
 {
     //AOtimeB=0.5*(AikBjl+AilBjk)
-    return ((*this).AIkBJl(b)+(*this).AIlBJk(b))*0.5;
+    RankFourTensor temp(nDim,0.0);
+    temp=0.5*((*this).AIkBJl(b)+(*this).AIlBJk(b));
+    return temp;
 }
 
 //*** for lhs * operator
