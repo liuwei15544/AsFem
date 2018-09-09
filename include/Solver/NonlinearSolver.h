@@ -93,6 +93,15 @@ private:
                        LinearSolver &linearSolver,
                        FESystemInfo &feSystemInfo);
 
+    bool NRWithLineSearch(Mesh &mesh,
+                          DofHandler &dofHandler,
+                          BCSystem &bcSystem,
+                          EquationSystem &equationSystem,
+                          ElementSystem &elementSystem,
+                          FE &fe,
+                          LinearSolver &linearSolver,
+                          FESystemInfo &feSystemInfo);
+
     bool ModifyNewtonRaphson(Mesh &mesh,DofHandler &dofHandler,BCSystem &bcSystem,EquationSystem &equationSystem,LinearSolver &linearSolver);
 
     // TODO: arc-length method for multiple load step
@@ -106,6 +115,7 @@ private:
     {
         newtonraphson,
         modifynewtonraphson,
+        netownwithlinesearch,
         arclength
     };
 

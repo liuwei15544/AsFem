@@ -34,28 +34,19 @@ name = disp_x disp_y
    type=dirichlet
    dof=disp_y
    value=0.0
-   side=bottom
+   side=left
   [end]
   
   [right_ux]
-    type=tdirichlet
+    type=dirichlet
     dof=disp_x
     value=0.02
-    side=right
-  [end]
-  [right_uy]
-    type=tdirichlet
-    dof=disp_y
-    value=0.001
     side=right
   [end]
 []
 
 [run]
-  type=transient
+  type=static
   proj=true
   debug=true
-  dt=1.0
-  step=50
-  maxiter=200
 []

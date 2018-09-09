@@ -30,6 +30,7 @@ NonlinearSolver::NonlinearSolver()
 void NonlinearSolver::Init()
 {
     SolverType=newtonraphson;
+    //SolverType=netownwithlinesearch;
     Rtol_R =5.0e-8; Atol_R=1.0e-8;
 
     Rtol_dU=1.0e-8;Atol_dU=1.0e-9;

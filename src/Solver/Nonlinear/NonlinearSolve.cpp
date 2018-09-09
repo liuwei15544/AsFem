@@ -29,6 +29,9 @@ bool NonlinearSolver::Solve(Mesh &mesh,
             break;
         case modifynewtonraphson:
             break;
+        case netownwithlinesearch:
+            return NRWithLineSearch(mesh,dofHandler,bcSystem,equationSystem,elementSystem,fe,linearSolver,feSystemInfo);
+            break;
         case arclength:
             break;
         default:
