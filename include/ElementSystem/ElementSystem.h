@@ -74,6 +74,7 @@ private:
     {
         emptyumat,
         linearelastic,
+        deformgrad,
         neohookean,
         freeenergy,
         conductivity,
@@ -83,6 +84,13 @@ private:
         umat4,
         umat5
     };
+
+    enum StrainMode
+    {
+        small,
+        finite
+    };
+
 
 private:
     //**********************************************************
@@ -125,18 +133,25 @@ private:
     //**************************************************
     //*** For Umat system                            ***
     //**************************************************
+    void ComputeStrain(const int &nDim,const RankTwoTensor &grad,RankTwoTensor &strain);
+
     void MechanicsMaterials(const int &nDim,const RankTwoTensor &grad,
                            RankTwoTensor &strain,
                            RankTwoTensor &stress,
                            RankFourTensor &Jacobian);
 
     void LinearElasticMaterial(const int &nDim,const RankTwoTensor &grad,
-                               RankTwoTensor &strain,
+                               const RankTwoTensor &strain,
                                RankTwoTensor &stress,
                                RankFourTensor &Jacobian);
 
     void NeoHookeanMaterial(const int &nDim,const RankTwoTensor &grad,
-                            RankTwoTensor &strain,
+                            const RankTwoTensor &strain,
+                            RankTwoTensor &stress,
+                            RankFourTensor &Jacobian);
+
+    void DeformGradMaterial(const int &nDim,const RankTwoTensor &grad,
+                            const RankTwoTensor &strain,
                             RankTwoTensor &stress,
                             RankFourTensor &Jacobian);
 
@@ -149,6 +164,8 @@ private:
     int ActiveUmatIndex=-10000;
     bool IsInit=false;
     vector<double> Parameters;
+
+    StrainMode strainMode=small;
 
 };
 

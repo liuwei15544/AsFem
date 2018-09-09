@@ -81,7 +81,8 @@ set(INC ${INC} include/BCSystem/BCBlockInfo.h include/BCSystem/BCInfo.h)
 set(SRC ${SRC} src/BCSystem/BCInfo.cpp)
 set(INC ${INC} include/BCSystem/BCSystem.h)
 set(SRC ${SRC} src/BCSystem/BCSystem.cpp src/BCSystem/ApplyBoundaryCondition.cpp)
-set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp src/BCSystem/ApplyConstraint.cpp)
+set(SRC ${SRC} src/BCSystem/ApplyNeumannBC.cpp src/BCSystem/ApplyDirichletBC.cpp)
+set(SRC ${SRC} src/BCSystem/ApplyConstraint.cpp src/BCSystem/userbc/ubc1.cpp)
 
 # For input system
 set(INC ${INC} include/InputSystem/InputSystem.h)
@@ -102,8 +103,11 @@ set(SRC ${SRC} src/ElementSystem/uel/elmt01.cpp)
 # For material system (AsFem's umat)
 # for mechanics constitutive law
 set(SRC ${SRC} src/ElementSystem/materials/MechanicsMaterials.cpp src/ElementSystem/materials/LinearElasticMaterial.cpp)
+set(SRC ${SRC} src/ElementSystem/materials/NeoHookeanMaterial.cpp src/ElementSystem/materials/DeformGradMaterial.cpp)
+
 # for phase field free energy
 set(SRC ${SRC} src/ElementSystem/materials/FreeEnergyMaterials.cpp src/ElementSystem/materials/FreeEnergyForCahnHilliard.cpp)
+
 
 # For shapefuns
 set(INC ${INC} include/ShapeFuns/ShapeFuns.h)
@@ -134,6 +138,7 @@ set(INC ${INC} include/Solver/LinearSolver.h)
 set(INC ${INC} include/Solver/NonlinearSolver.h)
 set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolver.cpp src/Solver/Nonlinear/NonlinearSolverSetting.cpp)
 set(SRC ${SRC} src/Solver/Nonlinear/NonlinearSolve.cpp src/Solver/Nonlinear/NewtonRaphson.cpp)
+set(SRC ${SRC} src/Solver/Nonlinear/NRWithLineSearch.cpp)
 set(SRC ${SRC} src/Solver/Nonlinear/NonLinearConvergenceCheck.cpp)
 
 # For FESystem info
@@ -151,7 +156,7 @@ set(SRC ${SRC} src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSyste
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp src/BCSystem/userbc/ubc1.cpp src/ElementSystem/materials/NeoHookeanMaterial.cpp src/Solver/Nonlinear/NRWithLineSearch.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})

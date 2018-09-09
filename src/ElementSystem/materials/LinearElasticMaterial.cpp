@@ -15,7 +15,7 @@
 
 void ElementSystem::LinearElasticMaterial(const int &nDim,
                                           const RankTwoTensor &grad,
-                                          RankTwoTensor &strain,
+                                          const RankTwoTensor &strain,
                                           RankTwoTensor &stress,
                                           RankFourTensor &Jacobian)
 {
@@ -27,7 +27,6 @@ void ElementSystem::LinearElasticMaterial(const int &nDim,
         PetscFinalize();
         abort();
     }
-    strain=(grad+grad.transpose())*0.5;
     Jacobian.FillFromEandNu(E,nu);
     stress=Jacobian*strain;
 }

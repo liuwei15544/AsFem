@@ -8,53 +8,51 @@
   ymax=2.0
   nx=100
   ny=20
-  meshtype=quad8
+  meshtype=quad4
 []
 
 [dofs]
-name = ux uy
+name = disp_x disp_y
 []
 
 [kernel]
   type=mechanics
   strain=finite
   params= 10.0e5 0.3
-  mate=neohookean
+  mate=deformgrad
 []
 
 [bcs]
   [left_ux]
     type=dirichlet
-    dof=ux
+    dof=disp_x
     value=0.0
     side=left
   [end]
 
   [bottom_uy]
    type=dirichlet
-   dof=uy
+   dof=disp_y
    value=0.0
    side=left
   [end]
   
   [right_ux]
-    type=tdirichlet
-    dof=ux
-    value=-0.02
+    type=dirichlet
+    dof=disp_x
+    value=-0.1
     side=right
   [end]
   [right_uy]
     type=dirichlet
-    dof=uy
-    value=-0.02
+    dof=disp_y
+    value=-0.1
     side=right
   [end]
 []
 
 [run]
-  type=transient
+  type=static
   proj=true
   debug=true
-  dt=1.0
-  step=10
 []

@@ -95,6 +95,10 @@ void ElementSystem::SetUmatIndex()
     {
         ActiveUmatIndex=UmatList::linearelastic;
     }
+    else if(kernelBlockInfo.MaterialKernelName=="deformgrad")
+    {
+        ActiveUmatIndex=UmatList::deformgrad;
+    }
     else if(kernelBlockInfo.MaterialKernelName=="freeenergy")
     {
         ActiveUmatIndex=UmatList::freeenergy;
@@ -115,5 +119,14 @@ void ElementSystem::SetUmatIndex()
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
         PetscFinalize();
         abort();
+    }
+
+    if(kernelBlockInfo.strain=="small")
+    {
+        strainMode=small;
+    }
+    else
+    {
+        strainMode=finite;
     }
 }

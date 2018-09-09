@@ -18,10 +18,14 @@ void ElementSystem::MechanicsMaterials(const int &nDim,const RankTwoTensor &grad
                                       RankTwoTensor &stress,
                                       RankFourTensor &Jacobian)
 {
+    ComputeStrain(nDim,grad,strain);
     switch (ActiveUmatIndex)
     {
         case linearelastic:
             LinearElasticMaterial(nDim,grad,strain,stress,Jacobian);
+            break;
+        case deformgrad:
+            DeformGradMaterial(nDim,grad,strain,stress,Jacobian);
             break;
         case neohookean:
             NeoHookeanMaterial(nDim,grad,strain,stress,Jacobian);
@@ -33,5 +37,29 @@ void ElementSystem::MechanicsMaterials(const int &nDim,const RankTwoTensor &grad
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
             PetscFinalize();
             abort();
+    }
+}
+
+//************************************
+void ElementSystem::ComputeStrain(const int &nDim,
+                                  const RankTwoTensor &grad,
+                                  RankTwoTensor &strain)
+{
+    RankTwoTensor F(nDim,0.0),Ft(nDim,0.0),I(nDim,0.0);
+
+    if(strainMode==small)
+    {
+        F=grad.transpose();
+
+        strain=0.5*(F+grad);
+    }
+    else
+    {
+        I.IdentityEntities();
+
+        F=grad+I;
+        Ft=F.transpose();
+
+        strain=0.5*(Ft*F-I);
     }
 }
