@@ -32,6 +32,8 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
                                   equationSystem.U);
 
 
+
+
         fe.FormKR(feSystemInfo.iState,
                   feSystemInfo.current_dt,feSystemInfo.current_time,
                   feSystemInfo.ctan,
@@ -46,6 +48,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
         bcSystem.ApplyNeumannBC(mesh,dofHandler,
                                 feSystemInfo.current_time,feSystemInfo.current_dt,
                                 equationSystem.AMATRIX,equationSystem.RHS);
+
         //bcSystem.ApplyConstraint(mesh,dofHandler,equationSystem.AMATRIX,equationSystem.RHS);
 
 

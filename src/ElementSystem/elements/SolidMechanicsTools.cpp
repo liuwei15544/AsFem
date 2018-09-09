@@ -35,6 +35,7 @@ double ElementSystem::ElasticityTensorComponent(int i, int k, const int &nDim,
     {
         for(l=1;l<=nDim;l++)
         {
+
             val+=elasticity_tensor.voigt(i,j,k,l)*shp[jInd][l]*shp[iInd][j];
         }
     }

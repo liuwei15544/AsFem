@@ -33,17 +33,17 @@ name = u v
    value=0
    side=right
   [end]
-  [leftv]
+  [rightv]
     type=dirichlet
     dof=v
     value=2
-    side=left
+    side=right
   [end]
-  [rightv]
+  [leftv]
    type=dirichlet
    dof=v
-   value=0
-   side=right
+   value=0.1
+   side=left
   [end]
 []
 

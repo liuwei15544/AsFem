@@ -6,8 +6,8 @@
   xmax=10.0
   ymin=0.0
   ymax=2.0
-  nx=20
-  ny=100
+  nx=50
+  ny=10
   meshtype=quad9
 []
 
@@ -46,7 +46,7 @@ name = disp_x disp_y
   [right_uy]
     type=tdirichlet
     dof=disp_y
-    value=0.01
+    value=0.001
     side=right
   [end]
 []
@@ -56,6 +56,6 @@ name = disp_x disp_y
   proj=true
   debug=true
   dt=1.0
-  step=20
+  step=50
   maxiter=200
 []

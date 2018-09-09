@@ -77,7 +77,7 @@ void FE::ModifyLocalKandRHS(DofHandler &dofHandler)
             {
                 // if dirichlet bc applied
                 jInd=(i-1)*nDofsPerNode+j-1;
-                for(i1=0;i1<nNodesPerElmt;i1++)
+                for(i1=0;i1<nDofsPerElmt;i1++)
                 {
                     localK[i1*nDofsPerElmt+jInd]=0.0;
                     localK[jInd*nDofsPerElmt+i1]=0.0;
