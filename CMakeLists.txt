@@ -104,7 +104,8 @@ set(SRC ${SRC} src/ElementSystem/uel/elmt01.cpp)
 # for mechanics constitutive law
 set(SRC ${SRC} src/ElementSystem/materials/MechanicsMaterials.cpp src/ElementSystem/materials/LinearElasticMaterial.cpp)
 set(SRC ${SRC} src/ElementSystem/materials/NeoHookeanMaterial.cpp src/ElementSystem/materials/DeformGradMaterial.cpp)
-
+# For thermal mechanics problem
+set(SRC ${SRC} src/ElementSystem/elements/ThermalMechanics.cpp src/ElementSystem/materials/ThermalElasticMaterial.cpp)
 # for phase field free energy
 set(SRC ${SRC} src/ElementSystem/materials/FreeEnergyMaterials.cpp src/ElementSystem/materials/FreeEnergyForCahnHilliard.cpp)
 
@@ -156,7 +157,7 @@ set(SRC ${SRC} src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSyste
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp src/ElementSystem/elements/ThermalMechanics.cpp src/ElementSystem/materials/ThermalElasticMaterial.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})

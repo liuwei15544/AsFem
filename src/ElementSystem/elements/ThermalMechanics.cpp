@@ -114,11 +114,11 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
         gradSigmaH[0]=0.0;gradSigmaH[1]=0.0;gradSigmaH[2]=0.0;
         for(i=0;i<nNodes;i++)
         {
-            conc+=shp[i][0]*U[3*i+2][0];
-            cdot+=shp[i][0]*U[3*i+2][1];
 
             if(nDim==2)
             {
+                conc+=shp[i][0]*U[3*i+2][0];
+                cdot+=shp[i][0]*U[3*i+2][1];
                 for(k=1;k<=nDim;k++)
                 {
                     gradUx[k-1]+=shp[i][k]*U[3*i  ][0];
@@ -148,18 +148,28 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
             grad.FillFromDispGradient(gradUx,gradUy,gradUz);
         }
 
+
         ThermalElasticMaterial(nDim,conc,grad,strain,stress,dstressdc,Jacobian);
 
         // SigmaH=Sigma_ij*delta_ij/nDim
         D=Parameters[2];
         Omega=Parameters[3];
-        prefactor=-(Jacobian(1,1,1,1)+Jacobian(1,1,2,2)+Jacobian(1,1,3,3)
-                   +Jacobian(2,2,1,1)+Jacobian(2,2,2,2)+Jacobian(2,2,3,3)
-                   +Jacobian(3,3,1,1)+Jacobian(3,3,2,2)+Jacobian(3,3,3,3))*Omega/(nDim*nDim);
+        if(nDim==2)
+        {
+            prefactor=-(Jacobian(1,1,1,1)+Jacobian(1,1,2,2)
+                        +Jacobian(2,2,1,1)+Jacobian(2,2,2,2))*Omega/(nDim*nDim);
+        }
+        else
+        {
+            prefactor=-(Jacobian(1,1,1,1)+Jacobian(1,1,2,2)+Jacobian(1,1,3,3)
+                        +Jacobian(2,2,1,1)+Jacobian(2,2,2,2)+Jacobian(2,2,3,3)
+                        +Jacobian(3,3,1,1)+Jacobian(3,3,2,2)+Jacobian(3,3,3,3))*Omega/(nDim*nDim);
+        }
 
         gradSigmaH[0]=prefactor*gradc[0];
         gradSigmaH[1]=prefactor*gradc[1];
         gradSigmaH[2]=prefactor*gradc[2];
+        //prefactor=0.0;
 
 
 

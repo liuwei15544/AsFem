@@ -6,9 +6,9 @@
   xmax=10.0
   ymin=0.0
   ymax=2.0
-  nx=100
-  ny=20
-  meshtype=quad9
+  nx=50
+  ny=10
+  meshtype=quad4
 []
 
 [dofs]
@@ -18,7 +18,7 @@ name = ux uy c
 [kernel]
   type=thermalmechanics
   strain=small
-  params= 1.0e5 0.3 1.0 0.08
+  params= 1.0e2 0.3 1.0 0.08
   mate=linearelastic
 []
 
@@ -40,7 +40,7 @@ name = ux uy c
   [right_ux]
     type=dirichlet
     dof=c
-    value=0.01
+    value=1.0
     side=bottom
   [end]
   [right_uy]
@@ -56,6 +56,6 @@ name = ux uy c
   proj=true
   debug=true
   dt=1.0e-3
-  step=50
+  step=150
   output=10
 []
