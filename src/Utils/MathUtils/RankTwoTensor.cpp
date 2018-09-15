@@ -820,7 +820,7 @@ RankTwoTensor operator*(const double &lhs, const RankTwoTensor &a)
 //************************************************
 //*** For eigen value and eigen vector
 //************************************************
-void RankTwoTensor::SymmetricEigenValueAndVector(vector<double> &eigenvalue,
+void RankTwoTensor::GetEigenValueAndVector(vector<double> &eigenvalue,
                                                  RankTwoTensor &eigenvector)
 {
     // taken from:
@@ -836,6 +836,8 @@ void RankTwoTensor::SymmetricEigenValueAndVector(vector<double> &eigenvalue,
         // TODO:If there is well-documented algorithm, move to that simple and clean code
         //      Now I have to use Eigen, which is not a good choice for me.
         //      Include Eigen is too heavy for AsFem!!!
+        //      But good thing is Eigen can handle non-symmetric case, even through
+        //       the strain should be symmetric, any how, it works!
 
         Eigen::Matrix2d A;
         A<<(*this)(1,1),(*this)(1,2),
@@ -906,4 +908,100 @@ void RankTwoTensor::SymmetricEigenValueAndVector(vector<double> &eigenvalue,
         eigenvector(2,3)=EigVec(1,2);
         eigenvector(3,3)=EigVec(2,2);
     }
+}
+
+//********************************************************
+RankFourTensor RankTwoTensor::PositiveProjectionTensor(vector<double> &eigenvalue,
+                                                       RankTwoTensor &eigenvec)
+{
+    // Algorithm is taken from:
+    // C. Miehe and M. Lambrecht, Commun. Numer. Meth. Engng 2001; 17:337~353
+    // https://onlinelibrary.wiley.com/doi/epdf/10.1002/cnm.404
+    GetEigenValueAndVector(eigenvalue,eigenvec);
+
+    // C=F^T F=lambda_i M_i where M_i=n_i x n_i
+    //         lambda_i-->eigenvalue  n_i--> the eigenvector
+
+    double epos[nDim],d[nDim]; // d is defined in Eq.(17)
+    int a,b,i,j;
+    for(i=1;i<=nDim;i++)
+    {
+        // here only use the positive part, which is defined as eps_pos=[abs(eps)+eps]/2.0
+        epos[i-1]=0.5*(abs(eigenvalue[i])+eigenvalue[i]);
+
+        d[i-1]=1.0;
+        if(eigenvalue[i-1]<0.0) d[i-1]=0.0;
+    }
+
+    RankFourTensor ProjPos(nDim,0.0);
+
+    // calculate Ma defined in Eq.(9)-2
+    // Ma=n_a x n_a
+    RankTwoTensor Ma(nDim,0.0);
+    for(a=1;a<=nDim;a++)
+    {
+        // for Ma=n_a x n_a
+        for(i=1;i<=nDim;i++)
+        {
+            for(j=1;j<=nDim;j++)
+            {
+                Ma(i,j)=eigenvec(i,a)*eigenvec(j,a);
+                // here the eigenvec is a rank-2 tensor(nxn matrix):
+                // i-th col is the i-th eigen vector
+            }
+        }
+
+        // Eq.(19), first term on the right side
+        ProjPos+=d[a-1]*Ma.OuterProduct(Ma);
+    }
+
+    // Now we calculate the Gab and Gba
+    // We need a new rank-2 tensor Mb(same defination as Ma)
+    RankTwoTensor Mb(nDim,0.0);
+    RankFourTensor Gab(nDim,0.0);
+    RankFourTensor Gba(nDim,0.0);
+    double theta_ab;// defined in Eq.(21)-1
+    const double tol=1.0e-14;
+    for(a=1;a<=nDim;a++)
+    {
+        for(b=1;b<=nDim;b++)
+        {
+            //*********************************
+            //*** For Ma and Mb
+            for(i=1;i<=nDim;i++)
+            {
+                for(j=1;j<=nDim;j++)
+                {
+                    Ma(i,j)=eigenvec(i,a)*eigenvec(j,a);
+                    Mb(i,j)=eigenvec(i,b)*eigenvec(j,b);
+                }
+            }
+
+            Gab=Ma.AIkBJl(Mb)+Ma.AIlBJk(Mb);// Eq.(12)
+            Gba=Mb.AIkBJl(Ma)+Mb.AIlBJk(Ma);// change the order of Eq.(12)
+
+            // since only positive term is involved
+            // e_a=0.5*(abs(lambda_a)+lambda_a)
+            // P is defined as: 2dE/dC in Eq.(8)-2
+            //  but 2dM/dC=(Gab+Gba)/(lambda_a-lambda_b)
+            // E(C)=sum(e_a*M_a)
+            // P=2dE(C)/dC=2(dE(C)/dM)*(dM/dC)
+
+            if(abs(eigenvalue[a-1]-eigenvalue[b-1])<tol)
+            {
+                //if limit lambda_a to lambda_b in Eq.(24)
+                theta_ab=0.5*(d[a-1]+d[b-1])/2.0;
+            }
+            else
+            {
+                // ea(lambda_a)=(1/2)*(lambda_a-1)
+                // m=2 for green strain case in Eq.(16)
+                theta_ab=0.5*(epos[a-1]-epos[b-1])/(eigenvalue[a-1]-eigenvalue[b-1]);// Eq.(21)-1
+            }
+
+            ProjPos+=theta_ab*(Gab+Gba);
+        }
+    }
+
+    return ProjPos;
 }

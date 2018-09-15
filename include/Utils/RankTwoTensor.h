@@ -88,7 +88,7 @@ public:
     double det() const;
     RankTwoTensor inverse() const;
 
-    void SymmetricEigenValueAndVector(vector<double> &eigenvalue,RankTwoTensor &eigenvector);
+    void GetEigenValueAndVector(vector<double> &eigenvalue,RankTwoTensor &eigenvector);
 
     //*********************************************
     //*** operator for rank-4 tensor calculation
@@ -98,6 +98,9 @@ public:
     RankFourTensor AJkBIl(const RankTwoTensor &b) const;
     RankFourTensor OuterProduct(const RankTwoTensor &b) const;
     RankFourTensor Otimes(const RankTwoTensor &b) const;
+
+    RankFourTensor PositiveProjectionTensor(vector<double> &eigenvalue,
+                                            RankTwoTensor &eigenvec);
 
     //******************************************
     void PrintTensor() const;
