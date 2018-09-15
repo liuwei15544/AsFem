@@ -88,6 +88,8 @@ public:
     double det() const;
     RankTwoTensor inverse() const;
 
+    void SymmetricEigenValueAndVector(vector<double> &eigenvalue,RankTwoTensor &eigenvector);
+
     //*********************************************
     //*** operator for rank-4 tensor calculation
     //*********************************************

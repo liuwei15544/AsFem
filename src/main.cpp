@@ -4,8 +4,11 @@
 //**********************
 #include "FESystem/FESystem.h"
 
+#include "Utils/RankTwoTensor.h"
+
 
 using namespace std;
+
 int main(int args,char *argv[])
 {
     PetscErrorCode ierr;

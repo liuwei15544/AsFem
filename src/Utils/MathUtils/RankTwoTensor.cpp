@@ -13,6 +13,8 @@
 
 #include "Utils/RankTwoTensor.h"
 
+#include "Eigen/Eigen/Dense"
+
 //****************************************************
 //*** For constructor
 //****************************************************
@@ -812,4 +814,96 @@ RankTwoTensor operator*(const double &lhs, const RankTwoTensor &a)
     RankTwoTensor temp(a.GetDim(),0.0);
     for(int i=0;i<9;i++) temp.elements[i]=lhs*a.elements[i];
     return temp;
+}
+
+
+//************************************************
+//*** For eigen value and eigen vector
+//************************************************
+void RankTwoTensor::SymmetricEigenValueAndVector(vector<double> &eigenvalue,
+                                                 RankTwoTensor &eigenvector)
+{
+    // taken from:
+    // https://en.wikipedia.org/wiki/Eigenvalue_algorithm#3%C3%973_matrices
+    if(nDim==2)
+    {
+        //
+        // For two dimension case
+        // use : http://www.math.harvard.edu/archive/21b_fall_04/exhibits/2dmatrices/
+        // A=[a b;c d]
+        //
+        // Now I use Eigen's built-in eigen value and eigen vector solution
+        // TODO:If there is well-documented algorithm, move to that simple and clean code
+        //      Now I have to use Eigen, which is not a good choice for me.
+        //      Include Eigen is too heavy for AsFem!!!
+
+        Eigen::Matrix2d A;
+        A<<(*this)(1,1),(*this)(1,2),
+           (*this)(2,1),(*this)(2,2);
+
+        Eigen::EigenSolver<Eigen::Matrix2d> es(A);
+
+        if(es.eigenvalues().size()<1)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find eigen value for rank-2 !\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscFinalize();
+            abort();
+        }
+
+        Eigen::Matrix2d EigVec=es.eigenvectors().real();
+        eigenvalue.clear();
+        for(unsigned int i=0;i<es.eigenvalues().size();i++)
+        {
+            eigenvalue.push_back(es.eigenvalues().real()[i]);
+        }
+
+        eigenvector(1,1)=EigVec(0,0);eigenvector(2,1)=EigVec(1,0);
+        eigenvector(1,2)=EigVec(0,1);eigenvector(2,2)=EigVec(1,1);
+
+    }
+    else if(nDim==3)
+    {
+        eigenvalue.clear();
+
+        Eigen::Matrix3d A;
+        A<<(*this)(1,1),(*this)(1,2),(*this)(1,3),
+           (*this)(2,1),(*this)(2,2),(*this)(2,3),
+           (*this)(3,1),(*this)(3,2),(*this)(3,3);
+
+        Eigen::EigenSolver<Eigen::Matrix3d> es(A);
+
+        if(es.eigenvalues().size()<1)
+        {
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find eigen value for rank-2 !\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+            PetscFinalize();
+            abort();
+        }
+
+        Eigen::Matrix3d EigVec=es.eigenvectors().real();
+        eigenvalue.clear();
+        for(unsigned int i=0;i<es.eigenvalues().size();i++)
+        {
+            eigenvalue.push_back(es.eigenvalues().real()[i]);
+        }
+
+        eigenvector(1,1)=EigVec(0,0);
+        eigenvector(2,1)=EigVec(1,0);
+        eigenvector(3,1)=EigVec(2,0);
+
+        eigenvector(1,2)=EigVec(0,1);
+        eigenvector(2,2)=EigVec(1,1);
+        eigenvector(3,2)=EigVec(2,1);
+
+        eigenvector(1,3)=EigVec(0,2);
+        eigenvector(2,3)=EigVec(1,2);
+        eigenvector(3,3)=EigVec(2,2);
+    }
 }
