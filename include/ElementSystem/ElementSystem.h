@@ -112,6 +112,14 @@ private:
                                      const int &iInd,const int &jInd,
                                      const double (&shp)[27][4]);
 
+    //*************************************************************
+    //*** For thermal mechanics
+    void ThermalMechanics(const int &iState,const int (&IX)[27],
+                          const int &nDim,const int &nNodes,const int &nDofs,
+                          const double &dt,const double &t,const double (&ctan)[2],
+                          const double (&Coords)[27][4],const double (&U)[270][2],
+                          double (&K)[270*270],double (&rhs)[270],double (&proj)[27][12+1]);
+
     void CahnHilliard(const int &iState,const int (&IX)[27],
                  const int &nDim,const int &nNodes,const int &nDofs,
                  const double &dt,const double &t,const double (&ctan)[2],
