@@ -26,10 +26,13 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
     int iInd,jInd;
     double shp[27][4],gs[125][4],xsj,JxW;
     double gradUx[3],gradUy[3],gradUz[3];
+    double gradc[3],gradSigmaH[3];
+    double cdot,conc;
+    double D,Omega,prefactor;
     double xi,eta,zeta;
     double value[12];// currently, only 12 variable is allowed to be projected!
 
-    RankTwoTensor stress(nDim,0.0),strain(nDim,0.0),grad(nDim,0.0);
+    RankTwoTensor stress(nDim,0.0),dstressdc(nDim,0.0),strain(nDim,0.0),grad(nDim,0.0);
     RankFourTensor Jacobian(nDim,0.0);
 
     //******************************
@@ -106,23 +109,31 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
         gradUx[0]=0.0;gradUx[1]=0.0;gradUx[2]=0.0;
         gradUy[0]=0.0;gradUy[1]=0.0;gradUy[2]=0.0;
         gradUz[0]=0.0;gradUz[1]=0.0;gradUz[2]=0.0;
+        cdot=0.0;conc=0.0;
+        gradc[0]=0.0;gradc[1]=0.0;gradc[2]=0.0;
+        gradSigmaH[0]=0.0;gradSigmaH[1]=0.0;gradSigmaH[2]=0.0;
         for(i=0;i<nNodes;i++)
         {
+            conc+=shp[i][0]*U[3*i+2][0];
+            cdot+=shp[i][0]*U[3*i+2][1];
+
             if(nDim==2)
             {
                 for(k=1;k<=nDim;k++)
                 {
-                    gradUx[k-1]+=shp[i][k]*U[2*i  ][0];
-                    gradUy[k-1]+=shp[i][k]*U[2*i+1][0];
+                    gradUx[k-1]+=shp[i][k]*U[3*i  ][0];
+                    gradUy[k-1]+=shp[i][k]*U[3*i+1][0];
+                    gradc[k-1] +=shp[i][k]*U[3*i+2][0];
                 }
             }
             else if(nDim==3)
             {
                 for(k=1;k<=nDim;k++)
                 {
-                    gradUx[k-1]+=shp[i][k]*U[3*i  ][0];
-                    gradUy[k-1]+=shp[i][k]*U[3*i+1][0];
-                    gradUz[k-1]+=shp[i][k]*U[3*i+2][0];
+                    gradUx[k-1]+=shp[i][k]*U[4*i  ][0];
+                    gradUy[k-1]+=shp[i][k]*U[4*i+1][0];
+                    gradUz[k-1]+=shp[i][k]*U[4*i+2][0];
+                    gradc[k-1] +=shp[i][k]*U[4*i+3][0];
                 }
             }
         }
@@ -137,7 +148,20 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
             grad.FillFromDispGradient(gradUx,gradUy,gradUz);
         }
 
-        MechanicsMaterials(nDim,grad,strain,stress,Jacobian);
+        ThermalElasticMaterial(nDim,conc,grad,strain,stress,dstressdc,Jacobian);
+
+        // SigmaH=Sigma_ij*delta_ij/nDim
+        D=Parameters[2];
+        Omega=Parameters[3];
+        prefactor=-(Jacobian(1,1,1,1)+Jacobian(1,1,2,2)+Jacobian(1,1,3,3)
+                   +Jacobian(2,2,1,1)+Jacobian(2,2,2,2)+Jacobian(2,2,3,3)
+                   +Jacobian(3,3,1,1)+Jacobian(3,3,2,2)+Jacobian(3,3,3,3))*Omega/(nDim*nDim);
+
+        gradSigmaH[0]=prefactor*gradc[0];
+        gradSigmaH[1]=prefactor*gradc[1];
+        gradSigmaH[2]=prefactor*gradc[2];
+
+
 
 
         // Calculate local K and RHS
@@ -146,22 +170,34 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
             // calculate residual
             for(iInd=0;iInd<nNodes;iInd++)
             {
+                // R_c
+                rhs[3*iInd+2]+=cdot*shp[iInd][0]*JxW;
+                // R_u part
                 // -Bt*Sigma
                 if(nDim==2)
                 {
                     for(k=1;k<=nDim;k++)
                     {
-                        rhs[2*iInd  ]+=-stress(1,k)*shp[iInd][k]*JxW;
-                        rhs[2*iInd+1]+=-stress(2,k)*shp[iInd][k]*JxW;
+                        // R_ux
+                        rhs[3*iInd  ]+=-stress(1,k)*shp[iInd][k]*JxW;
+                        // R_uy
+                        rhs[3*iInd+1]+=-stress(2,k)*shp[iInd][k]*JxW;
+                        // R_c
+                        rhs[3*iInd+2]+=D*gradc[k-1]*shp[iInd][k]*JxW
+                                      -D*conc*Omega*gradSigmaH[k-1]*shp[iInd][k]*JxW;
                     }
                 }
                 else if(nDim==3)
                 {
                     for(k=1;k<=nDim;k++)
                     {
-                        rhs[3*iInd  ]+=-stress(1,k)*shp[iInd][k]*JxW;
-                        rhs[3*iInd+1]+=-stress(2,k)*shp[iInd][k]*JxW;
-                        rhs[3*iInd+2]+=-stress(3,k)*shp[iInd][k]*JxW;
+                        // R_u
+                        rhs[4*iInd  ]+=-stress(1,k)*shp[iInd][k]*JxW;
+                        rhs[4*iInd+1]+=-stress(2,k)*shp[iInd][k]*JxW;
+                        rhs[4*iInd+2]+=-stress(3,k)*shp[iInd][k]*JxW;
+                        // R_c
+                        rhs[4*iInd+3]+=D*gradc[k-1]*shp[iInd][k]*JxW
+                                       -D*conc*Omega*gradSigmaH[k-1]*shp[iInd][k]*JxW;
                     }
                 }
 
@@ -173,36 +209,70 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
                         if(nDim==2)
                         {
                             // Kux,ux
-                            K[(2*iInd  )*nDofs+2*jInd  ]+=ElasticityTensorComponent(1,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
-                            // Kux,uy
-                            K[(2*iInd  )*nDofs+2*jInd+1]+=ElasticityTensorComponent(1,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
-                            // Kuy,ux
-                            K[(2*iInd+1)*nDofs+2*jInd  ]+=ElasticityTensorComponent(2,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
-                            // Kuy,uy
-                            K[(2*iInd+1)*nDofs+2*jInd+1]+=ElasticityTensorComponent(2,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
-                        }
-                        else if(nDim==3)
-                        {
-                            // Kux,ux
                             K[(3*iInd  )*nDofs+3*jInd  ]+=ElasticityTensorComponent(1,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
                             // Kux,uy
                             K[(3*iInd  )*nDofs+3*jInd+1]+=ElasticityTensorComponent(1,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
-                            // Kux,uz
-                            K[(3*iInd  )*nDofs+3*jInd+2]+=ElasticityTensorComponent(1,3,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+
+
 
                             // Kuy,ux
                             K[(3*iInd+1)*nDofs+3*jInd  ]+=ElasticityTensorComponent(2,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
                             // Kuy,uy
                             K[(3*iInd+1)*nDofs+3*jInd+1]+=ElasticityTensorComponent(2,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
-                            // Kuy,uz
-                            K[(3*iInd+1)*nDofs+3*jInd+2]+=ElasticityTensorComponent(2,3,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+
+                            // Kc,cdot
+                            K[(3*iInd+2)*nDofs+3*jInd+2]+=-shp[jInd][0]*shp[iInd][0]*JxW*ctan[1];
+                            for(k=1;k<=nDim;k++)
+                            {
+                                // K_ux,c
+                                K[(3*iInd  )*nDofs+3*jInd+2]+=shp[jInd][0]*dstressdc(1,k)*shp[iInd][k]*JxW*ctan[0];
+                                // K_uy,c
+                                K[(3*iInd+1)*nDofs+3*jInd+2]+=shp[jInd][0]*dstressdc(2,k)*shp[iInd][k]*JxW*ctan[0];
+                                // Kc,c
+                                K[(3*iInd+2)*nDofs+3*jInd+2]+=-D*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0]
+                                                             +D*Omega*shp[jInd][0]*gradSigmaH[k-1]*shp[iInd][k]*JxW*ctan[0]
+                                                             +D*conc*Omega*prefactor*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
+                            }
+
+                        }
+                        else if(nDim==3)
+                        {
+                            // Kux,ux
+                            K[(4*iInd  )*nDofs+4*jInd  ]+=ElasticityTensorComponent(1,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+                            // Kux,uy
+                            K[(4*iInd  )*nDofs+4*jInd+1]+=ElasticityTensorComponent(1,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+                            // Kux,uz
+                            K[(4*iInd  )*nDofs+4*jInd+2]+=ElasticityTensorComponent(1,3,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
 
                             // Kuy,ux
-                            K[(3*iInd+2)*nDofs+3*jInd  ]+=ElasticityTensorComponent(3,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+                            K[(4*iInd+1)*nDofs+4*jInd  ]+=ElasticityTensorComponent(2,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
                             // Kuy,uy
-                            K[(3*iInd+2)*nDofs+3*jInd+1]+=ElasticityTensorComponent(3,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+                            K[(4*iInd+1)*nDofs+4*jInd+1]+=ElasticityTensorComponent(2,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
                             // Kuy,uz
-                            K[(3*iInd+2)*nDofs+3*jInd+2]+=ElasticityTensorComponent(3,3,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+                            K[(4*iInd+1)*nDofs+4*jInd+2]+=ElasticityTensorComponent(2,3,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+
+                            // Kuy,ux
+                            K[(4*iInd+2)*nDofs+4*jInd  ]+=ElasticityTensorComponent(3,1,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+                            // Kuy,uy
+                            K[(4*iInd+2)*nDofs+4*jInd+1]+=ElasticityTensorComponent(3,2,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+                            // Kuy,uz
+                            K[(4*iInd+2)*nDofs+4*jInd+2]+=ElasticityTensorComponent(3,3,nDim,Jacobian,iInd,jInd,shp)*JxW*ctan[0];
+
+                            // Kc,cdot
+                            K[(4*iInd+3)*nDofs+4*jInd+3]+=-shp[jInd][0]*shp[iInd][0]*JxW*ctan[1];
+                            for(k=1;k<=nDim;k++)
+                            {
+                                // K_ux,c
+                                K[(4*iInd  )*nDofs+4*jInd+3]+=shp[jInd][0]*dstressdc(1,k)*shp[iInd][k]*JxW*ctan[0];
+                                // K_uy,c
+                                K[(4*iInd+1)*nDofs+4*jInd+3]+=shp[jInd][0]*dstressdc(2,k)*shp[iInd][k]*JxW*ctan[0];
+                                // K_uz,c
+                                K[(4*iInd+2)*nDofs+4*jInd+3]+=shp[jInd][0]*dstressdc(3,k)*shp[iInd][k]*JxW*ctan[0];
+                                // Kc,c
+                                K[(4*iInd+3)*nDofs+4*jInd+3]+=-D*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0]
+                                                              +D*Omega*shp[jInd][0]*gradSigmaH[k-1]*shp[iInd][k]*JxW*ctan[0]
+                                                              +D*conc*Omega*prefactor*shp[jInd][k]*shp[iInd][k]*JxW*ctan[0];
+                            }
                         }
                     }
                 }
