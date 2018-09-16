@@ -57,7 +57,7 @@ PetscErrorCode EquationSystem::Init()
         VecDuplicate(U0,&V);//CHKERRQ(ierr);
 
         // initialize
-        const PetscScalar val=1.0e-14;
+        const PetscScalar val=1.0e-13;
         ierr=VecSet(U0,val);//CHKERRQ(ierr);
         ierr=VecSet(RHS,val);//CHKERRQ(ierr);
         ierr=VecSet(V,val);//CHKERRQ(ierr);
