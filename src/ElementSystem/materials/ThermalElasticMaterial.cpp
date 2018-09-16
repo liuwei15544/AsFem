@@ -34,18 +34,17 @@ void ElementSystem::ThermalElasticMaterial(const int &nDim,
     const double Omega=Parameters[3];
 
 
-    RankTwoTensor I(nDim,0.0);
+    RankTwoTensor I(0.0);
     I.IdentityEntities();
 
 
     if(strainMode==small)
     {
-
-        strain=0.5*(grad+grad.transpose())-(Omega*conc/nDim)*I;
+        strain=0.5*(grad+grad.transpose())-(Omega*conc/3.0)*I;
     }
     else
     {
-        RankTwoTensor F(nDim,0.0),Ft(nDim,0.0);
+        RankTwoTensor F(0.0),Ft(0.0);
         I.IdentityEntities();
 
         F=grad+I;
@@ -55,30 +54,12 @@ void ElementSystem::ThermalElasticMaterial(const int &nDim,
     }
 
 
-
-
-
-
     Jacobian.FillFromEandNu(E,nu);
-
-    for(int i=1;i<=nDim;i++)
-    {
-        for(int j=1;j<=nDim;j++)
-        {
-            for(int k=1;k<=nDim;k++)
-            {
-                for(int l=1;l<=nDim;l++)
-                    cout<<Jacobian(i,j,k,l)<<" ";
-            }
-            cout<<endl;
-        }
-    }
-    cout<<endl<<endl;
-
 
     stress=Jacobian*strain;
 
-    dstressdc=(-Omega/nDim)*Jacobian*I;
+    dstressdc=(-Omega/3.0)*Jacobian*I;
+
 
 
 }

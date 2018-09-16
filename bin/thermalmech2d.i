@@ -6,9 +6,9 @@
   xmax=10.0
   ymin=0.0
   ymax=2.0
-  nx=50
-  ny=10
-  meshtype=quad4
+  nx=100
+  ny=20
+  meshtype=quad9
 []
 
 [dofs]
@@ -56,6 +56,6 @@ name = ux uy c
   proj=true
   debug=true
   dt=1.0e-3
-  step=51
+  step=50
   output=10
 []

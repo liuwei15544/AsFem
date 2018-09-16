@@ -31,8 +31,8 @@ void ElementSystem::SolidMechanics(const int &iState, const int (&IX)[27], const
     double xi,eta,zeta;
     double value[12];// currently, only 12 variable is allowed to be projected!
 
-    RankTwoTensor stress(nDim,0.0),strain(nDim,0.0),grad(nDim,0.0);
-    RankFourTensor Jacobian(nDim,0.0);
+    RankTwoTensor stress(0.0),strain(0.0),grad(0.0);
+    RankFourTensor Jacobian(0.0);
 
     //******************************
     //*** Initializing

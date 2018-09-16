@@ -30,9 +30,9 @@ void ElementSystem::NeoHookeanMaterial(const int &nDim,
         abort();
     }
 
-    RankTwoTensor F(nDim,0.0),Ft(nDim,0.0),I(nDim,0.0);
-    RankTwoTensor C(nDim,0.0),Cinv(nDim,0.0);
-    RankTwoTensor pk2(nDim,0.0);
+    RankTwoTensor F(0.0),Ft(0.0),I(0.0);
+    RankTwoTensor C(0.0),Cinv(0.0);
+    RankTwoTensor pk2(0.0);
     double J;
 
     I.IdentityEntities();// set as diagonal unit tensor

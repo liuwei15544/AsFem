@@ -916,8 +916,8 @@ RankFourTensor RankTwoTensor::PositiveProjectionTensor(vector<double> &eigenvalu
     // Now we calculate the Gab and Gba
     // We need a new rank-2 tensor Mb(same defination as Ma)
     RankTwoTensor Mb(0.0);
-    RankFourTensor Gab(nDim,0.0);
-    RankFourTensor Gba(nDim,0.0);
+    RankFourTensor Gab(0.0);
+    RankFourTensor Gba(0.0);
     double theta_ab;// defined in Eq.(21)-1
     const double tol=1.0e-14;
     for(a=1;a<=nDim;a++)
