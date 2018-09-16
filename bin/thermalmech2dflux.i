@@ -51,5 +51,5 @@ name = ux uy c
   debug=true
   dt=1.0e-3
   step=150
-  output=10
+  interval=10
 []

@@ -19,6 +19,7 @@ FESystemInfo::FESystemInfo()
     current_time=0.0;
     totalstep=0;
     iState=6;
+    interval=1;
 
     IsProjOutput=false;
 
@@ -33,6 +34,7 @@ void FESystemInfo::Init()
     current_time=0.0;
     totalstep=0;
     iState=6;
+    interval=1;
 
     ctan[0]=1.0;ctan[1]=1.0;
 

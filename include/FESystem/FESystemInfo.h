@@ -35,6 +35,7 @@ public:
     double current_time;
     int totalstep,currentstep;
     int iState;
+    int interval=1;
     double ctan[2]={1.0};
 
     int nDofs=0,nNodes=0,nElmts=0;

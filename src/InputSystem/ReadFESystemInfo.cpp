@@ -223,6 +223,26 @@ bool InputSystem::ReadFESystemInfo(FESystemInfo &feSystemInfo)
 
                 feSystemInfo.NonLinearSolver=substr;
             }
+            else if(str.compare(0,9,"interval=")==0)
+            {
+                int i=line.find("=")+1;
+                numbers=SplitNum(line.substr(i,line.size()-i+1));
+                if(numbers.size()<1)
+                {
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: can't find dt= value  !!!       ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        dt=val1... is required !!!      ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+                    return false;
+                }
+                if(numbers[0]<1)
+                {
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: interval=%6d is two small  !!!***\n",int(numbers[0]));
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***        interval>=1... is required !!!  ***\n");
+                    PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
+                    return false;
+                }
+                feSystemInfo.interval=int(numbers[0]);
+            }
 
 
             getline(in,line);linenum+=1;// inside [kernels]

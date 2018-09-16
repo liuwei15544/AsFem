@@ -48,16 +48,20 @@ void FESystem::BackwardEulerMethod()
             PetscFinalize();
             abort();
         }
-        if(feSystemInfo.IsProjOutput)
+
+        if(step%feSystemInfo.interval==0)
         {
-            feSystemInfo.iState=8;
-            fe.FormKR(feSystemInfo.iState,feSystemInfo.current_dt,feSystemInfo.current_time,feSystemInfo.ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.Proj);
-            outputSystem.WriteUAndProjToVTUFile(step,mesh,equationSystem,equationSystem.U,equationSystem.Proj);
-            feSystemInfo.iState=6;
-        }
-        else
-        {
-            outputSystem.WriteUToVTUFile(step,mesh,equationSystem,equationSystem.U);
+            if(feSystemInfo.IsProjOutput)
+            {
+                feSystemInfo.iState=8;
+                fe.FormKR(feSystemInfo.iState,feSystemInfo.current_dt,feSystemInfo.current_time,feSystemInfo.ctan,mesh,dofHandler,elementSystem,equationSystem.U,equationSystem.V,equationSystem.AMATRIX,equationSystem.RHS,equationSystem.Proj);
+                outputSystem.WriteUAndProjToVTUFile(step,mesh,equationSystem,equationSystem.U,equationSystem.Proj);
+                feSystemInfo.iState=6;
+            }
+            else
+            {
+                outputSystem.WriteUToVTUFile(step,mesh,equationSystem,equationSystem.U);
+            }
         }
 
         equationSystem.UpdateU0(equationSystem.U);
