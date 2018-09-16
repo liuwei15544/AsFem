@@ -642,7 +642,7 @@ RankFourTensor RankTwoTensor::OuterProduct(const RankTwoTensor &b) const
         abort();
     }
 
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(i=1;i<=nDim;i++)
     {
         for(j=1;j<=nDim;j++)
@@ -675,7 +675,7 @@ RankFourTensor RankTwoTensor::AIkBJl(const RankTwoTensor &b) const
         abort();
     }
 
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(i=1;i<=nDim;i++)
     {
         for(j=1;j<=nDim;j++)
@@ -707,7 +707,7 @@ RankFourTensor RankTwoTensor::AIlBJk(const RankTwoTensor &b) const
         abort();
     }
 
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(i=1;i<=nDim;i++)
     {
         for(j=1;j<=nDim;j++)
@@ -739,7 +739,7 @@ RankFourTensor RankTwoTensor::AJkBIl(const RankTwoTensor &b) const
         abort();
     }
 
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(i=1;i<=nDim;i++)
     {
         for(j=1;j<=nDim;j++)
@@ -761,7 +761,7 @@ RankFourTensor RankTwoTensor::AJkBIl(const RankTwoTensor &b) const
 RankFourTensor RankTwoTensor::Otimes(const RankTwoTensor &b) const
 {
     //AOtimeB=0.5*(AikBjl+AilBjk)
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     temp=0.5*((*this).AIkBJl(b)+(*this).AIlBJk(b));
     return temp;
 }
@@ -891,7 +891,7 @@ RankFourTensor RankTwoTensor::PositiveProjectionTensor(vector<double> &eigenvalu
         if(eigenvalue[i-1]<0.0) d[i-1]=0.0;
     }
 
-    RankFourTensor ProjPos(nDim,0.0);
+    RankFourTensor ProjPos(0.0);
 
     // calculate Ma defined in Eq.(9)-2
     // Ma=n_a x n_a

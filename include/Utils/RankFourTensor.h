@@ -38,8 +38,8 @@ public:
         InitRank4Identity
     };
 public:
-    RankFourTensor(int dim,double val);
-    RankFourTensor(int dim,InitMethod method=InitZero);
+    RankFourTensor(double val);
+    RankFourTensor(InitMethod method=InitZero);
     void FillFromEandNu(double E,double nu);// Young's modulus and poisson ratio
     void FillFromKandG(double K,double G);  // Bulk modulus and shear modulus
 
@@ -82,7 +82,7 @@ public:
     void PrintTensor() const;
 
 private:
-    int nDim;
+    const int nDim=3;
     int Dim2,Dim3,Dim4;
     double elements[3*3*3*3]={0.0};
 };

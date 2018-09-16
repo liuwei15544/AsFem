@@ -16,42 +16,20 @@
 //**************************************************
 //*** For constructor                            ***
 //**************************************************
-RankFourTensor::RankFourTensor(int dim, double val)
+RankFourTensor::RankFourTensor(double val)
 {
-    if(dim<1||dim>3)
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: dim=%3d is invalid in rank4 tensor*\n",dim);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
-    nDim=dim;
-    Dim2=dim*dim;
-    Dim3=dim*dim;
-    Dim4=dim*dim*dim*dim;
+
+    Dim2=3*3;
+    Dim3=3*3*3;
+    Dim4=3*3*3*3;
     for(int i=0;i<81;i++) elements[i]=val;
 }
 
-RankFourTensor::RankFourTensor(int dim, RankFourTensor::InitMethod method)
+RankFourTensor::RankFourTensor(RankFourTensor::InitMethod method)
 {
-    if(dim<1||dim>3)
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: dim=%3d is invalid in rank4 tensor*\n",dim);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
-
-    nDim=dim;
-    Dim2=dim*dim;
-    Dim3=dim*dim;
-    Dim4=dim*dim*dim*dim;
+    Dim2=3*3;
+    Dim3=3*3*3;
+    Dim4=3*3*3*3;
 
     if(method==InitZero)
     {
@@ -97,8 +75,6 @@ RankFourTensor::RankFourTensor(int dim, RankFourTensor::InitMethod method)
 //*****************************************************
 double RankFourTensor::operator()(int i, int j, int k, int l) const
 {
-    int iInd,jInd;
-
     if(i<1||i>nDim)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -148,8 +124,6 @@ double RankFourTensor::operator()(int i, int j, int k, int l) const
 }
 double& RankFourTensor::operator()(int i, int j, int k, int l)
 {
-    int iInd,jInd;
-
     if(i<1||i>nDim)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -191,17 +165,12 @@ double& RankFourTensor::operator()(int i, int j, int k, int l)
         abort();
     }
 
-    iInd=(i-1)*nDim+j;
-    jInd=(iInd-1)*nDim+k;
-
     return elements[(((i-1)*nDim+j-1)*nDim+k-1)*nDim+l-1];
-    return elements[(jInd-1)*nDim+l-1];
+
 }
 
 double RankFourTensor::voigt(int i,int j,int k,int l) const
 {
-    int iInd,jInd;
-
     if(i<1||i>nDim)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -326,7 +295,7 @@ bool RankFourTensor::operator==(const RankFourTensor &a) const
 //*** For + operator
 RankFourTensor RankFourTensor::operator+(const double &a) const
 {
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(int i=0;i<Dim4;i++) temp.elements[i]=elements[i]+a;
     return temp;
 }
@@ -343,7 +312,7 @@ RankFourTensor RankFourTensor::operator+(const RankFourTensor &a) const
         abort();
     }
 
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(int i=0;i<Dim4;i++) temp.elements[i]=elements[i]+a.elements[i];
     return temp;
 }
@@ -371,7 +340,7 @@ RankFourTensor& RankFourTensor::operator+=(const RankFourTensor &a)
 //*** For - operator
 RankFourTensor RankFourTensor::operator-(const double &a) const
 {
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(int i=0;i<Dim4;i++) temp.elements[i]=elements[i]-a;
     return temp;
 }
@@ -388,7 +357,7 @@ RankFourTensor RankFourTensor::operator-(const RankFourTensor &a) const
         abort();
     }
 
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(int i=0;i<Dim4;i++) temp.elements[i]=elements[i]-a.elements[i];
     return temp;
 }
@@ -418,7 +387,7 @@ RankFourTensor& RankFourTensor::operator-=(const RankFourTensor &a)
 //***************************
 RankFourTensor RankFourTensor::operator*(const double &a) const
 {
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     for(int i=0;i<Dim4;i++) temp.elements[i]=elements[i]*a;
     return temp;
 }
@@ -437,7 +406,7 @@ RankTwoTensor RankFourTensor::operator*(const RankTwoTensor &a) const
     }
 
     // B_ij=C_ijkl*a_kl
-    RankTwoTensor temp(nDim,0.0);
+    RankTwoTensor temp(0.0);
     int i,j,k,l;
     double val;
     for(i=1;i<=nDim;i++)
@@ -474,7 +443,7 @@ RankFourTensor RankFourTensor::operator*(const RankFourTensor &a) const
     }
 
     // E_ijkl=C_ijmn*D_mnkl
-    RankFourTensor temp(nDim,0.0);
+    RankFourTensor temp(0.0);
     int i,j,k,l,m,n;
     double val;
     for(i=1;i<=nDim;i++)
@@ -616,7 +585,7 @@ void RankFourTensor::IdentityRank4Entities()
 //******************************
 RankFourTensor operator*(const double &lhs, const RankFourTensor &a)
 {
-    RankFourTensor temp(a.GetDim(),0.0);
+    RankFourTensor temp(0.0);
     for(int i=0;i<81;i++) temp.elements[i]=lhs*a.elements[i];
     return temp;
 }

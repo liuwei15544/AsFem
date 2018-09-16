@@ -45,7 +45,7 @@ void ElementSystem::ComputeStrain(const int &nDim,
                                   const RankTwoTensor &grad,
                                   RankTwoTensor &strain)
 {
-    RankTwoTensor F(nDim,0.0),Ft(nDim,0.0),I(nDim,0.0);
+    RankTwoTensor F(0.0),Ft(0.0),I(0.0);
 
     if(strainMode==small)
     {
