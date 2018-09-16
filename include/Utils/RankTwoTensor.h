@@ -36,8 +36,8 @@ public:
         InitZero,
         InitIdentity
     };
-    RankTwoTensor(int dim,double val=0);
-    RankTwoTensor(int dim,InitMethod method=InitZero);
+    RankTwoTensor(double val=0);
+    RankTwoTensor(InitMethod method=InitZero);
     RankTwoTensor(double (&gradUx)[3],double (&gradUy)[3]);
     RankTwoTensor(double (&gradUx)[3],double (&gradUy)[3],double (&gradUz)[3]);
     // from voigt notation
@@ -106,7 +106,7 @@ public:
     void PrintTensor() const;
 
 private:
-    int nDim;
+    const int nDim=3;
     double elements[3*3]={0.0};
 
 };

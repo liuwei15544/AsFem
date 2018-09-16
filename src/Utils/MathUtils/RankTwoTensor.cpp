@@ -18,35 +18,15 @@
 //****************************************************
 //*** For constructor
 //****************************************************
-RankTwoTensor::RankTwoTensor(int dim, double val)
+RankTwoTensor::RankTwoTensor(double val)
 {
-    if(dim<1||dim>3)
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: dim=%3d is invalid in rank2 tensor*\n",dim);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
-    nDim=dim;
+    // for general cases(i.e. plane strain problem, this must be 3x3 )
+
     for(int i=0;i<9;i++) elements[i]=val;
 }
 //***
-RankTwoTensor::RankTwoTensor(int dim,RankTwoTensor::InitMethod method)
+RankTwoTensor::RankTwoTensor(RankTwoTensor::InitMethod method)
 {
-    if(dim<1||dim>3)
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: dim=%3d is invalid in rank2 tensor*\n",dim);
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
-    nDim=dim;
     if(method==InitZero)
     {
         for(int i=0;i<9;i++) elements[i]=0.0;
@@ -73,15 +53,14 @@ RankTwoTensor::RankTwoTensor(int dim,RankTwoTensor::InitMethod method)
 RankTwoTensor::RankTwoTensor(double &s11, double &s22, double &s12)
 {
     // For 2D case
-    nDim=2;
-    (*this)(1,1)=s11;(*this)(1,2)=s12;
-    (*this)(2,1)=s12;(*this)(2,2)=s22;
+    (*this)(1,1)=s11;(*this)(1,2)=s12;(*this)(1,3)=0.0;
+    (*this)(2,1)=s12;(*this)(2,2)=s22;(*this)(2,3)=0.0;
+    (*this)(3,1)=0.0;(*this)(3,2)=0.0;(*this)(3,3)=0.0;
 
 }
 RankTwoTensor::RankTwoTensor(double &s11,double &s22,double &s33,double &s23,double &s13,double &s12)
 {
     // For 3D case
-    nDim=3;
     (*this)(1,1)=s11;(*this)(1,2)=s12;(*this)(1,3)=s13;
     (*this)(2,1)=s12;(*this)(2,2)=s22;(*this)(2,3)=s23;
     (*this)(3,1)=s13;(*this)(3,2)=s23;(*this)(3,3)=s33;
@@ -90,14 +69,13 @@ RankTwoTensor::RankTwoTensor(double &s11,double &s22,double &s33,double &s23,dou
 RankTwoTensor::RankTwoTensor(double (&gradUx)[3],double (&gradUy)[3])
 {
     // For 2D displacement gradient
-    nDim=2;
-    (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];
-    (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];
+    (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];(*this)(1,3)=0.0;
+    (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];(*this)(2,3)=0.0;
+    (*this)(3,1)=      0.0;(*this)(3,2)=      0.0;(*this)(3,3)=0.0;
 }
 RankTwoTensor::RankTwoTensor(double (&gradUx)[3],double (&gradUy)[3],double (&gradUz)[3])
 {
     // For 3D displacement gradient
-    nDim=3;
     (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];(*this)(1,3)=gradUx[2];
     (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];(*this)(2,3)=gradUy[2];
     (*this)(3,1)=gradUz[0];(*this)(3,2)=gradUz[1];(*this)(3,3)=gradUz[2];
@@ -105,32 +83,12 @@ RankTwoTensor::RankTwoTensor(double (&gradUx)[3],double (&gradUy)[3],double (&gr
 //*** Fill method
 void RankTwoTensor::FillFromDispGradient(double (&gradUx)[3],double (&gradUy)[3])
 {
-    if(nDim!=2)
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: fill a non-2d grad tensor!!!    ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
-
-    (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];
-    (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];
+    (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];(*this)(1,3)=0.0;
+    (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];(*this)(2,3)=0.0;
+    (*this)(3,1)=      0.0;(*this)(3,2)=      0.0;(*this)(3,3)=0.0;
 }
 void RankTwoTensor::FillFromDispGradient(double (&gradUx)[3],double (&gradUy)[3],double (&gradUz)[3])
 {
-    if(nDim!=3)
-    {
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: fill a non-3d grad tensor!!!    ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
-        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
-        PetscFinalize();
-        abort();
-    }
     (*this)(1,1)=gradUx[0];(*this)(1,2)=gradUx[1];(*this)(1,3)=gradUx[2];
     (*this)(2,1)=gradUy[0];(*this)(2,2)=gradUy[1];(*this)(2,3)=gradUy[2];
     (*this)(3,1)=gradUz[0];(*this)(3,2)=gradUz[1];(*this)(3,3)=gradUz[2];
@@ -241,7 +199,7 @@ RankTwoTensor& RankTwoTensor::operator=(const RankTwoTensor & a)
 //***************************
 RankTwoTensor RankTwoTensor::operator+(const double & a) const
 {
-    RankTwoTensor temp(nDim,0.0);
+    RankTwoTensor temp(0.0);
     for(int i=1;i<=nDim;i++)
     {
         for(int j=1;j<=nDim;j++)
@@ -264,7 +222,7 @@ RankTwoTensor RankTwoTensor::operator+(const RankTwoTensor & a) const
         abort();
     }
 
-    RankTwoTensor temp(nDim,0.0);
+    RankTwoTensor temp(0.0);
     for(int i=1;i<=nDim;i++)
     {
         for(int j=1;j<=nDim;j++)
@@ -312,7 +270,7 @@ RankTwoTensor& RankTwoTensor::operator+=(const RankTwoTensor & a)
 //************
 RankTwoTensor RankTwoTensor::operator-(const double & a) const
 {
-    RankTwoTensor temp(nDim,0.0);
+    RankTwoTensor temp(0.0);
     for(int i=1;i<=nDim;i++)
     {
         for(int j=1;j<=nDim;j++)
@@ -335,7 +293,7 @@ RankTwoTensor RankTwoTensor::operator-(const RankTwoTensor & a) const
         abort();
     }
 
-    RankTwoTensor temp(nDim,0.0);
+    RankTwoTensor temp(0.0);
     for(int i=1;i<=nDim;i++)
     {
         for(int j=1;j<=nDim;j++)
@@ -384,7 +342,7 @@ RankTwoTensor& RankTwoTensor::operator-=(const RankTwoTensor & a)
 //*************************************
 RankTwoTensor  RankTwoTensor::operator*(const double & a) const
 {
-    RankTwoTensor temp(nDim,0.0);
+    RankTwoTensor temp(0.0);
     for(int i=1;i<=nDim;i++)
     {
         for(int j=1;j<=nDim;j++)
@@ -432,7 +390,7 @@ RankTwoTensor RankTwoTensor::operator*(const RankTwoTensor & a) const
         abort();
     }
 
-    RankTwoTensor temp(nDim,0.0);
+    RankTwoTensor temp(0.0);
     for(int i=1;i<=nDim;i++)
     {
         for(int j=1;j<=nDim;j++)
@@ -503,7 +461,7 @@ bool RankTwoTensor::operator==(const RankTwoTensor &a) const
 //****************************************
 RankTwoTensor RankTwoTensor::transpose() const
 {
-    RankTwoTensor temp(GetDim(),0.0);
+    RankTwoTensor temp(0.0);
     for(int i=1;i<=GetDim();i++)
     {
         for(int j=1;j<=GetDim();j++)
@@ -608,7 +566,7 @@ double RankTwoTensor::det() const
 //*** for the inverse
 RankTwoTensor RankTwoTensor::inverse() const
 {
-    RankTwoTensor inv(GetDim(),0.0);
+    RankTwoTensor inv(0.0);
     double J=det();
     if(fabs(J)<1.0e-13)
     {
@@ -811,7 +769,7 @@ RankFourTensor RankTwoTensor::Otimes(const RankTwoTensor &b) const
 //*** for lhs * operator
 RankTwoTensor operator*(const double &lhs, const RankTwoTensor &a)
 {
-    RankTwoTensor temp(a.GetDim(),0.0);
+    RankTwoTensor temp(0.0);
     for(int i=0;i<9;i++) temp.elements[i]=lhs*a.elements[i];
     return temp;
 }
@@ -937,7 +895,7 @@ RankFourTensor RankTwoTensor::PositiveProjectionTensor(vector<double> &eigenvalu
 
     // calculate Ma defined in Eq.(9)-2
     // Ma=n_a x n_a
-    RankTwoTensor Ma(nDim,0.0);
+    RankTwoTensor Ma(0.0);
     for(a=1;a<=nDim;a++)
     {
         // for Ma=n_a x n_a
@@ -957,7 +915,7 @@ RankFourTensor RankTwoTensor::PositiveProjectionTensor(vector<double> &eigenvalu
 
     // Now we calculate the Gab and Gba
     // We need a new rank-2 tensor Mb(same defination as Ma)
-    RankTwoTensor Mb(nDim,0.0);
+    RankTwoTensor Mb(0.0);
     RankFourTensor Gab(nDim,0.0);
     RankFourTensor Gba(nDim,0.0);
     double theta_ab;// defined in Eq.(21)-1
