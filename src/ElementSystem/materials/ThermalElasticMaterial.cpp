@@ -41,7 +41,7 @@ void ElementSystem::ThermalElasticMaterial(const int &nDim,
     if(strainMode==small)
     {
 
-        strain=0.5*(grad+grad.transpose());
+        strain=0.5*(grad+grad.transpose())-(Omega*conc/nDim)*I;
     }
     else
     {
@@ -51,22 +51,35 @@ void ElementSystem::ThermalElasticMaterial(const int &nDim,
         F=grad+I;
         Ft=F.transpose();
 
-        strain=0.5*(Ft*F-I);
+        strain=0.5*(Ft*F-I)-(Omega*conc/nDim)*I;
     }
 
 
 
-    strain=strain-(Omega*conc/3.0)*I;
+
+
 
     Jacobian.FillFromEandNu(E,nu);
+
+    for(int i=1;i<=nDim;i++)
+    {
+        for(int j=1;j<=nDim;j++)
+        {
+            for(int k=1;k<=nDim;k++)
+            {
+                for(int l=1;l<=nDim;l++)
+                    cout<<Jacobian(i,j,k,l)<<" ";
+            }
+            cout<<endl;
+        }
+    }
+    cout<<endl<<endl;
 
 
     stress=Jacobian*strain;
 
-    dstressdc(1,1)=(-Omega*conc/nDim)*(Jacobian(1,1,1,1)+Jacobian(1,1,2,2));
-    dstressdc(1,2)=(-Omega*conc/nDim)*(Jacobian(1,2,1,1)+Jacobian(1,2,2,2));
-    dstressdc(2,1)=(-Omega*conc/nDim)*(Jacobian(2,1,1,1)+Jacobian(2,1,2,2));
-    dstressdc(2,2)=(-Omega*conc/nDim)*(Jacobian(2,2,1,1)+Jacobian(2,2,2,2));
+    dstressdc=(-Omega/nDim)*Jacobian*I;
+
 
 }
 

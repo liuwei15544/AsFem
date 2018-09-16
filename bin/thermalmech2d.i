@@ -56,6 +56,6 @@ name = ux uy c
   proj=true
   debug=true
   dt=1.0e-3
-  step=150
+  step=51
   output=10
 []

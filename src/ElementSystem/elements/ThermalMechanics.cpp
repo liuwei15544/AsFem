@@ -34,6 +34,8 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
 
     RankTwoTensor stress(nDim,0.0),dstressdc(nDim,0.0),strain(nDim,0.0),grad(nDim,0.0);
     RankFourTensor Jacobian(nDim,0.0);
+    RankTwoTensor I(nDim,0.0);
+    I.IdentityEntities();
 
     //******************************
     //*** Initializing
@@ -154,17 +156,8 @@ void ElementSystem::ThermalMechanics(const int &iState, const int (&IX)[27], con
         // SigmaH=Sigma_ij*delta_ij/nDim
         D=Parameters[2];
         Omega=Parameters[3];
-        if(nDim==2)
-        {
-            prefactor=-(Jacobian(1,1,1,1)+Jacobian(1,1,2,2)
-                        +Jacobian(2,2,1,1)+Jacobian(2,2,2,2))*Omega/(nDim*nDim);
-        }
-        else
-        {
-            prefactor=-(Jacobian(1,1,1,1)+Jacobian(1,1,2,2)+Jacobian(1,1,3,3)
-                        +Jacobian(2,2,1,1)+Jacobian(2,2,2,2)+Jacobian(2,2,3,3)
-                        +Jacobian(3,3,1,1)+Jacobian(3,3,2,2)+Jacobian(3,3,3,3))*Omega/(nDim*nDim);
-        }
+
+        prefactor=-(Omega/(nDim*nDim))*(Jacobian*I).trace();
 
         gradSigmaH[0]=prefactor*gradc[0];
         gradSigmaH[1]=prefactor*gradc[1];
