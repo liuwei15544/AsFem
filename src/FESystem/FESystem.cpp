@@ -50,6 +50,8 @@ void FESystem::Init(int args, char **argv)
 
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   start initializing equation system...***\n");
     equationSystem.SetDofsNum(dofHandler.GetDofsNum());
+    equationSystem.SetDim(mesh.GetDims());
+    equationSystem.SetNodesNumPerElmt(mesh.GetNodesNumPerElmt());
     equationSystem.Init();
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   equation system initialized!         ***\n");
     PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");

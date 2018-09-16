@@ -45,7 +45,8 @@ public:
     void SetSolutionName();
     void SetDofsNum(int ndofs) {nDofs=ndofs;IsInit=false;}
     void SetDofsNumPerNode(int ndofspernode) {nDofsPerNode=ndofspernode;}
-
+    void SetNodesNumPerElmt(int nnodesperelmt) {nNodesPerElmt=nnodesperelmt;}
+    void SetDim(int dim) {nDims=dim;}
 
     // update and reinitializing functions
     void UpdateUplusdU();
@@ -78,6 +79,7 @@ public:
 
 private:
     const int MaxDofs=3000000;//I want to limite maximum dofs under 300W
+    int nNodesPerElmt,nDims;
     bool IsInit=false;
     PetscErrorCode ierr;
     int nDofs,nDofsPerNode;
