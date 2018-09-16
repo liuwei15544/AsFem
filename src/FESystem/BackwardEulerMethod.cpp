@@ -19,7 +19,16 @@ void FESystem::BackwardEulerMethod()
 
     feSystemInfo.iState=6;
     icSystem.ApplyInitialCondition(mesh,equationSystem.U0);
-    outputSystem.WriteUToVTUFile(0,mesh,equationSystem,equationSystem.U0);
+
+    if(feSystemInfo.IsProjOutput)
+    {
+        outputSystem.WriteUAndProjToVTUFile(0,mesh,equationSystem,equationSystem.U,equationSystem.Proj);
+    }
+    else
+    {
+        outputSystem.WriteUToVTUFile(0,mesh,equationSystem,equationSystem.U0);
+    }
+
     VecCopy(equationSystem.U0,equationSystem.U);
     for(int step=1;step<=feSystemInfo.totalstep;step++)
     {
