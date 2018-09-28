@@ -71,6 +71,7 @@ void FE::ModifyLocalKandRHS(DofHandler &dofHandler)
     for(i=1;i<=nNodesPerElmt;i++)
     {
         iInd=elConn[i-1];
+
         for(j=1;j<=nDofsPerNode;j++)
         {
             if(dofHandler.GetIthNodalJthDofState(iInd+1,j)==0)

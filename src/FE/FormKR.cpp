@@ -77,7 +77,6 @@ void FE::FormKR(const int &iState, const double dt, const double t, const double
 
         ModifyLocalKandRHS(dofHandler);
 
-
         AssembleLocalToGlobal(iState,AMATRIX,RHS,Proj);
     }
 

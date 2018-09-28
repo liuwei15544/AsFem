@@ -64,10 +64,11 @@ void FESystem::Init(int args, char **argv)
         bcSystem.InitFromBCBlockList(bcBlockList);
         bcSystem.SetDims(mesh.GetDims());
         bcSystem.SetUpBCSystem(equationSystem);
-        dofHandler.SetNodalDofActiveState(mesh,bcSystem.bcInfo);
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   bc system initialized!               ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***----------------------------------------***\n");
     }
+
+    dofHandler.SetNodalDofActiveState(mesh,bcSystem.bcInfo);
 
 
     if(icBlockList.size()>0)
