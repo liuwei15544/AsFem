@@ -27,6 +27,10 @@ void ElementSystem::SetUelIndex()
     {
         ActiveUelIndex=UelList::cahnhilliard;
     }
+    else if(kernelBlockInfo.ElementName=="allencahn")
+    {
+        ActiveUelIndex=UelList::allencahn;
+    }
     else if(kernelBlockInfo.ElementName=="mechanics")
     {
         ActiveUelIndex=UelList::mechanics;
@@ -102,6 +106,10 @@ void ElementSystem::SetUmatIndex()
     else if(kernelBlockInfo.MaterialKernelName=="freeenergy")
     {
         ActiveUmatIndex=UmatList::freeenergy;
+    }
+    else if(kernelBlockInfo.MaterialKernelName=="freeenergyac")
+    {
+        ActiveUmatIndex=UmatList::freeenergyac;
     }
     else if(kernelBlockInfo.MaterialKernelName=="conductivity")
     {

@@ -56,6 +56,7 @@ private:
         poisson,
         diffusion,
         cahnhilliard,
+        allencahn,
         mechanics,
         thermalmechanics,
         phasefieldfracture,
@@ -78,6 +79,7 @@ private:
         deformgrad,
         neohookean,
         freeenergy,
+        freeenergyac,
         conductivity,
         miehefracture,
         umat1,
@@ -121,13 +123,7 @@ private:
                           const double &dt,const double &t,const double (&ctan)[2],
                           const double (&Coords)[27][4],const double (&U)[270][2],
                           double (&K)[270*270],double (&rhs)[270],double (&proj)[27][12+1]);
-    void ThermalElasticMaterial(const int &nDim,
-                                const double &conc,
-                                const RankTwoTensor &grad,
-                                RankTwoTensor &strain,
-                                RankTwoTensor &stress,
-                                RankTwoTensor &dstressdc,
-                                RankFourTensor &Jacobian);
+
 
     // **********************************************************************
     // Phase field fracture model(Miehe's model)
@@ -137,13 +133,14 @@ private:
                             const double (&Coords)[27][4],const double (&U)[270][2],
                             double (&K)[270*270],double (&rhs)[270],double (&proj)[27][12+1]);
 
-    void MieheFractureMaterial(const int &nDim,
-                               const double &conc,
-                               const RankTwoTensor &grad,
-                               RankTwoTensor &strain,
-                               RankTwoTensor &stress,
-                               RankTwoTensor &dstressdc,
-                               RankFourTensor &Jacobian);
+
+    //***********************************************************************
+    // For allen-cahn equation
+    void AllenCahn(const int &iState,const int (&IX)[27],
+                   const int &nDim,const int &nNodes,const int &nDofs,
+                   const double &dt,const double &t,const double (&ctan)[2],
+                   const double (&Coords)[27][4],const double (&U)[270][2],
+                   double (&K)[270*270],double (&rhs)[270],double (&proj)[27][12+1]);
 
 
     //************************************************************************
@@ -180,6 +177,14 @@ private:
                                RankTwoTensor &stress,
                                RankFourTensor &Jacobian);
 
+    void ThermalElasticMaterial(const int &nDim,
+                                const double &conc,
+                                const RankTwoTensor &grad,
+                                RankTwoTensor &strain,
+                                RankTwoTensor &stress,
+                                RankTwoTensor &dstressdc,
+                                RankFourTensor &Jacobian);
+
 
     void NeoHookeanMaterial(const int &nDim,const RankTwoTensor &grad,
                             const RankTwoTensor &strain,
@@ -194,6 +199,15 @@ private:
 
     void FreeEnergyMaterials(const double &conc,double &f,double &dfdc,double &d2fdc2);
     void FreeEnergyForCahnHilliard(const double &conc,double &f,double &dfdc,double &d2fdc2);
+    void FreeEnergyForAllenCahn(const double &conc,double &f,double &dfdc,double &d2fdc2);
+
+    void MieheFractureMaterial(const int &nDim,
+                               const double &conc,
+                               const RankTwoTensor &grad,
+                               RankTwoTensor &strain,
+                               RankTwoTensor &stress,
+                               RankTwoTensor &dstressdc,
+                               RankFourTensor &Jacobian);
 
 private:
     int ActiveUelIndex=-10000;

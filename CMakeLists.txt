@@ -98,6 +98,7 @@ set(SRC ${SRC} src/ElementSystem/ElementSystem.cpp src/ElementSystem/ElementSyst
 set(SRC ${SRC} src/ElementSystem/RunElmtLib.cpp)
 set(SRC ${SRC} src/ElementSystem/ElementalProjection.cpp)
 set(SRC ${SRC} src/ElementSystem/elements/Poisson.cpp src/ElementSystem/elements/CahnHilliard.cpp)
+set(SRC ${SRC} src/ElementSystem/elements/AllenCahn.cpp)
 set(SRC ${SRC} src/ElementSystem/elements/SolidMechanics.cpp src/ElementSystem/elements/SolidMechanicsTools.cpp)
 set(SRC ${SRC} src/ElementSystem/uel/elmt01.cpp)
 # For material system (AsFem's umat)
@@ -108,6 +109,7 @@ set(SRC ${SRC} src/ElementSystem/materials/NeoHookeanMaterial.cpp src/ElementSys
 set(SRC ${SRC} src/ElementSystem/elements/ThermalMechanics.cpp src/ElementSystem/materials/ThermalElasticMaterial.cpp)
 # for phase field free energy
 set(SRC ${SRC} src/ElementSystem/materials/FreeEnergyMaterials.cpp src/ElementSystem/materials/FreeEnergyForCahnHilliard.cpp)
+
 
 
 # For shapefuns
@@ -157,7 +159,7 @@ set(SRC ${SRC} src/ICSystem/ConstantIC.cpp src/ICSystem/CircleIC.cpp src/ICSyste
 # For FESystem
 set(INC ${INC} include/FESystem/FESystem.h)
 set(SRC ${SRC} src/FESystem/FESystem.cpp src/FESystem/FESystemSetting.cpp)
-set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp)
+set(SRC ${SRC} src/FESystem/FEAnalysis.cpp src/FESystem/RunFESystem.cpp src/FESystem/BackwardEulerMethod.cpp src/ElementSystem/materials/FreeEnergyForAllenCahn.cpp)
 
 
 add_executable(ASFEM ${INC} ${SRC})
