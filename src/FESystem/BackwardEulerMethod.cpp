@@ -22,7 +22,7 @@ void FESystem::BackwardEulerMethod()
 
     if(feSystemInfo.IsProjOutput)
     {
-        outputSystem.WriteUAndProjToVTUFile(0,mesh,equationSystem,equationSystem.U,equationSystem.Proj);
+        outputSystem.WriteUAndProjToVTUFile(0,mesh,equationSystem,equationSystem.U0,equationSystem.Proj);
     }
     else
     {
