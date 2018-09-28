@@ -58,6 +58,7 @@ private:
         cahnhilliard,
         mechanics,
         thermalmechanics,
+        phasefieldfracture,
         uel1,
         uel2,
         uel3,
@@ -78,6 +79,7 @@ private:
         neohookean,
         freeenergy,
         conductivity,
+        miehefracture,
         umat1,
         umat2,
         umat3,
@@ -126,6 +128,22 @@ private:
                                 RankTwoTensor &stress,
                                 RankTwoTensor &dstressdc,
                                 RankFourTensor &Jacobian);
+
+    // **********************************************************************
+    // Phase field fracture model(Miehe's model)
+    void PhaseFieldFracture(const int &iState,const int (&IX)[27],
+                            const int &nDim,const int &nNodes,const int &nDofs,
+                            const double &dt,const double &t,const double (&ctan)[2],
+                            const double (&Coords)[27][4],const double (&U)[270][2],
+                            double (&K)[270*270],double (&rhs)[270],double (&proj)[27][12+1]);
+
+    void MieheFractureMaterial(const int &nDim,
+                               const double &conc,
+                               const RankTwoTensor &grad,
+                               RankTwoTensor &strain,
+                               RankTwoTensor &stress,
+                               RankTwoTensor &dstressdc,
+                               RankFourTensor &Jacobian);
 
 
     //************************************************************************
