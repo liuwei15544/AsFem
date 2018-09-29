@@ -204,6 +204,8 @@ private:
     void MieheFractureMaterial(const int &nDim,
                                const double &conc,
                                const RankTwoTensor &grad,
+                               const double &hist_old,
+                               double &hist,
                                RankTwoTensor &strain,
                                RankTwoTensor &stress,
                                RankTwoTensor &dstressdc,
