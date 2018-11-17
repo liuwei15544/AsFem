@@ -398,9 +398,339 @@ void Mesh::Create3DMesh()
         VTKCellType=29;
     }
 
-    // TODO: split mesh for 3D mesh
-
     MeshCreated=true;
+
+
+    //*********************************************
+    //*** Split the boundary mesh
+    //*********************************************
     BCMeshCreated=false;
+    pair<string,vector<int>> temp_pair;
+    nBCElmts=2*(Nx*Ny+Ny*Nz+Nz*Nx);
+
+    // for leftside
+    LeftBCConn.clear();
+    i=1;
+    for(k=1;k<=Nz;k++)
+    {
+        for(j=1;j<=Ny;j++)
+        {
+            e=(j-1)*Nx+i+(k-1)*Nx*Ny;
+            if(nNodesPerBCElmt==8)
+            {
+                // hex8 case
+                // must out of plane
+                LeftBCConn.push_back(GetIthConnJthIndex(e,1));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,5));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,8));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,4));
+            }
+            else if(nNodesPerBCElmt==20)
+            {
+                LeftBCConn.push_back(GetIthConnJthIndex(e,1));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,5));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,8));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,4));
+
+                LeftBCConn.push_back(GetIthConnJthIndex(e,17));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,16));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,20));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,12));
+            }
+            else if(nNodesPerBCElmt==27)
+            {
+                LeftBCConn.push_back(GetIthConnJthIndex(e,1));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,5));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,8));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,4));
+
+                LeftBCConn.push_back(GetIthConnJthIndex(e,17));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,16));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,20));
+                LeftBCConn.push_back(GetIthConnJthIndex(e,12));
+
+                LeftBCConn.push_back(GetIthConnJthIndex(e,21));
+            }
+        }
+    }
+    LeftBCConn.resize(LeftBCConn.size());
+    // For right side
+    RightBCConn.clear();
+    i=Nx;
+    for(k=1;k<=Nz;k++)
+    {
+        for(j=1;j<=Ny;j++)
+        {
+            e=(j-1)*Nx+i+(k-1)*Nx*Ny;
+            if(nNodesPerBCElmt==8)
+            {
+                // hex8 case
+                // must out of plane
+                RightBCConn.push_back(GetIthConnJthIndex(e,2));
+                RightBCConn.push_back(GetIthConnJthIndex(e,3));
+                RightBCConn.push_back(GetIthConnJthIndex(e,7));
+                RightBCConn.push_back(GetIthConnJthIndex(e,6));
+            }
+            else if(nNodesPerBCElmt==20)
+            {
+                RightBCConn.push_back(GetIthConnJthIndex(e,2));
+                RightBCConn.push_back(GetIthConnJthIndex(e,3));
+                RightBCConn.push_back(GetIthConnJthIndex(e,7));
+                RightBCConn.push_back(GetIthConnJthIndex(e,6));
+
+                RightBCConn.push_back(GetIthConnJthIndex(e,10));
+                RightBCConn.push_back(GetIthConnJthIndex(e,19));
+                RightBCConn.push_back(GetIthConnJthIndex(e,14));
+                RightBCConn.push_back(GetIthConnJthIndex(e,18));
+            }
+            else if(nNodesPerBCElmt==27)
+            {
+                RightBCConn.push_back(GetIthConnJthIndex(e,2));
+                RightBCConn.push_back(GetIthConnJthIndex(e,3));
+                RightBCConn.push_back(GetIthConnJthIndex(e,7));
+                RightBCConn.push_back(GetIthConnJthIndex(e,6));
+
+                RightBCConn.push_back(GetIthConnJthIndex(e,10));
+                RightBCConn.push_back(GetIthConnJthIndex(e,19));
+                RightBCConn.push_back(GetIthConnJthIndex(e,14));
+                RightBCConn.push_back(GetIthConnJthIndex(e,18));
+
+                RightBCConn.push_back(GetIthConnJthIndex(e,22));
+            }
+        }
+    }
+    RightBCConn.resize(RightBCConn.size());
+    // For bottom edge
+    BottomBCConn.clear();
+    j=1;
+    for(k=1;k<=Nz;k++)
+    {
+        for(i=1;i<=Nx;i++)
+        {
+            e=(j-1)*Nx+i+(k-1)*Nx*Ny;
+            if(nNodesPerBCElmt==8)
+            {
+                // hex8 case
+                // must out of plane
+                BottomBCConn.push_back(GetIthConnJthIndex(e,1));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,2));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,6));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,5));
+            }
+            else if(nNodesPerBCElmt==20)
+            {
+                BottomBCConn.push_back(GetIthConnJthIndex(e,1));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,2));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,6));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,5));
+
+                BottomBCConn.push_back(GetIthConnJthIndex(e,9));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,18));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,13));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,17));
+            }
+            else if(nNodesPerBCElmt==27)
+            {
+                BottomBCConn.push_back(GetIthConnJthIndex(e,1));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,2));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,6));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,5));
+
+                BottomBCConn.push_back(GetIthConnJthIndex(e,9));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,18));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,13));
+                BottomBCConn.push_back(GetIthConnJthIndex(e,17));
+
+                BottomBCConn.push_back(GetIthConnJthIndex(e,23));
+            }
+        }
+    }
+    BottomBCConn.resize(BottomBCConn.size());
+    // For top edge
+    TopBCConn.clear();
+    j=Ny;
+    for(k=1;k<=Nz;k++)
+    {
+        for(i=1;i<=Nx;i++)
+        {
+            e=(j-1)*Nx+i+(k-1)*Nx*Ny;
+            if(nNodesPerBCElmt==8)
+            {
+                // hex8 case
+                // must out of plane
+                TopBCConn.push_back(GetIthConnJthIndex(e,4));
+                TopBCConn.push_back(GetIthConnJthIndex(e,8));
+                TopBCConn.push_back(GetIthConnJthIndex(e,7));
+                TopBCConn.push_back(GetIthConnJthIndex(e,3));
+            }
+            else if(nNodesPerBCElmt==20)
+            {
+                TopBCConn.push_back(GetIthConnJthIndex(e,4));
+                TopBCConn.push_back(GetIthConnJthIndex(e,8));
+                TopBCConn.push_back(GetIthConnJthIndex(e,7));
+                TopBCConn.push_back(GetIthConnJthIndex(e,3));
+
+                TopBCConn.push_back(GetIthConnJthIndex(e,20));
+                TopBCConn.push_back(GetIthConnJthIndex(e,15));
+                TopBCConn.push_back(GetIthConnJthIndex(e,19));
+                TopBCConn.push_back(GetIthConnJthIndex(e,11));
+            }
+            else if(nNodesPerBCElmt==27)
+            {
+                TopBCConn.push_back(GetIthConnJthIndex(e,4));
+                TopBCConn.push_back(GetIthConnJthIndex(e,8));
+                TopBCConn.push_back(GetIthConnJthIndex(e,7));
+                TopBCConn.push_back(GetIthConnJthIndex(e,3));
+
+                TopBCConn.push_back(GetIthConnJthIndex(e,20));
+                TopBCConn.push_back(GetIthConnJthIndex(e,15));
+                TopBCConn.push_back(GetIthConnJthIndex(e,19));
+                TopBCConn.push_back(GetIthConnJthIndex(e,11));
+
+                TopBCConn.push_back(GetIthConnJthIndex(e,24));
+            }
+        }
+    }
+    TopBCConn.resize(TopBCConn.size());
+
+    // For back edge
+    BackBCConn.clear();
+    k=1;
+    for(j=1;j<=Ny;j++)
+    {
+        for(i=1;i<=Nx;i++)
+        {
+            e=(j-1)*Nx+i+(k-1)*Nx*Ny;
+            if(nNodesPerBCElmt==8)
+            {
+                // hex8 case
+                // must out of plane
+                BackBCConn.push_back(GetIthConnJthIndex(e,1));
+                BackBCConn.push_back(GetIthConnJthIndex(e,4));
+                BackBCConn.push_back(GetIthConnJthIndex(e,3));
+                BackBCConn.push_back(GetIthConnJthIndex(e,2));
+            }
+            else if(nNodesPerBCElmt==20)
+            {
+                BackBCConn.push_back(GetIthConnJthIndex(e,1));
+                BackBCConn.push_back(GetIthConnJthIndex(e,4));
+                BackBCConn.push_back(GetIthConnJthIndex(e,3));
+                BackBCConn.push_back(GetIthConnJthIndex(e,2));
+
+                BackBCConn.push_back(GetIthConnJthIndex(e,12));
+                BackBCConn.push_back(GetIthConnJthIndex(e,11));
+                BackBCConn.push_back(GetIthConnJthIndex(e,10));
+                BackBCConn.push_back(GetIthConnJthIndex(e,9));
+            }
+            else if(nNodesPerBCElmt==27)
+            {
+                BackBCConn.push_back(GetIthConnJthIndex(e,1));
+                BackBCConn.push_back(GetIthConnJthIndex(e,4));
+                BackBCConn.push_back(GetIthConnJthIndex(e,3));
+                BackBCConn.push_back(GetIthConnJthIndex(e,2));
+
+                BackBCConn.push_back(GetIthConnJthIndex(e,12));
+                BackBCConn.push_back(GetIthConnJthIndex(e,11));
+                BackBCConn.push_back(GetIthConnJthIndex(e,10));
+                BackBCConn.push_back(GetIthConnJthIndex(e,9));
+
+                BackBCConn.push_back(GetIthConnJthIndex(e,25));
+            }
+        }
+    }
+    BackBCConn.resize(BackBCConn.size());
+
+    // For front edge
+    FrontBCConn.clear();
+    k=Nz;
+    for(j=1;j<=Ny;j++)
+    {
+        for(i=1;i<=Nx;i++)
+        {
+            e=(j-1)*Nx+i+(k-1)*Nx*Ny;
+            if(nNodesPerBCElmt==8)
+            {
+                // hex8 case
+                // must out of plane
+                FrontBCConn.push_back(GetIthConnJthIndex(e,5));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,6));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,7));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,8));
+            }
+            else if(nNodesPerBCElmt==20)
+            {
+                FrontBCConn.push_back(GetIthConnJthIndex(e,5));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,6));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,7));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,8));
+
+                FrontBCConn.push_back(GetIthConnJthIndex(e,13));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,14));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,15));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,16));
+            }
+            else if(nNodesPerBCElmt==27)
+            {
+                FrontBCConn.push_back(GetIthConnJthIndex(e,5));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,6));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,7));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,8));
+
+                FrontBCConn.push_back(GetIthConnJthIndex(e,13));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,14));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,15));
+                FrontBCConn.push_back(GetIthConnJthIndex(e,16));
+
+                FrontBCConn.push_back(GetIthConnJthIndex(e,26));
+            }
+        }
+    }
+    FrontBCConn.resize(FrontBCConn.size());
+
+    temp_pair=make_pair("left",LeftBCConn);
+    BCMeshSet.push_back(temp_pair);
+
+    temp_pair=make_pair("right",RightBCConn);
+    BCMeshSet.push_back(temp_pair);
+
+    temp_pair=make_pair("bottom",BottomBCConn);
+    BCMeshSet.push_back(temp_pair);
+
+    temp_pair=make_pair("top",TopBCConn);
+    BCMeshSet.push_back(temp_pair);
+
+    temp_pair=make_pair("back",BackBCConn);
+    BCMeshSet.push_back(temp_pair);
+
+    temp_pair=make_pair("front",FrontBCConn);
+    BCMeshSet.push_back(temp_pair);
+
+
+    // store all the bc subset to BCConn
+    BCConn.clear();
+    for(unsigned set=0;set<BCMeshSet.size();set++)
+    {
+        for(i=0;i<int(BCMeshSet[set].second.size());i++)
+        {
+            BCConn.push_back(BCMeshSet[set].second[i]);
+        }
+    }
+
+    i=int(BCConn.size());
+    if(i!=nBCElmts*nNodesPerBCElmt)
+    {
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: BCConn size is wrong!!! SplitBC fail ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                                 ***\n");
+        PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
+        PetscFinalize();
+        abort();
+    }
+    else
+    {
+        BCConn.resize(nBCElmts*nNodesPerBCElmt);
+    }
+    BCMeshCreated=true;
 }
 
