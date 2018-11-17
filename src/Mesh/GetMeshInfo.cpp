@@ -159,7 +159,7 @@ int Mesh::GetSideBCElmtNum(string sidename) const
 
         if(!IsSideNameInList)
         {
-            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+            PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -199,7 +199,7 @@ int Mesh::GetSideBCIthConnJthIndex(string sidename, int i, int j) const
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename);
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -240,7 +240,7 @@ int Mesh::GetSideBCIthConnJthIndex(string sidename, int i, int j) const
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -289,7 +289,7 @@ int Mesh::GetSideBCIthConnJthIndex(string sidename, int i, int j) const
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -333,7 +333,7 @@ double Mesh::GetSideBCIthNodeJthCoord(string sidename, int e, int i, int j) cons
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -379,7 +379,7 @@ double Mesh::GetSideBCIthNodeJthCoord(string sidename, int e, int i, int j) cons
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -435,7 +435,7 @@ double Mesh::GetSideBCIthNodeJthCoord(string sidename, int e, int i, int j) cons
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -522,7 +522,7 @@ void Mesh::GetLocalBCCoords(string sidename, int e, double (&coords)[27][4]) con
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -646,7 +646,7 @@ void Mesh::GetLocalBCCoords(string sidename, int e, double (&coords)[27][4]) con
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
@@ -816,7 +816,7 @@ void Mesh::GetLocalBCCoords(string sidename, int e, double (&coords)[27][4]) con
 
             if(!IsSideNameInList)
             {
-                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!",sidename.c_str());
+                PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: sidename=%12s is not in the list!!!\n",sidename.c_str());
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem exit!                            ***\n");
                 PetscSynchronizedPrintf(PETSC_COMM_WORLD,"**********************************************\n");
