@@ -42,6 +42,7 @@ void BCSystem::ApplyDirichletBC(Mesh &mesh,DofHandler &dofHandler,
             value=bcInfo.GetIthBCKernelValue(i+1);
             sidename=bcInfo.GetIthBCKernelSideName(i+1);
 
+
             iInd=bcInfo.GetIthBCKernelDofIndex(i+1);
 
             rankne=dofHandler.GetBCSideElmtsNum(sidename)/size;

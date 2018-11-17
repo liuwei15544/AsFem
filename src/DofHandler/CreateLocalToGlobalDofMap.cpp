@@ -237,6 +237,7 @@ bool DofHandler::CreateLocalToGlobalDofMap(Mesh &mesh, int ndofspernode)
                 }
             }
         }
+
         // for front side
         FrontBCDofs.resize(mesh.GetSideBCElmtNum("front")*nNodesPerBCElmt*nDofsPerNode,0);
         for(e=1;e<=mesh.GetSideBCElmtNum("front");e++)
@@ -251,6 +252,7 @@ bool DofHandler::CreateLocalToGlobalDofMap(Mesh &mesh, int ndofspernode)
                 }
             }
         }
+
 
         temp=make_pair("left",LeftBCDofs);
         GlobalBCDofMap.push_back(temp);

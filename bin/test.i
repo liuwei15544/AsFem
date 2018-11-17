@@ -24,7 +24,7 @@ name = c
   [left]
     type=dirichlet
     dof=c
-    value=1
+    value=-2.0
     side=left
   [end]
 

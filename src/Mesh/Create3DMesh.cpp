@@ -640,6 +640,7 @@ void Mesh::Create3DMesh()
     }
     BackBCConn.resize(BackBCConn.size());
 
+
     // For front edge
     FrontBCConn.clear();
     k=Nz;
@@ -686,6 +687,8 @@ void Mesh::Create3DMesh()
         }
     }
     FrontBCConn.resize(FrontBCConn.size());
+
+
 
     temp_pair=make_pair("left",LeftBCConn);
     BCMeshSet.push_back(temp_pair);

@@ -145,6 +145,14 @@ int Mesh::GetSideBCElmtNum(string sidename) const
     {
         return int(TopBCConn.size()/nNodesPerBCElmt);
     }
+    else if(sidename=="back")
+    {
+        return int(BackBCConn.size()/nNodesPerBCElmt);
+    }
+    else if(sidename=="front")
+    {
+        return int(FrontBCConn.size()/nNodesPerBCElmt);
+    }
     else
     {
         bool IsSideNameInList=false;
@@ -273,7 +281,7 @@ int Mesh::GetSideBCIthConnJthIndex(string sidename, int i, int j) const
         }
         else if(sidename=="front")
         {
-            return BackBCConn[(i-1)*nNodesPerBCElmt+j-1];
+            return FrontBCConn[(i-1)*nNodesPerBCElmt+j-1];
         }
         else
         {

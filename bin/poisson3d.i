@@ -8,9 +8,9 @@
   ymax=1.0
   zmin=0.0
   zmax=5.0
-  nx=1
-  ny=1
-  nz=5
+  nx=2
+  ny=2
+  nz=20
   meshtype=hex8
 []
 
@@ -27,14 +27,14 @@ name = c
   [left]
     type=dirichlet
     dof=c
-    value=0.0
+    value=-2.0
     side=back
   [end]
 
   [right]
    type=dirichlet
    dof=c
-   value=2
+   value=2.0
    side=front
   [end]
 []
