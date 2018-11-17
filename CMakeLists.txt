@@ -18,13 +18,13 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 #######################################
 ### Set the PETSc path with your own###
 #######################################
-set(PETSc "/home/by/Programs/petsc3.9.3")
+set(PETSc "/home/by/Programs/petsc3.10.2")
 include_directories("${PETSc}/include")
 link_libraries("${PETSc}/lib/libpetsc.so")
 #######################################
 ### Set the mpi path with your own  ###
 #######################################
-set(MPI "/opt/moose/mpich-3.2/gcc-7.3.0")
+set(MPI "/opt/moose/mpich-3.2/gcc-7.3.1")
 include_directories("${MPI}/include")
 link_libraries("${MPI}/lib/libmpi.so")
 
@@ -64,6 +64,7 @@ set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/MeshSettings.cpp)
 set(SRC ${SRC} src/Mesh/CreateMesh.cpp src/Mesh/Create1DMesh.cpp src/Mesh/Create2DMesh.cpp)
 set(SRC ${SRC} src/Mesh/GetMeshInfo.cpp src/Mesh/Create3DMesh.cpp)
 set(SRC ${SRC} src/Mesh/PrintAndSaveMesh.cpp)
+set(SRC ${SRC} src/Mesh/ImportGmsh.cpp)
 
 # For dof handler
 set(INC ${INC} include/DofHandler/DofHandler.h)

@@ -16,10 +16,11 @@ int main(int args,char *argv[])
     ierr=PetscInitialize(&args,&argv,NULL,NULL);CHKERRQ(ierr);
 
 
+    /*
     FESystem feSystem;
     feSystem.Init(args,argv);
     feSystem.Run();
-
+     */
 
 
     ierr=PetscFinalize();CHKERRQ(ierr);

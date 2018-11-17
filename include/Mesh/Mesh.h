@@ -17,6 +17,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
+#include <algorithm>
 #include <vector>
 #include <string>
 
@@ -77,7 +78,8 @@ public:
 
 
     // For external mesh
-    void ImportGmsh();
+    void ImportGmsh(string filename);
+    int GetNodesNumOfGmshCell(int elmttpye);
 
     void SaveMeshToVTU(string filename="mesh.vtu");
 
@@ -95,7 +97,15 @@ private:
     bool MeshCreated=false;
     int VTKCellType;
     string MeshType;
+
+    // For gmsh infortion
     string GmshFileName;
+    int nPhysics;
+    vector<pair<int,string>> GmshPhyGroup;
+    int MaxPhyDim=-10,MinPhyDim=10;
+
+
+
     int Nx,Ny,Nz,nDim;
     int nNodes,nElmts,nNodesPerElmt;
     vector<double> NodeCoords;
