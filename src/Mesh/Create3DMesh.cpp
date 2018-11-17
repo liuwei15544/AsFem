@@ -416,7 +416,7 @@ void Mesh::Create3DMesh()
         for(j=1;j<=Ny;j++)
         {
             e=(j-1)*Nx+i+(k-1)*Nx*Ny;
-            if(nNodesPerBCElmt==8)
+            if(nNodesPerBCElmt==4)
             {
                 // hex8 case
                 // must out of plane
@@ -425,7 +425,7 @@ void Mesh::Create3DMesh()
                 LeftBCConn.push_back(GetIthConnJthIndex(e,8));
                 LeftBCConn.push_back(GetIthConnJthIndex(e,4));
             }
-            else if(nNodesPerBCElmt==20)
+            else if(nNodesPerBCElmt==8)
             {
                 LeftBCConn.push_back(GetIthConnJthIndex(e,1));
                 LeftBCConn.push_back(GetIthConnJthIndex(e,5));
@@ -437,7 +437,7 @@ void Mesh::Create3DMesh()
                 LeftBCConn.push_back(GetIthConnJthIndex(e,20));
                 LeftBCConn.push_back(GetIthConnJthIndex(e,12));
             }
-            else if(nNodesPerBCElmt==27)
+            else if(nNodesPerBCElmt==9)
             {
                 LeftBCConn.push_back(GetIthConnJthIndex(e,1));
                 LeftBCConn.push_back(GetIthConnJthIndex(e,5));
@@ -462,7 +462,7 @@ void Mesh::Create3DMesh()
         for(j=1;j<=Ny;j++)
         {
             e=(j-1)*Nx+i+(k-1)*Nx*Ny;
-            if(nNodesPerBCElmt==8)
+            if(nNodesPerBCElmt==4)
             {
                 // hex8 case
                 // must out of plane
@@ -471,7 +471,7 @@ void Mesh::Create3DMesh()
                 RightBCConn.push_back(GetIthConnJthIndex(e,7));
                 RightBCConn.push_back(GetIthConnJthIndex(e,6));
             }
-            else if(nNodesPerBCElmt==20)
+            else if(nNodesPerBCElmt==8)
             {
                 RightBCConn.push_back(GetIthConnJthIndex(e,2));
                 RightBCConn.push_back(GetIthConnJthIndex(e,3));
@@ -483,7 +483,7 @@ void Mesh::Create3DMesh()
                 RightBCConn.push_back(GetIthConnJthIndex(e,14));
                 RightBCConn.push_back(GetIthConnJthIndex(e,18));
             }
-            else if(nNodesPerBCElmt==27)
+            else if(nNodesPerBCElmt==9)
             {
                 RightBCConn.push_back(GetIthConnJthIndex(e,2));
                 RightBCConn.push_back(GetIthConnJthIndex(e,3));
@@ -508,7 +508,7 @@ void Mesh::Create3DMesh()
         for(i=1;i<=Nx;i++)
         {
             e=(j-1)*Nx+i+(k-1)*Nx*Ny;
-            if(nNodesPerBCElmt==8)
+            if(nNodesPerBCElmt==4)
             {
                 // hex8 case
                 // must out of plane
@@ -517,7 +517,7 @@ void Mesh::Create3DMesh()
                 BottomBCConn.push_back(GetIthConnJthIndex(e,6));
                 BottomBCConn.push_back(GetIthConnJthIndex(e,5));
             }
-            else if(nNodesPerBCElmt==20)
+            else if(nNodesPerBCElmt==8)
             {
                 BottomBCConn.push_back(GetIthConnJthIndex(e,1));
                 BottomBCConn.push_back(GetIthConnJthIndex(e,2));
@@ -529,7 +529,7 @@ void Mesh::Create3DMesh()
                 BottomBCConn.push_back(GetIthConnJthIndex(e,13));
                 BottomBCConn.push_back(GetIthConnJthIndex(e,17));
             }
-            else if(nNodesPerBCElmt==27)
+            else if(nNodesPerBCElmt==9)
             {
                 BottomBCConn.push_back(GetIthConnJthIndex(e,1));
                 BottomBCConn.push_back(GetIthConnJthIndex(e,2));
@@ -554,7 +554,7 @@ void Mesh::Create3DMesh()
         for(i=1;i<=Nx;i++)
         {
             e=(j-1)*Nx+i+(k-1)*Nx*Ny;
-            if(nNodesPerBCElmt==8)
+            if(nNodesPerBCElmt==4)
             {
                 // hex8 case
                 // must out of plane
@@ -563,7 +563,7 @@ void Mesh::Create3DMesh()
                 TopBCConn.push_back(GetIthConnJthIndex(e,7));
                 TopBCConn.push_back(GetIthConnJthIndex(e,3));
             }
-            else if(nNodesPerBCElmt==20)
+            else if(nNodesPerBCElmt==8)
             {
                 TopBCConn.push_back(GetIthConnJthIndex(e,4));
                 TopBCConn.push_back(GetIthConnJthIndex(e,8));
@@ -575,7 +575,7 @@ void Mesh::Create3DMesh()
                 TopBCConn.push_back(GetIthConnJthIndex(e,19));
                 TopBCConn.push_back(GetIthConnJthIndex(e,11));
             }
-            else if(nNodesPerBCElmt==27)
+            else if(nNodesPerBCElmt==9)
             {
                 TopBCConn.push_back(GetIthConnJthIndex(e,4));
                 TopBCConn.push_back(GetIthConnJthIndex(e,8));
@@ -601,7 +601,7 @@ void Mesh::Create3DMesh()
         for(i=1;i<=Nx;i++)
         {
             e=(j-1)*Nx+i+(k-1)*Nx*Ny;
-            if(nNodesPerBCElmt==8)
+            if(nNodesPerBCElmt==4)
             {
                 // hex8 case
                 // must out of plane
@@ -610,7 +610,7 @@ void Mesh::Create3DMesh()
                 BackBCConn.push_back(GetIthConnJthIndex(e,3));
                 BackBCConn.push_back(GetIthConnJthIndex(e,2));
             }
-            else if(nNodesPerBCElmt==20)
+            else if(nNodesPerBCElmt==8)
             {
                 BackBCConn.push_back(GetIthConnJthIndex(e,1));
                 BackBCConn.push_back(GetIthConnJthIndex(e,4));
@@ -622,7 +622,7 @@ void Mesh::Create3DMesh()
                 BackBCConn.push_back(GetIthConnJthIndex(e,10));
                 BackBCConn.push_back(GetIthConnJthIndex(e,9));
             }
-            else if(nNodesPerBCElmt==27)
+            else if(nNodesPerBCElmt==9)
             {
                 BackBCConn.push_back(GetIthConnJthIndex(e,1));
                 BackBCConn.push_back(GetIthConnJthIndex(e,4));
@@ -648,7 +648,7 @@ void Mesh::Create3DMesh()
         for(i=1;i<=Nx;i++)
         {
             e=(j-1)*Nx+i+(k-1)*Nx*Ny;
-            if(nNodesPerBCElmt==8)
+            if(nNodesPerBCElmt==4)
             {
                 // hex8 case
                 // must out of plane
@@ -657,7 +657,7 @@ void Mesh::Create3DMesh()
                 FrontBCConn.push_back(GetIthConnJthIndex(e,7));
                 FrontBCConn.push_back(GetIthConnJthIndex(e,8));
             }
-            else if(nNodesPerBCElmt==20)
+            else if(nNodesPerBCElmt==8)
             {
                 FrontBCConn.push_back(GetIthConnJthIndex(e,5));
                 FrontBCConn.push_back(GetIthConnJthIndex(e,6));
@@ -669,7 +669,7 @@ void Mesh::Create3DMesh()
                 FrontBCConn.push_back(GetIthConnJthIndex(e,15));
                 FrontBCConn.push_back(GetIthConnJthIndex(e,16));
             }
-            else if(nNodesPerBCElmt==27)
+            else if(nNodesPerBCElmt==9)
             {
                 FrontBCConn.push_back(GetIthConnJthIndex(e,5));
                 FrontBCConn.push_back(GetIthConnJthIndex(e,6));
@@ -717,6 +717,8 @@ void Mesh::Create3DMesh()
     }
 
     i=int(BCConn.size());
+
+
     if(i!=nBCElmts*nNodesPerBCElmt)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***************************************************\n");
