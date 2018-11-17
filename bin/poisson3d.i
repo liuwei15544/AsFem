@@ -8,10 +8,10 @@
   ymax=1.0
   zmin=0.0
   zmax=5.0
-  nx=2
-  ny=2
-  nz=20
-  meshtype=hex8
+  nx=4
+  ny=4
+  nz=40
+  meshtype=hex27
 []
 
 [dofs]
