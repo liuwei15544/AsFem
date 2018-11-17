@@ -10,8 +10,8 @@
   zmax=5.0
   nx=1
   ny=1
-  nz=1
-  meshtype=hex20
+  nz=5
+  meshtype=hex8
 []
 
 [dofs]
@@ -27,7 +27,7 @@ name = c
   [left]
     type=dirichlet
     dof=c
-    value=1
+    value=0.0
     side=back
   [end]
 
@@ -35,7 +35,7 @@ name = c
    type=dirichlet
    dof=c
    value=2
-   side=fromt
+   side=front
   [end]
 []
 

@@ -29,6 +29,7 @@ void Shp2D(const int &ndim,const int &nnodes,const double &xi,const double &eta,
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: Wrong dimension case !!!        ***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: Wrong dimension(dim=%d)!!!",ndim);
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error happens in Shp2D!!!              ***\n");
+        PetscFinalize();
         abort();
     }
 
@@ -37,6 +38,7 @@ void Shp2D(const int &ndim,const int &nnodes,const double &xi,const double &eta,
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error:Wrong nodes on current element(nNodes=%d)!!!\n",nnodes);
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** AsFem only support 2D-4,8,9 nodes mesh!***\n");
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error happens in Shp2D!!!              ***\n");
+        PetscFinalize();
         abort();
     }
 
@@ -178,6 +180,7 @@ void Shp2D(const int &ndim,const int &nnodes,const double &xi,const double &eta,
     if(fabs(DetJac)<1.e-13)
     {
         PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** Error: Singular in element(Shp2D)!!!   ***\n");
+        PetscFinalize();
         abort();
     }
     XJac[0][0]= Jac[1][1]/DetJac;

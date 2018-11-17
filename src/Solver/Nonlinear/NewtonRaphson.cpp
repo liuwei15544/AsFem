@@ -70,9 +70,6 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
             EnergyNorm0=EnergyNorm;
         }
 
-
-
-
         if(PrintIterationInfo && iters>0)
         {
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"*** iter=%6d                            ***\n",iters);
@@ -80,6 +77,7 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   |dU0|=%11.5e, |dU|=%11.5e  ***\n",dUnorm0,dUnorm);
             PetscSynchronizedPrintf(PETSC_COMM_WORLD,"***   | E0|=%11.5e, | E|=%11.5e  ***\n",EnergyNorm0,EnergyNorm);
         }
+
 
         equationSystem.UpdateUplusdU();
         //VecWAXPY(Vec w,PetscScalar a,Vec x,Vec y); w = a ∗ x + y
@@ -89,6 +87,8 @@ bool NonlinearSolver::NewtonRaphson(Mesh &mesh,
 
 
         iters+=1;
+
+
 
         if(ConvergenceCheck())
         {
