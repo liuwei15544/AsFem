@@ -27,7 +27,7 @@ PetscErrorCode EquationSystem::Init()
 
         ierr=MatCreate(PETSC_COMM_WORLD,&AMATRIX);CHKERRQ(ierr);
         ierr=MatSetSizes(AMATRIX,PETSC_DECIDE,PETSC_DECIDE,nDofs,nDofs);CHKERRQ(ierr);
-        NNZ_InExact=PetscInt(4*nDims*nNodesPerElmt*nDofsPerNode);// here I assume the each row
+        NNZ_InExact=PetscInt(3*nDims*nNodesPerElmt*nDofsPerNode);// here I assume the each row
                                                  // has maximum 12 neighoured elmt,
                                                  // each elmt has maximum 27 node
         if(size>1)
