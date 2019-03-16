@@ -18,7 +18,7 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/include")
 #######################################
 ### Set the PETSc path with your own###
 #######################################
-set(PETSc "/home/by/Programs/petsc3.10.2")
+set(PETSc "/home/by/Programs/petsc3.10.4")
 include_directories("${PETSc}/include")
 link_libraries("${PETSc}/lib/libpetsc.so")
 #######################################
