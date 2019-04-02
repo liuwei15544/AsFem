@@ -22,7 +22,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -O3 -Wall -march=native -DNDEBU
 ### In most cases, you don't need to modify the following lines!!!###
 #####################################################################
 set(SRC src/main.cpp)
+set(INC include/Welcome.h)
 
-
-add_executable(LIBs-opt ${INC} ${SRC})
+add_executable(asfem ${INC} ${SRC})
 
