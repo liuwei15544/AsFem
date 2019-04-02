@@ -7,6 +7,5 @@ using namespace Eigen;
 
 int main(int args,char *argv[])
 {
-    cout<<"Hello eigen!"<<endl;
     return 0;
 }
