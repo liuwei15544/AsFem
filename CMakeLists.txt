@@ -24,5 +24,16 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -O3 -Wall -march=native -DNDEBU
 set(SRC src/main.cpp)
 set(INC include/Welcome.h)
 
+#################################################
+### Message print for input step              ###
+#################################################
+set(INC ${INC} include/MsgPrint/MsgPrintForInput.h)
+set(SRC ${SRC} src/MsgPrint/Input/Msg_InputFileNameWrong.cpp)
+
+### For program
+set(INC ${INC} include/MsgPrint/MsgPrintForProgram.h)
+set(SRC ${SRC} src/MsgPrint/Program/Msg_ExitProgram.cpp)
+
+
 add_executable(asfem ${INC} ${SRC})
 
