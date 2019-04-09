@@ -11,7 +11,7 @@ using namespace Eigen;
 
 int main(int args,char *argv[])
 {
-    Welcome(1.2);
+    Welcome(1.0);
     Msg_InputFileNameWrong("test.i");
     Msg_ExitProgram();
     return 0;
