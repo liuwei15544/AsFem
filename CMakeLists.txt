@@ -34,6 +34,21 @@ set(SRC ${SRC} src/MsgPrint/Input/Msg_InputFileNameWrong.cpp)
 set(INC ${INC} include/MsgPrint/MsgPrintForProgram.h)
 set(SRC ${SRC} src/MsgPrint/Program/Msg_ExitProgram.cpp)
 
+#################################################
+### String utils                              ###
+#################################################
+#  for string utils
+set(INC ${INC} include/Utils/StringUtils.h)
+set(SRC ${SRC} src/Utils/StringUtils/RemoveSpace.cpp src/Utils/StringUtils/StrToLower.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/StrVecToLower.cpp src/Utils/StringUtils/StrToUpper.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/StrVecToUpper.cpp src/Utils/StringUtils/SplitStr.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/SplitNum.cpp src/Utils/StringUtils/SplitNumAfter.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/IsBracketMatch.cpp src/Utils/StringUtils/IsSubBracketMatch.cpp)
+set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUtils/GotoLine.cpp)
+
+
+#################################################
+
 
 add_executable(asfem ${INC} ${SRC})
 
