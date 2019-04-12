@@ -11,11 +11,13 @@
 // Created by walkandthinker on 18.08.18.
 // Define input system init warning msg print
 
-
 #include "MsgPrint/MsgPrintForInput.h"
 
-
-void Msg_InputFileNameWrong(string filename)
+void Msg_InputSystemInitWarning()
 {
-    cout<<"*** Error: invalid input file name(="<<filename.c_str()<<") !!!"<<endl;
+    cout<<"*********************************************************"<<endl;
+    cout<<"*** Warning: InputSystem is initialized!!!            ***"<<endl;
+    cout<<"*** AsFem will do nothing for you!                    ***"<<endl;
+    cout<<"*********************************************************"<<endl;
 }
+

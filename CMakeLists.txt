@@ -47,6 +47,13 @@ set(SRC ${SRC} src/Utils/StringUtils/IsBracketMatch.cpp src/Utils/StringUtils/Is
 set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUtils/GotoLine.cpp)
 
 
+
+#################################################
+### Input system                              ###
+#################################################
+set(INC ${INC} include/InputSystem/InputSystem.h)
+set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/MsgPrint/Input/Msg_InputSystemInitWarning.cpp)
+
 #################################################
 
 

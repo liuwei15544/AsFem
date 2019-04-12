@@ -17,10 +17,12 @@ C_BASE_FLAGS = [
         '-std=c11',
         '-I/usr/lib/',
         '-I/usr/include/',
-        '-I','../'
+        '-I','../',
+        '-I','./',
         '-I','/usr/include',
         '-I','/opt/moose/gcc-7.3.1/include/c++/7.3.1',
-        '-I','include'
+        '-I','include',
+        '-I','include/'
         ]
 
 CPP_BASE_FLAGS = [
@@ -36,9 +38,11 @@ CPP_BASE_FLAGS = [
         '-I/usr/lib/',
         '-I/usr/include/',
         '-I','../',
+        '-I','./',
         '-I','/usr/include',
         '-I','/opt/moose/gcc-7.3.1/include/c++/7.3.1',
         '-I','include',
+        '-I','include/'
         ]
 
 C_SOURCE_EXTENSIONS = [
@@ -67,6 +71,7 @@ HEADER_EXTENSIONS = [
 
 HEADER_DIRECTORIES = [
         'include',
+        'include/',
         '../',
         './',
         ]
