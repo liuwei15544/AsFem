@@ -8,24 +8,20 @@
 //* Licensed under GPL 3.0, please see LICENSE for details
 //******************************************************
 //
-// Created by walkandthinker on 18.08.18.
-// Define the msg printer for input file read system in AsFem
+// Created by walkandthinker on 08.04.19.
+// Define the gmsh io class(read .msh file from gmsh)
 
-#ifndef ASFEM_MSGPRINTFORINPUT_H
-#define ASFEM_MSGPRINTFORINPUT_H
+#include "Mesh/GmshIO.h"
+#include "Utils/StringUtils.h"
 
+GmshIO::GmshIO()
+{
+    MshFileName="";
+    version=2.0;
+}
 
-#include <iostream>
-#include <iomanip>
-#include <string>
+GmshIO::GmshIO(string mshfilename)
+{
+    MshFileName=RemoveSpace(mshfilename);
+}
 
-using namespace std;
-
-void Msg_InputFileNameWrong(string filename);
-void Msg_InputSystemInitWarning();
-
-
-// For gmsh
-void Msg_Gmsh_UnsupportElmtType(int type);
-
-#endif 

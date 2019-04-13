@@ -9,23 +9,18 @@
 //******************************************************
 //
 // Created by walkandthinker on 18.08.18.
-// Define the msg printer for input file read system in AsFem
+// Define the msg printer for unsupported gmsh elmt type
 
-#ifndef ASFEM_MSGPRINTFORINPUT_H
-#define ASFEM_MSGPRINTFORINPUT_H
+#include "MsgPrint/MsgPrintForInput.h"
 
-
-#include <iostream>
-#include <iomanip>
-#include <string>
-
-using namespace std;
-
-void Msg_InputFileNameWrong(string filename);
-void Msg_InputSystemInitWarning();
+void Msg_Gmsh_UnsupportElmtType(int type)
+{
+    cout<<"*********************************************************"<<endl;
+    cout<<"*** Error: unsupported gmsh elmt type(="<<setw(6)<<type;
+    cout<<" )       ***"<<endl;
+    cout<<"*********************************************************"<<endl;
+}
 
 
-// For gmsh
-void Msg_Gmsh_UnsupportElmtType(int type);
 
-#endif 
+

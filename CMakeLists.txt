@@ -29,10 +29,11 @@ set(INC include/Welcome.h)
 #################################################
 set(INC ${INC} include/MsgPrint/MsgPrintForInput.h)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_InputFileNameWrong.cpp)
+set(SRC ${SRC} src/MsgPrint/Input/Msg_InputSystemInitWarning.cpp)
 
 ### For program
 set(INC ${INC} include/MsgPrint/MsgPrintForProgram.h)
-set(SRC ${SRC} src/MsgPrint/Program/Msg_ExitProgram.cpp)
+set(SRC ${SRC} src/MsgPrint/Program/Msg_ExitProgram.cpp )
 
 #################################################
 ### String utils                              ###
@@ -52,7 +53,15 @@ set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUti
 ### Input system                              ###
 #################################################
 set(INC ${INC} include/InputSystem/InputSystem.h)
-set(SRC ${SRC} src/InputSystem/InputSystem.cpp src/MsgPrint/Input/Msg_InputSystemInitWarning.cpp)
+set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
+
+
+
+#################################################
+### Mesh class                                ###
+#################################################
+set(INC ${INC} include/Mesh/Mesh.h include/Mesh/GmshIO.h)
+set(SRC ${SRC} src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp src/MsgPrint/Input/Msg_Gmsh_UnsupportElmtType.cpp)
 
 #################################################
 
