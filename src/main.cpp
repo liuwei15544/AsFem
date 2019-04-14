@@ -16,9 +16,6 @@ int main(int argc,char *argv[])
 {
     Welcome(1.0);
 
-    Msg_Gmsh_UnsupportElmtType(100);
-
-
     InputSystem inputSystem(argc,argv);
 
     return 0;

@@ -313,35 +313,45 @@ vector<int> GmshIO::GetNodeOrderViaElmtType(int elmttype) const
             // 4-node tetrahedron.
             temp=vector<int>{1+0,1+1,1+2,1+3};
             return temp;
-//        case 5:
-//            // 8-node hexahedron.
-//            return 8;
-//        case 6:
-//            // 6-node prism
-//            return 6;
-//        case 7:
-//            // 5-node pyramid
-//            return 5;
-//        case 8:
-//            // 3-node second order line (2 nodes associated with the vertices and
-//            // 1 with the edge).
-//            return 3;
-//        case 9:
-//            // 6-node second order triangle (3 nodes associated with the vertices
-//            // and 3 with the edges).
-//            return 6;
-//        case 10:
-//            // 9-node second order quadrangle (4 nodes associated with the ver-
-//            // tices, 4 with the edges and 1 with the face).
-//            return 9;
-//        case 11:
-//            // 10-node second order tetrahedron (4 nodes associated with the ver-
-//            // tices and 6 with the edges).
-//            return 10;
-//        case 12:
-//            // 27-node second order hexahedron (8 nodes associated with the ver-
-//            // tices, 12 with the edges, 6 with the faces and 1 with the volume).
-//            return 27;
+        case 5:
+            // 8-node hexahedron.
+            temp=vector<int>{1,2,3,4,5,6,7,8};
+            return temp;
+        case 6:
+            // 6-node prism
+            temp=vector<int>{1,2,3,4,5,6};
+            return temp;
+        case 7:
+            // 5-node pyramid
+            temp=vector<int>{1,2,3,4,5};
+            return temp;
+        case 8:
+            // 3-node second order line (2 nodes associated with the vertices and
+            // 1 with the edge).
+            temp=vector<int>{1,3,2};// convert to asfem's index order
+            return temp;
+        case 9:
+            // 6-node second order triangle (3 nodes associated with the vertices
+            // and 3 with the edges).
+            temp=vector<int>{1,2,3,4,5,6};
+            return temp;
+        case 10:
+            // 9-node second order quadrangle (4 nodes associated with the ver-
+            // tices, 4 with the edges and 1 with the face).
+            temp=vector<int>{1,2,3,4,5,6,7,8,9};
+            return temp;
+        case 11:
+            // 10-node second order tetrahedron (4 nodes associated with the ver-
+            // tices and 6 with the edges).
+            temp=vector<int>{1,2,3,4,5,6,7,8,9,10};
+            return temp;
+        case 12:
+            // 27-node second order hexahedron (8 nodes associated with the ver-
+            // tices, 12 with the edges, 6 with the faces and 1 with the volume).
+            temp=vector<int>{1,2,3,4,5,6,7,8,9,10,
+                             11,12,13,14,15,16,17,18,19,20,
+                             21,22,23,24,25,26,27};
+            return temp;
 //        case 13:
 //            // 18-node second order prism (6 nodes associated with the vertices,
 //            // 9 with the edges and 3 with the quadrangular faces).
@@ -350,17 +360,21 @@ vector<int> GmshIO::GetNodeOrderViaElmtType(int elmttype) const
 //            // 14-node second order pyramid (5 nodes associated with the vertices,
 //            // 8 with the edges and 1 with the quadrangular face).
 //            return 14;
-//        case 15:
-//            // 1-node point.
-//            return 1;
-//        case 16:
-//            // 8-node second order quadrangle (4 nodes associated with the ver-
-//            // tices and 4 with the edges).
-//            return 8;
-//        case 17:
-//            // 20-node second order hexahedron (8 nodes associated with the ver-
-//            // tices and 12 with the edges).
-//            return 20;
+        case 15:
+            // 1-node point.
+            temp=vector<int>{1};
+            return temp;
+        case 16:
+            // 8-node second order quadrangle (4 nodes associated with the ver-
+            // tices and 4 with the edges).
+            temp=vector<int>{1,2,3,4,5,6,7,8};
+            return temp;
+        case 17:
+            // 20-node second order hexahedron (8 nodes associated with the ver-
+            // tices and 12 with the edges).
+            temp=vector<int>{1,2,3,4,5,6,7,8,9,10,
+                             11,12,13,14,15,16,17,18,19,20};
+            return temp;
 //        case 18:
 //            // 15-node second order prism (6 nodes associated with the vertices
 //            // and 9 with the edges).
@@ -369,10 +383,11 @@ vector<int> GmshIO::GetNodeOrderViaElmtType(int elmttype) const
 //            // 13-node second order pyramid (5 nodes associated with the vertices
 //            // and 8 with the edges).
 //            return 13;
-//        case 20:
-//            // 9-node third order incomplete triangle (3 nodes associated with the
-//            // vertices, 6 with the edges)
-//            return 9;
+        case 20:
+            // 9-node third order incomplete triangle (3 nodes associated with the
+            // vertices, 6 with the edges)
+            temp=vector<int>{1,2,3,4,5,6,7,8,9};
+            return temp;
 //        case 21:
 //            // 10-node third order triangle (3 nodes associated with the vertices,
 //            // 6 with the edges, 1 with the face)
@@ -425,6 +440,140 @@ vector<int> GmshIO::GetNodeOrderViaElmtType(int elmttype) const
 //            // 125-node fourth order hexahedron (8 nodes associated with the
 //            // vertices, 36 with the edges, 54 with the faces, 27 in the volume)
 //            return 125;
+        default:
+            Msg_Gmsh_UnsupportElmtType(elmttype);
+            Msg_ExitProgram();
+    }
+}
+//*****************************************
+string GmshIO::GetElmtNameViaElmtType(int elmttype) const
+{
+    switch (elmttype)
+    {
+        case 1:
+            // 2-node line.
+            return "edge2";
+        case 2:
+            // 3-node triangle.
+            return "tri3";
+        case 3:
+            // 4-node quadrangle.
+            return "quad4";
+        case 4:
+            // 4-node tetrahedron.
+            return "tet4";
+        case 5:
+            // 8-node hexahedron.
+            return "hex8";
+        case 6:
+            // 6-node prism
+            return "prism6";
+        case 7:
+            // 5-node pyramid
+            return "pyramid5";
+        case 8:
+            // 3-node second order line (2 nodes associated with the vertices and
+            // 1 with the edge).
+            return "edge3";
+        case 9:
+            // 6-node second order triangle (3 nodes associated with the vertices
+            // and 3 with the edges).
+            return "tri6";
+        case 10:
+            // 9-node second order quadrangle (4 nodes associated with the ver-
+            // tices, 4 with the edges and 1 with the face).
+            return "quad9";
+        case 11:
+            // 10-node second order tetrahedron (4 nodes associated with the ver-
+            // tices and 6 with the edges).
+            return "tet10";
+        case 12:
+            // 27-node second order hexahedron (8 nodes associated with the ver-
+            // tices, 12 with the edges, 6 with the faces and 1 with the volume).
+            return "hex27";
+        case 13:
+            // 18-node second order prism (6 nodes associated with the vertices,
+            // 9 with the edges and 3 with the quadrangular faces).
+            return "prism18";
+        case 14:
+            // 14-node second order pyramid (5 nodes associated with the vertices,
+            // 8 with the edges and 1 with the quadrangular face).
+            return "pyramid14";
+        case 15:
+            // 1-node point.
+            return "point";
+        case 16:
+            // 8-node second order quadrangle (4 nodes associated with the ver-
+            // tices and 4 with the edges).
+            return "quad8";
+        case 17:
+            // 20-node second order hexahedron (8 nodes associated with the ver-
+            // tices and 12 with the edges).
+            return "hex20";
+        case 18:
+            // 15-node second order prism (6 nodes associated with the vertices
+            // and 9 with the edges).
+            return "prism15";
+        case 19:
+            // 13-node second order pyramid (5 nodes associated with the vertices
+            // and 8 with the edges).
+            return "pyramid13";
+        case 20:
+            // 9-node third order incomplete triangle (3 nodes associated with the
+            // vertices, 6 with the edges)
+            return "tri9";
+        case 21:
+            // 10-node third order triangle (3 nodes associated with the vertices,
+            // 6 with the edges, 1 with the face)
+            return "tri10";
+        case 22:
+            // 12-node fourth order incomplete triangle (3 nodes associated with
+            // the vertices, 9 with the edges)
+            return "tri12";
+        case 23:
+            // 15-node fourth order triangle (3 nodes associated with the vertices,
+            // 9 with the edges, 3 with the face)
+            return "tri15";
+        case 24:
+            // 15-node fifth order incomplete triangle (3 nodes associated with the
+            // vertices, 12 with the edges)
+            return "tri15i";
+        case 25:
+            // 21-node fifth order complete triangle (3 nodes associated with the
+            // vertices, 12 with the edges, 6 with the face)
+            return "tri21";
+        case 26:
+            // 4-node third order edge (2 nodes associated with the vertices, 2
+            // internal to the edge)
+            return "edge4";
+        case 27:
+            // 5-node fourth order edge (2 nodes associated with the vertices, 3
+            // internal to the edge)
+            return "edge5";
+        case 28:
+            // 6-node fifth order edge (2 nodes associated with the vertices, 4
+            // internal to the edge)
+            return "edge6";
+        case 29:
+            // 20-node third order tetrahedron (4 nodes associated with the ver-
+            // tices, 12 with the edges, 4 with the faces)
+            return "tet20";
+        case 30:
+            // 35-node fourth order tetrahedron (4 nodes associated with the ver-
+            // tices, 18 with the edges, 12 with the faces, 1 in the volume)
+            return "tet35";
+        case 31:
+            // 56-node fifth order tetrahedron (4 nodes associated with the ver-
+            // tices, 24 with the edges, 24 with the faces, 4 in the volume)
+            return "tet56";
+        case 92:
+            // 64-node third order hexahedron (8 nodes associated with the ver-
+            // tices, 24 with the edges, 24 with the faces, 8 in the volume)
+            return "hex64";
+        case 93:
+            // 125-node fourth order hexahedron (8 nodes associated with the
+            // vertices, 36 with the edges, 54 with the faces, 27 in the volume)
+            return "hex125";
         default:
             Msg_Gmsh_UnsupportElmtType(elmttype);
             Msg_ExitProgram();

@@ -28,9 +28,10 @@ set(INC include/Welcome.h)
 ### Message print for input step              ###
 #################################################
 set(INC ${INC} include/MsgPrint/MsgPrintForInput.h)
+### For input
 set(SRC ${SRC} src/MsgPrint/Input/Msg_InputFileNameWrong.cpp)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_InputSystemInitWarning.cpp)
-
+set(SRC ${SRC} src/MsgPrint/Input/Msg_Gmsh_UnsupportElmtType.cpp)
 ### For program
 set(INC ${INC} include/MsgPrint/MsgPrintForProgram.h)
 set(SRC ${SRC} src/MsgPrint/Program/Msg_ExitProgram.cpp )
@@ -61,7 +62,7 @@ set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
 ### Mesh class                                ###
 #################################################
 set(INC ${INC} include/Mesh/Mesh.h include/Mesh/GmshIO.h)
-set(SRC ${SRC} src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp src/MsgPrint/Input/Msg_Gmsh_UnsupportElmtType.cpp)
+set(SRC ${SRC} src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp)
 
 #################################################
 
