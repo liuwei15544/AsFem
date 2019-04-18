@@ -9,12 +9,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 ##############################################
 ### For debug mode                         ###
 ##############################################
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -O2 -Wall -Wextra")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -O2 -Wall -Wextra")
 
 ##############################################
 ### For release mode                       ###
 ##############################################
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -O3 -Wall -march=native -DNDEBUG")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fopenmp -O3 -Wall -march=native -DNDEBUG")
 
 #####################################################################
 ### In most cases, you don't need to modify the following lines!!!###
@@ -63,6 +63,7 @@ set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
 #################################################
 set(INC ${INC} include/Mesh/Mesh.h include/Mesh/GmshIO.h)
 set(SRC ${SRC} src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp)
+set(SRC ${SRC} src/Mesh/GmshIO/ReadMshFile.cpp src/MsgPrint/Input/Msg_Gmsh_NoMshFile.cpp)
 
 #################################################
 

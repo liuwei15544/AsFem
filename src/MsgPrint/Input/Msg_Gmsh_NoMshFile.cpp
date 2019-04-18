@@ -9,24 +9,15 @@
 //******************************************************
 //
 // Created by walkandthinker on 18.08.18.
-// Define the msg printer for input file read system in AsFem
+// msg print for error of no msh file
 
-#ifndef ASFEM_MSGPRINTFORINPUT_H
-#define ASFEM_MSGPRINTFORINPUT_H
+#include "MsgPrint/MsgPrintForInput.h"
 
+void Msg_Gmsh_NoMshFile()
+{
+    cout<<"*********************************************************"<<endl;
+    cout<<"*** Error: can't find any .msh file !!!               ***"<<endl;
+    cout<<"***        please check your input file !!!           ***"<<endl;
+    cout<<"*********************************************************"<<endl;
+}
 
-#include <iostream>
-#include <iomanip>
-#include <string>
-
-using namespace std;
-
-void Msg_InputFileNameWrong(string filename);
-void Msg_InputSystemInitWarning();
-
-
-// For gmsh
-void Msg_Gmsh_UnsupportElmtType(int type);
-void Msg_Gmsh_NoMshFile();
-
-#endif 

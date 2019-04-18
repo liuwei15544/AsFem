@@ -30,7 +30,11 @@ public:
     GmshIO();
     GmshIO(string mshfilename);
 
-    void SetMshFileName(string mshfilename) {MshFileName=mshfilename;}
+    bool ReadMshFile(vector<double> &NodeCoords,
+                     vector<vector<int>> &Conn,
+                     vector<pair<int,string>> &GmshPhyGroup);
+
+    void SetMshFileName(string mshfilename) {MshFileName=mshfilename;HasMshFileName=true;}
     void SetMshFileVersion(double ver) {version=ver;}
 
     int GetNodesNumViaElmtType(int elmttype) const;
@@ -39,9 +43,18 @@ public:
     vector<int> GetNodeOrderViaElmtType(int elmttype) const;
     int GetVTKCellTypeViaElmtType(int elmttype) const;
 
+    inline int GetMinPhyDim() const { return MinPhyDim;}
+    inline int GetMaxPhyDim() const { return MaxPhyDim;}
+    inline int GetMaxElmtDim() const { return ElmtMaxDim;}
+
 private:
+    bool HasMshFileName=false;
     string MshFileName="";
     double version;
+    double Xmin,Xmax,Ymin,Ymax,Zmin,Zmax;
+    int nDims,nElmts,nNodes;
+    int nPhysics=0;
+    int MaxPhyDim=-10,MinPhyDim=10,ElmtMaxDim=0;
 
 };
 
