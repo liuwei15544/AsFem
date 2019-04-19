@@ -18,10 +18,27 @@ GmshIO::GmshIO()
 {
     MshFileName="";
     version=2.0;
+    HasMshFileName=false;
+
+    Xmin=1.0e15;Xmax=-1.0e15;
+    Ymin=1.0e15;Ymax=-1.0e15;
+    Zmin=1.0e15;Zmax=-1.0e15;
+    nDims=0;nElmts=0;nNodes=0;
+    nPhysics=0;
+    MaxPhyDim=-10;MinPhyDim=10;ElmtMaxDim=0;
 }
 
 GmshIO::GmshIO(string mshfilename)
 {
     MshFileName=RemoveSpace(mshfilename);
+    HasMshFileName=true;
+    version=2.0;
+
+    Xmin=1.0e15;Xmax=-1.0e15;
+    Ymin=1.0e15;Ymax=-1.0e15;
+    Zmin=1.0e15;Zmax=-1.0e15;
+    nDims=0;nElmts=0;nNodes=0;
+    nPhysics=0;
+    MaxPhyDim=-10;MinPhyDim=10;ElmtMaxDim=0;
 }
 

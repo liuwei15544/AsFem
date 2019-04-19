@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <fstream>
 #include <algorithm>
+#include <map>
 #include <vector>
 #include <string>
 
@@ -32,6 +33,8 @@ public:
 
     bool ReadMshFile(vector<double> &NodeCoords,
                      vector<vector<int>> &Conn,
+                     map<string,vector<int>> &MeshNameSet,
+                     map<int,vector<int>> &MeshIdSet,
                      vector<pair<int,string>> &GmshPhyGroup);
 
     void SetMshFileName(string mshfilename) {MshFileName=mshfilename;HasMshFileName=true;}
@@ -46,13 +49,24 @@ public:
     inline int GetMinPhyDim() const { return MinPhyDim;}
     inline int GetMaxPhyDim() const { return MaxPhyDim;}
     inline int GetMaxElmtDim() const { return ElmtMaxDim;}
+    inline int GetElmtsNum() const { return nElmts;}
+    inline int GetNodesNum() const { return nNodes;}
+
+    inline double GetXmin() const { return Xmin;}
+    inline double GetXmax() const { return Xmax;}
+
+    inline double GetYmin() const { return Ymin;}
+    inline double GetYmax() const { return Ymax;}
+
+    inline double GetZmin() const { return Zmin;}
+    inline double GetZmax() const { return Zmax;}
 
 private:
     bool HasMshFileName=false;
     string MshFileName="";
     double version;
     double Xmin,Xmax,Ymin,Ymax,Zmin,Zmax;
-    int nDims,nElmts,nNodes;
+    int nDims=0,nElmts=0,nNodes=0;
     int nPhysics=0;
     int MaxPhyDim=-10,MinPhyDim=10,ElmtMaxDim=0;
 

@@ -32,6 +32,10 @@ set(INC ${INC} include/MsgPrint/MsgPrintForInput.h)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_InputFileNameWrong.cpp)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_InputSystemInitWarning.cpp)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_Gmsh_UnsupportElmtType.cpp)
+set(SRC ${SRC} src/MsgPrint/Input/Msg_Gmsh_NoMshFile.cpp)
+set(SRC ${SRC} src/MsgPrint/Input/Msg_Gmsh_ImportFailed.cpp)
+
+
 ### For program
 set(INC ${INC} include/MsgPrint/MsgPrintForProgram.h)
 set(SRC ${SRC} src/MsgPrint/Program/Msg_ExitProgram.cpp )
@@ -63,7 +67,7 @@ set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
 #################################################
 set(INC ${INC} include/Mesh/Mesh.h include/Mesh/GmshIO.h)
 set(SRC ${SRC} src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp)
-set(SRC ${SRC} src/Mesh/GmshIO/ReadMshFile.cpp src/MsgPrint/Input/Msg_Gmsh_NoMshFile.cpp)
+set(SRC ${SRC} src/Mesh/GmshIO/ReadMshFile.cpp src/Mesh/ReadMesh.cpp)
 
 #################################################
 

@@ -16,6 +16,8 @@
 
 bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                          vector<vector<int>> &Conn,
+                         map<string,vector<int>> &MeshNameSet,
+                         map<int,vector<int>> &MeshIdSet,
                          vector<pair<int,string>> &GmshPhyGroup)
 {
     if(!HasMshFileName)
@@ -26,6 +28,11 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
     ifstream in;
 
     in.open(MshFileName.c_str(),ios::in);
+    if(!in.is_open())
+    {
+        Msg_Gmsh_NoMshFile();
+        return false;
+    }
     string line,str,str0;
 
     int phydim,phyid;
@@ -58,6 +65,9 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 phyname.erase(remove(phyname.begin(),phyname.end(),'"'), phyname.end());
                 GmshPhyGroup[phyid-1]=make_pair(phydim,phyname);
 
+                MeshNameSet[phyname].clear();
+                MeshIdSet[phyid].clear();
+
             }
 
             getline(in,line);// read '$EndPhysicalNames'
@@ -83,6 +93,15 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 NodeCoords[(nodeid-1)*4+1]=x;
                 NodeCoords[(nodeid-1)*4+2]=y;
                 NodeCoords[(nodeid-1)*4+3]=z;
+
+                if(x<Xmin) Xmin=x;
+                if(x>Xmax) Xmax=x;
+
+                if(y<Ymin) Ymin=y;
+                if(y>Ymax) Ymax=y;
+
+                if(z<Zmin) Zmin=z;
+                if(z>Zmax) Zmax=z;
             }
 
             getline(in,line);// read '$EndNodes'
@@ -90,6 +109,8 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
         else if(line.find("$Elements")!=string::npos||
                 line.find("$ELM")!=string::npos)
         {
+            nElmts=0;
+
             in>>nElmts;
 
             if(nElmts<1) return false;
@@ -121,6 +142,10 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                     tempvec.push_back(nodeid);
                 }
                 Conn.push_back(tempvec);
+
+                MeshIdSet[phyid].push_back(elmtid);
+
+                MeshNameSet[GmshPhyGroup[phyid-1].second].push_back(elmtid);
             }
             getline(in,line);
         }

@@ -23,15 +23,23 @@
 
 #include "MsgPrint/MsgPrintForProgram.h"
 
+#include "Mesh/GmshIO.h"
+
 class Mesh
 {
 public:
     Mesh();
     void Release();
 
+    bool CreateMesh();
+    bool ReadMesh(string meshfiletype="gmsh");
+
     inline bool IsMeshCreated() const {return MeshCreated;}
 
-
+private:
+    bool Create1DMesh();
+    bool Create2DMesh();
+    bool Create3DMesh();
     // for mesh's private variable
 private:
     // for basic mesh information
@@ -42,13 +50,15 @@ private:
     int Nx,Ny,Nz,nDim;
     int nNodes,nElmts,nNodesPerElmt;
     vector<double> NodeCoords;
-    vector<int> Conn;
+    vector<vector<int>> Conn;
 
     // For gmsh infortion
     string GmshFileName;
     int nPhysics;
-    vector<pair<int,string>> GmshPhyGroup;
-    int MaxPhyDim=-10,MinPhyDim=10;
+    vector<pair<int,string>> PhyGroup;
+    int MaxPhyDim=-10,MinPhyDim=10,ElmtMaxDim=0;
+    map<string,vector<int>> MeshNameSet;
+    map<int,vector<int>> MeshIdSet;
 
     // For state variable check
     bool IsBultInMesh=false;

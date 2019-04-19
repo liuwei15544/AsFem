@@ -8,26 +8,15 @@
 //* Licensed under GPL 3.0, please see LICENSE for details
 //******************************************************
 //
-// Created by walkandthinker on 18.08.18.
-// Define the msg printer for input file read system in AsFem
+// Created by walkandthinker on 19.04.19.
+// msg print for error of no msh file
 
-#ifndef ASFEM_MSGPRINTFORINPUT_H
-#define ASFEM_MSGPRINTFORINPUT_H
+#include "MsgPrint/MsgPrintForInput.h"
 
-
-#include <iostream>
-#include <iomanip>
-#include <string>
-
-using namespace std;
-
-void Msg_InputFileNameWrong(string filename);
-void Msg_InputSystemInitWarning();
-
-
-// For gmsh
-void Msg_Gmsh_UnsupportElmtType(int type);
-void Msg_Gmsh_NoMshFile();
-void Msg_Gmsh_ImportFailed();
-
-#endif 
+void Msg_Gmsh_ImportFailed()
+{
+    cout<<"*********************************************************"<<endl;
+    cout<<"*** Error: mesh class read gmsh file failed !!!       ***"<<endl;
+    cout<<"***        please check the name of *.msh file !!!    ***"<<endl;
+    cout<<"*********************************************************"<<endl;
+}
