@@ -46,9 +46,15 @@ bool Mesh::ReadMesh(string meshfiletype)
             nSurfaceElmtsNum=gmshIo.GetSurfaceElmtsNum();
             nVolumeElmtsNum=gmshIo.GetVolumeElmtsNum();
 
-            MeshCreated=true;
-            IsBultInMesh=false;
+            BulkElmtTypeName=gmshIo.GetBulkElmtTypeName();
 
+            MaxPhyDim=gmshIo.GetMaxPhyDim();
+            MinPhyDim=gmshIo.GetMinPhyDim();
+            nDim=gmshIo.GetMaxElmtDim();
+
+            MeshCreated=true;
+
+            IsBultInMesh=false;
             UseMeshFromGmsh= true;
             UseMeshFromAbaqus=false;
 

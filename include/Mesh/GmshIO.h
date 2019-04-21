@@ -47,6 +47,7 @@ public:
     string GetElmtNameViaElmtType(int elmttype) const;
     vector<int> GetNodeOrderViaElmtType(int elmttype) const;
     int GetVTKCellTypeViaElmtType(int elmttype) const;
+    string GetBulkElmtTypeName() const { return BulkElmtTypeName;}
 
     inline int GetMinPhyDim() const { return MinPhyDim;}
     inline int GetMaxPhyDim() const { return MaxPhyDim;}
@@ -78,6 +79,7 @@ private:
     int MaxPhyDim=-10,MinPhyDim=10,ElmtMaxDim=0;
     int nVolumeElmts,nSurfaceElmts,nLineElmts,nPointElmts;
     int nBulkElmts;
+    string BulkElmtTypeName="";
 
 
 

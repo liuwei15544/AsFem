@@ -9,7 +9,7 @@
 #include "InputSystem/InputSystem.h"
 #include "MsgPrint/MsgPrintForInput.h"
 
-#include "Mesh/GmshIO.h"
+#include "Mesh/Mesh.h"
 
 using namespace std;
 using namespace Eigen;
@@ -18,16 +18,11 @@ int main(int argc,char *argv[])
 {
     Welcome(1.0);
 
-    vector<double> NodeCoords;
-    vector<vector<int>> Conn;
-    vector<pair<int,string>> PhyGroup;
-    map<string,vector<int>> MeshNameSet;
-    map<int,vector<int>> MeshIdSet;
-    vector<int> ElmtVTKCellType;
-    vector<string> ElmtTypeName;
+    Mesh mesh;
 
-    GmshIO gmshIo("rect.msh");
-    gmshIo.ReadMshFile(NodeCoords,Conn,ElmtVTKCellType,ElmtTypeName,MeshNameSet,MeshIdSet,PhyGroup);
+    mesh.SetMshFileName("sphere10.msh");
+    mesh.ReadMesh("gmsh");
+    mesh.PrintMeshInfo();
 
     return 0;
 }

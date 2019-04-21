@@ -33,12 +33,15 @@ public:
 
     bool CreateMesh();
     bool ReadMesh(string meshfiletype="gmsh");
+    void SetMshFileName(string meshfilename) {GmshFileName=meshfilename;}
+    void SetInpFileName(string meshfilename) {AbaqusFileName=meshfilename;}
 
     inline bool IsMeshCreated() const {return MeshCreated;}
 
     inline int GetElmtVTKCellType(int e) const { return ElmtVTKCellType[e-1];}
     inline string GetElmtTypeName(int e) const { return ElmtTypeName[e-1];}
 
+    inline int GetDim() const { return nDim;}
     inline int GetNodesNum() const { return nNodes;}
     inline int GetElmtsNum() const { return nElmts;}
     inline int GetBulkElmtsNum() const { return nBulkElmts;}
@@ -46,6 +49,13 @@ public:
     inline int GetLineElmtsNum() const { return nLineElmtsNum;}
     inline int GetSurfaceElmtsNum() const { return nSurfaceElmtsNum;}
     inline int GetVolumeElmtsNum() const { return nVolumeElmtsNum;}
+
+    inline int GetXmax() const { return Xmax;}
+    inline int GetXmin() const { return Xmin;}
+    inline int GetYmax() const { return Ymax;}
+    inline int GetYmin() const { return Ymin;}
+    inline int GetZmax() const { return Zmax;}
+    inline int GetZmin() const { return Zmin;}
 
 
     void PrintMeshInfo() const;
@@ -79,6 +89,8 @@ private:
     map<int,vector<int>> MeshIdSet;
     // For abaqus
     string AbaqusFileName;
+
+    string BulkElmtTypeName="";
 
     bool UseMeshFromGmsh=false,UseMeshFromAbaqus=false;
 

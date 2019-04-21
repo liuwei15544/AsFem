@@ -42,6 +42,7 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
 
     ElmtMaxDim=0;
 
+    BulkElmtTypeName="";
     while (!in.eof())
     {
         getline(in,line);
@@ -52,7 +53,7 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
             in>>nPhysics;
             getline(in,line);
             GmshPhyGroup.clear();
-            GmshPhyGroup.resize(nPhysics);
+            GmshPhyGroup.resize(nPhysics+1);
             for(int i=0;i<nPhysics;i++)
             {
                 //phyical dimension,physical id,physical name
@@ -60,17 +61,21 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 istringstream s_stream(line);
                 s_stream >> phydim >> phyid >> phyname;
 
+
                 if(phydim>MaxPhyDim) MaxPhyDim=phydim;
                 if(phydim<MinPhyDim) MinPhyDim=phydim;
 
                 //remove ""
                 phyname.erase(remove(phyname.begin(),phyname.end(),'"'), phyname.end());
-                GmshPhyGroup[phyid-1]=make_pair(phydim,phyname);
+                GmshPhyGroup[phyid]=make_pair(phydim,phyname);
 
                 MeshNameSet[phyname].clear();
                 MeshIdSet[phyid].clear();
 
             }
+            MeshNameSet["all"].clear();
+            MeshIdSet[0].clear();
+            GmshPhyGroup[0]=make_pair(MaxPhyDim,"all");
 
             getline(in,line);// read '$EndPhysicalNames'
         }
@@ -131,10 +136,11 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
 
             int elmtid,geoid,dim,elmttype,ntags,nodeid;
             int nNodesPerElmt;
-            string elmttypename;
+            string elmttypename,phyname;
             int elmtvtktype;
             ElmtMaxDim=0;
             vector<int> tempvec;
+            bool IsPhyIDInList;
 
             for(int e=0;e<nElmts;e++)
             {
@@ -154,6 +160,11 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 if(dim==2) nSurfaceElmts+=1;
                 if(dim==3) nVolumeElmts+=1;
 
+                if(dim==MaxPhyDim)
+                {
+                    BulkElmtTypeName=GetElmtNameViaElmtType(elmttype);
+                }
+
 
                 //Conn[e+1].push_back(nNodesPerElmt);
                 tempvec.clear();
@@ -165,17 +176,35 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                     tempvec.push_back(nodeid);
                 }
                 Conn.push_back(tempvec);
+                // check if current phyid already is in the  phylist
+                // if not exist, add it to the GmshPhyGroup
+                IsPhyIDInList=true;
+                for(int i=0;i<GmshPhyGroup.size();i++)
+                {
+                    if(phyid!=i+1)
+                    {
+                        IsPhyIDInList=false;
+                        break;
+                    }
+                }
+                if(!IsPhyIDInList)
+                {
+                    // element's physical id isn't in PhyGroup list
+                    // then add it to the list
+                    phyname=to_string(phyid);
+                    GmshPhyGroup[phyid]=make_pair(dim,phyname);
+                }
 
                 MeshIdSet[phyid].push_back(elmtid);
 
-                MeshNameSet[GmshPhyGroup[phyid-1].second].push_back(elmtid);
+                MeshNameSet[GmshPhyGroup[phyid].second].push_back(elmtid);
 
                 if(dim==MaxPhyDim)
                 {
                     // store all the bulk element(max dim) to "default" for phyname
                     //                                     to  0        for phyid
-                    MeshIdSet[0].push_back(elmtid);
-                    MeshNameSet["default"].push_back(elmtid);
+                    //MeshIdSet[0].push_back(elmtid);
+                    //MeshNameSet["all"].push_back(elmtid);
                     nBulkElmts+=1;
                 }
             }

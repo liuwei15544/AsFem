@@ -28,6 +28,8 @@ GmshIO::GmshIO()
     MaxPhyDim=-10;MinPhyDim=10;ElmtMaxDim=0;
     nVolumeElmts=0;nSurfaceElmts=0;nLineElmts=0;nPointElmts=0;
     nBulkElmts=0;
+
+    BulkElmtTypeName="";
 }
 
 GmshIO::GmshIO(string mshfilename)
@@ -45,5 +47,6 @@ GmshIO::GmshIO(string mshfilename)
 
     nBulkElmts=0;
     nVolumeElmts=0;nSurfaceElmts=0;nLineElmts=0;nPointElmts=0;
+    BulkElmtTypeName="";
 }
 
