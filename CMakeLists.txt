@@ -66,8 +66,9 @@ set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
 ### Mesh class                                ###
 #################################################
 set(INC ${INC} include/Mesh/Mesh.h include/Mesh/GmshIO.h)
-set(SRC ${SRC} src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp)
+set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp)
 set(SRC ${SRC} src/Mesh/GmshIO/ReadMshFile.cpp src/Mesh/ReadMesh.cpp)
+set(SRC ${SRC} src/Mesh/PrintMeshInfo.cpp src/Mesh/GmshIO/GetVTKCellTypeViaElmtType.cpp)
 
 #################################################
 

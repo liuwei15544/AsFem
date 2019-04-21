@@ -22,6 +22,8 @@ bool Mesh::ReadMesh(string meshfiletype)
 
         if(gmshIo.ReadMshFile(NodeCoords,
                            Conn,
+                           ElmtVTKCellType,
+                           ElmtTypeName,
                            MeshNameSet,
                            MeshIdSet,
                            PhyGroup))
@@ -34,10 +36,30 @@ bool Mesh::ReadMesh(string meshfiletype)
 
             Zmin=gmshIo.GetZmin();
             Zmax=gmshIo.GetZmax();
+
+            nNodes=gmshIo.GetNodesNum();
+            nElmts=gmshIo.GetElmtsNum();
+            nBulkElmts=gmshIo.GetBulkElmtsNum();
+
+            nPointElmtsNum=gmshIo.GetPointElmtsNum();
+            nLineElmtsNum=gmshIo.GetLineElmtsNum();
+            nSurfaceElmtsNum=gmshIo.GetSurfaceElmtsNum();
+            nVolumeElmtsNum=gmshIo.GetVolumeElmtsNum();
+
+            MeshCreated=true;
+            IsBultInMesh=false;
+
+            UseMeshFromGmsh= true;
+            UseMeshFromAbaqus=false;
+
             return true;
         }
         else
         {
+            MeshCreated=false;
+            UseMeshFromGmsh= false;
+            UseMeshFromAbaqus=false;
+
             Msg_Gmsh_ImportFailed();
             return false;
         }

@@ -33,6 +33,8 @@ public:
 
     bool ReadMshFile(vector<double> &NodeCoords,
                      vector<vector<int>> &Conn,
+                     vector<int> &ElmtVTKCellType,
+                     vector<string> &ElmtTypeName,
                      map<string,vector<int>> &MeshNameSet,
                      map<int,vector<int>> &MeshIdSet,
                      vector<pair<int,string>> &GmshPhyGroup);
@@ -50,6 +52,11 @@ public:
     inline int GetMaxPhyDim() const { return MaxPhyDim;}
     inline int GetMaxElmtDim() const { return ElmtMaxDim;}
     inline int GetElmtsNum() const { return nElmts;}
+    inline int GetBulkElmtsNum() const { return nBulkElmts;}
+    inline int GetPointElmtsNum() const { return nPointElmts;}
+    inline int GetLineElmtsNum() const { return nLineElmts;}
+    inline int GetSurfaceElmtsNum() const { return nSurfaceElmts;}
+    inline int GetVolumeElmtsNum() const { return nVolumeElmts;}
     inline int GetNodesNum() const { return nNodes;}
 
     inline double GetXmin() const { return Xmin;}
@@ -69,6 +76,10 @@ private:
     int nDims=0,nElmts=0,nNodes=0;
     int nPhysics=0;
     int MaxPhyDim=-10,MinPhyDim=10,ElmtMaxDim=0;
+    int nVolumeElmts,nSurfaceElmts,nLineElmts,nPointElmts;
+    int nBulkElmts;
+
+
 
 };
 

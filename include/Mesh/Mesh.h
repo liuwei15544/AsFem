@@ -36,6 +36,21 @@ public:
 
     inline bool IsMeshCreated() const {return MeshCreated;}
 
+    inline int GetElmtVTKCellType(int e) const { return ElmtVTKCellType[e-1];}
+    inline string GetElmtTypeName(int e) const { return ElmtTypeName[e-1];}
+
+    inline int GetNodesNum() const { return nNodes;}
+    inline int GetElmtsNum() const { return nElmts;}
+    inline int GetBulkElmtsNum() const { return nBulkElmts;}
+    inline int GetPointElmtsNum() const { return nPointElmtsNum;}
+    inline int GetLineElmtsNum() const { return nLineElmtsNum;}
+    inline int GetSurfaceElmtsNum() const { return nSurfaceElmtsNum;}
+    inline int GetVolumeElmtsNum() const { return nVolumeElmtsNum;}
+
+
+    void PrintMeshInfo() const;
+    void PrintMeshDetailedInfo() const;
+
 private:
     bool Create1DMesh();
     bool Create2DMesh();
@@ -48,9 +63,12 @@ private:
     int VTKCellType;
     string MeshType;
     int Nx,Ny,Nz,nDim;
-    int nNodes,nElmts,nNodesPerElmt;
+    int nNodes,nElmts,nBulkElmts,nNodesPerElmt;
+    int nPointElmtsNum,nLineElmtsNum,nSurfaceElmtsNum,nVolumeElmtsNum;
     vector<double> NodeCoords;
     vector<vector<int>> Conn;
+    vector<int> ElmtVTKCellType;
+    vector<string> ElmtTypeName;
 
     // For gmsh infortion
     string GmshFileName;
@@ -59,6 +77,10 @@ private:
     int MaxPhyDim=-10,MinPhyDim=10,ElmtMaxDim=0;
     map<string,vector<int>> MeshNameSet;
     map<int,vector<int>> MeshIdSet;
+    // For abaqus
+    string AbaqusFileName;
+
+    bool UseMeshFromGmsh=false,UseMeshFromAbaqus=false;
 
     // For state variable check
     bool IsBultInMesh=false;

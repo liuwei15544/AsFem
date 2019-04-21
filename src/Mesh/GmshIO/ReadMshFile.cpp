@@ -16,6 +16,8 @@
 
 bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                          vector<vector<int>> &Conn,
+                         vector<int> &ElmtVTKCellType,
+                         vector<string> &ElmtTypeName,
                          map<string,vector<int>> &MeshNameSet,
                          map<int,vector<int>> &MeshIdSet,
                          vector<pair<int,string>> &GmshPhyGroup)
@@ -110,10 +112,17 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 line.find("$ELM")!=string::npos)
         {
             nElmts=0;
+            nVolumeElmts=0;nSurfaceElmts=0;nLineElmts=0;nPointElmts=0;
+            nBulkElmts=0;
+
+            ElmtVTKCellType.clear();
+            ElmtTypeName.clear();
 
             in>>nElmts;
-
             if(nElmts<1) return false;
+
+            ElmtTypeName.resize(nElmts);
+            ElmtVTKCellType.resize(nElmts,-1);
 
             Conn.clear();
             //elm-number elm-type number-of-tags .. node-list
@@ -122,14 +131,28 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
 
             int elmtid,geoid,dim,elmttype,ntags,nodeid;
             int nNodesPerElmt;
+            string elmttypename;
+            int elmtvtktype;
             ElmtMaxDim=0;
             vector<int> tempvec;
+
             for(int e=0;e<nElmts;e++)
             {
                 in>>elmtid>>elmttype>>ntags;
                 nNodesPerElmt=GetNodesNumViaElmtType(elmttype);
                 dim=GetElmtDimViaElmtType(elmttype);
+                elmttypename=GetElmtNameViaElmtType(elmttype);
+                elmtvtktype=GetVTKCellTypeViaElmtType(elmttype);
+
+                ElmtTypeName[elmtid-1]=elmttypename;
+                ElmtVTKCellType[elmtid-1]=elmtvtktype;
+
                 if(dim>ElmtMaxDim) ElmtMaxDim=dim;
+
+                if(dim==0) nPointElmts+=1;
+                if(dim==1) nLineElmts+=1;
+                if(dim==2) nSurfaceElmts+=1;
+                if(dim==3) nVolumeElmts+=1;
 
 
                 //Conn[e+1].push_back(nNodesPerElmt);
@@ -146,6 +169,15 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 MeshIdSet[phyid].push_back(elmtid);
 
                 MeshNameSet[GmshPhyGroup[phyid-1].second].push_back(elmtid);
+
+                if(dim==MaxPhyDim)
+                {
+                    // store all the bulk element(max dim) to "default" for phyname
+                    //                                     to  0        for phyid
+                    MeshIdSet[0].push_back(elmtid);
+                    MeshNameSet["default"].push_back(elmtid);
+                    nBulkElmts+=1;
+                }
             }
             getline(in,line);
         }
