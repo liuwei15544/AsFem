@@ -38,8 +38,8 @@ public:
 
     inline bool IsMeshCreated() const {return MeshCreated;}
 
-    inline int GetElmtVTKCellType(int e) const { return ElmtVTKCellType[e-1];}
-    inline string GetElmtTypeName(int e) const { return ElmtTypeName[e-1];}
+    inline int GetIthElmtVTKCellType(int e) const { return ElmtVTKCellType[e-1];}
+    inline string GetIthElmtTypeName(int e) const { return ElmtTypeName[e-1];}
 
     inline int GetDim() const { return nDim;}
     inline int GetNodesNum() const { return nNodes;}
@@ -57,9 +57,58 @@ public:
     inline int GetZmax() const { return Zmax;}
     inline int GetZmin() const { return Zmin;}
 
+    inline int GetElmtsNumViaPhyID(int phyid) const
+    {
+        for(auto it=MeshIdSet.begin();it!=MeshIdSet.end();it++)
+        {
+            if(it->first==phyid) return it->second.size();
+        }
+    }
+    inline int GetElmtsNumViaName(string phyname) const
+    {
+        for(auto it=MeshNameSet.begin();it!=MeshNameSet.end();it++)
+        {
+            if(it->first==phyname) return it->second.size();
+        }
+    }
+
+    // For local mesh information
+    inline double GetIthNodeJthCoord(int i,int j) const { return NodeCoords[(i-1)*4+j];}
+    inline int GetIthConnJthIndex(int e,int j) const { return Conn[e-1][j];}
+    inline int GetIthElmtNodesNum(int e) const { return Conn[e-1][0];}
+    inline void GetIthElmtConn(const int &e,int &nnodes,int (&elConn)[27])
+    {
+        nnodes=Conn[e-1][0];
+        for(int i=0;i<nnodes;i++)
+        {
+            elConn[i]=Conn[e-1][1+i];
+        }
+    }
+    inline void GetIthElmtConnViaID(const int &e,const int &phyid,int &nnodes,int (&elConn)[27])
+    {
+        int i=MeshIdSet[phyid][e-1];
+        nnodes=Conn[i-1][0];
+        for(int j=0;j<nnodes;j++)
+        {
+            elConn[j]=Conn[i-1][1+j];
+        }
+    }
+    inline void GetIthElmtConnViaName(const int &e,string phyname,int &nnodes,int (&elConn)[27])
+    {
+        int i=MeshNameSet[phyname][e-1];
+        nnodes=Conn[i-1][0];
+        for(int j=0;j<nnodes;j++)
+        {
+            elConn[j]=Conn[i-1][1+j];
+        }
+    }
+
+
 
     void PrintMeshInfo() const;
     void PrintMeshDetailedInfo() const;
+
+    void SaveMeshAsVTU(string filename="mesh.vtu");
 
 private:
     bool Create1DMesh();
@@ -76,7 +125,8 @@ private:
     int nNodes,nElmts,nBulkElmts,nNodesPerElmt;
     int nPointElmtsNum,nLineElmtsNum,nSurfaceElmtsNum,nVolumeElmtsNum;
     vector<double> NodeCoords;
-    vector<vector<int>> Conn;
+    vector<vector<int>> Conn; // Conn[e][0]--> number of elemental nodes
+                              // Conn[e][i]--> i-th node index of e-th element
     vector<int> ElmtVTKCellType;
     vector<string> ElmtTypeName;
     vector<int> PhyIDIndex;// physical id could be disordered

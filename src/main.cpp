@@ -24,5 +24,7 @@ int main(int argc,char *argv[])
     mesh.ReadMesh("gmsh");
     mesh.PrintMeshInfo();
 
+    mesh.SaveMeshAsVTU();
+
     return 0;
 }

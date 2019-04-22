@@ -55,7 +55,6 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                          // than 1, so do not resize it, just clear and push bakc!!!
             getline(in,line);
             GmshPhyGroup.clear();
-            //GmshPhyGroup.resize(nPhysics+1);
             PhyIDIndex.resize(nPhysics,-1);
             for(int i=0;i<nPhysics;i++)
             {
@@ -159,6 +158,8 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 ElmtVTKCellType[elmtid-1]=elmtvtktype;
 
                 if(dim>ElmtMaxDim) ElmtMaxDim=dim;
+                if(dim>MaxPhyDim) MaxPhyDim=dim;
+                if(dim<MinPhyDim) MinPhyDim=dim;
 
                 if(dim==0) nPointElmts+=1;
                 if(dim==1) nLineElmts+=1;
@@ -229,6 +230,8 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                     nBulkElmts+=1;
                 }
             }
+            GmshPhyGroup.push_back(make_pair(MaxPhyDim,"all"));
+            PhyIDIndex.push_back(0);
             getline(in,line);
         }
     }

@@ -69,8 +69,8 @@ void Mesh::PrintMeshInfo() const
     for(unsigned int i=0;i<PhyGroup.size();i++)
     {
         cout<<"***   phy id="<<setw(5)<<PhyIDIndex[i];
-        cout<<" ,phy dim="<<setw(2)<<PhyGroup[PhyIDIndex[i]-1].first;
-        printf(" ,phy name= %-12s***\n",PhyGroup[PhyIDIndex[i]-1].second.c_str());
+        cout<<" ,phy dim="<<setw(2)<<PhyGroup[i].first;
+        printf(" ,phy name= %-12s***\n",PhyGroup[i].second.c_str());
     }
     cout<<"*********************************************************"<<endl;
 }
