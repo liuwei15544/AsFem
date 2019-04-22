@@ -35,6 +35,7 @@ public:
                      vector<vector<int>> &Conn,
                      vector<int> &ElmtVTKCellType,
                      vector<string> &ElmtTypeName,
+                     vector<int> &PhyIDIndex,
                      map<string,vector<int>> &MeshNameSet,
                      map<int,vector<int>> &MeshIdSet,
                      vector<pair<int,string>> &GmshPhyGroup);

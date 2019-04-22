@@ -79,6 +79,9 @@ private:
     vector<vector<int>> Conn;
     vector<int> ElmtVTKCellType;
     vector<string> ElmtTypeName;
+    vector<int> PhyIDIndex;// physical id could be disordered
+                           // i.e. PhyIDIndex[0]=55---> 1st phyid is 55
+                           //      PhyIDIndex[1]=67---> 2nd phyid is 67
 
     // For gmsh infortion
     string GmshFileName;

@@ -18,6 +18,7 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                          vector<vector<int>> &Conn,
                          vector<int> &ElmtVTKCellType,
                          vector<string> &ElmtTypeName,
+                         vector<int> &PhyIDIndex,
                          map<string,vector<int>> &MeshNameSet,
                          map<int,vector<int>> &MeshIdSet,
                          vector<pair<int,string>> &GmshPhyGroup)
@@ -50,10 +51,12 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
         {
             nPhysics=0;
             MaxPhyDim=-10;MinPhyDim=10;
-            in>>nPhysics;
+            in>>nPhysics;// waring: even nPhysics=1, in elmts section, it can be greater
+                         // than 1, so do not resize it, just clear and push bakc!!!
             getline(in,line);
             GmshPhyGroup.clear();
-            GmshPhyGroup.resize(nPhysics+1);
+            //GmshPhyGroup.resize(nPhysics+1);
+            PhyIDIndex.resize(nPhysics,-1);
             for(int i=0;i<nPhysics;i++)
             {
                 //phyical dimension,physical id,physical name
@@ -67,15 +70,16 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
 
                 //remove ""
                 phyname.erase(remove(phyname.begin(),phyname.end(),'"'), phyname.end());
-                GmshPhyGroup[phyid]=make_pair(phydim,phyname);
+                //GmshPhyGroup[phyid]=make_pair(phydim,phyname);
+                GmshPhyGroup.push_back(make_pair(phydim,phyname));
 
                 MeshNameSet[phyname].clear();
                 MeshIdSet[phyid].clear();
-
+                PhyIDIndex[i]=phyid;
             }
             MeshNameSet["all"].clear();
             MeshIdSet[0].clear();
-            GmshPhyGroup[0]=make_pair(MaxPhyDim,"all");
+            //GmshPhyGroup[0]=make_pair(MaxPhyDim,"all");
 
             getline(in,line);// read '$EndPhysicalNames'
         }
@@ -134,9 +138,10 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
             //                    first  tag: physical id
             //                    second tag: geometry id
 
-            int elmtid,geoid,dim,elmttype,ntags,nodeid;
+            int elmtid,geoid,dim,phydim,elmttype,ntags,nodeid;
             int nNodesPerElmt;
             string elmttypename,phyname;
+            int ind;
             int elmtvtktype;
             ElmtMaxDim=0;
             vector<int> tempvec;
@@ -178,26 +183,42 @@ bool GmshIO::ReadMshFile(vector<double> &NodeCoords,
                 Conn.push_back(tempvec);
                 // check if current phyid already is in the  phylist
                 // if not exist, add it to the GmshPhyGroup
-                IsPhyIDInList=true;
-                for(int i=0;i<GmshPhyGroup.size();i++)
+                IsPhyIDInList=false;
+                for(int i=0;i<PhyIDIndex.size();i++)
                 {
-                    if(phyid!=i+1)
+                    if(phyid==PhyIDIndex[i])
                     {
-                        IsPhyIDInList=false;
+                        IsPhyIDInList=true;
+                        phydim=GmshPhyGroup[PhyIDIndex[i]-1].first;
                         break;
                     }
                 }
+
                 if(!IsPhyIDInList)
                 {
                     // element's physical id isn't in PhyGroup list
                     // then add it to the list
+                    PhyIDIndex.push_back(phyid);
                     phyname=to_string(phyid);
-                    GmshPhyGroup[phyid]=make_pair(dim,phyname);
+                    //GmshPhyGroup[phyid]=make_pair(dim,phyname);
+                    GmshPhyGroup.push_back(make_pair(dim,phyname));
                 }
+
+                ind=-1;
+                for(int i=0;i<PhyIDIndex.size();i++)
+                {
+                    if(PhyIDIndex[i]==phyid)
+                    {
+                        ind=i;
+                        break;
+                    }
+                }
+
+                if(dim>GmshPhyGroup[ind].first) GmshPhyGroup[ind].first=dim;
 
                 MeshIdSet[phyid].push_back(elmtid);
 
-                MeshNameSet[GmshPhyGroup[phyid].second].push_back(elmtid);
+                MeshNameSet[GmshPhyGroup[ind].second].push_back(elmtid);
 
                 if(dim==MaxPhyDim)
                 {

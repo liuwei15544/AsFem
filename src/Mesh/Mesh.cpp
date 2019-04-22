@@ -33,6 +33,8 @@ Mesh::Mesh()
     ElmtVTKCellType.clear();
     ElmtTypeName.clear();
 
+    PhyIDIndex.clear();
+
     // For gmsh infortion
     GmshFileName="";
     nPhysics=-1;

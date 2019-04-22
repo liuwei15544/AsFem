@@ -20,7 +20,7 @@ int main(int argc,char *argv[])
 
     Mesh mesh;
 
-    mesh.SetMshFileName("sphere10.msh");
+    mesh.SetMshFileName("rect.msh");
     mesh.ReadMesh("gmsh");
     mesh.PrintMeshInfo();
 

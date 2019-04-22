@@ -24,6 +24,7 @@ bool Mesh::ReadMesh(string meshfiletype)
                            Conn,
                            ElmtVTKCellType,
                            ElmtTypeName,
+                           PhyIDIndex,
                            MeshNameSet,
                            MeshIdSet,
                            PhyGroup))
