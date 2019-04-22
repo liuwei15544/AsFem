@@ -34,7 +34,7 @@ set(SRC ${SRC} src/MsgPrint/Input/Msg_InputSystemInitWarning.cpp)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_Gmsh_UnsupportElmtType.cpp)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_Gmsh_NoMshFile.cpp)
 set(SRC ${SRC} src/MsgPrint/Input/Msg_Gmsh_ImportFailed.cpp)
-
+set(SRC ${SRC} src/MsgPrint/Input/Msg_InputFile_MeshBlock_NoDim.cpp)
 
 ### For program
 set(INC ${INC} include/MsgPrint/MsgPrintForProgram.h)
@@ -59,6 +59,8 @@ set(SRC ${SRC} src/Utils/StringUtils/SplitStrFromBracket.cpp src/Utils/StringUti
 #################################################
 set(INC ${INC} include/InputSystem/InputSystem.h)
 set(SRC ${SRC} src/InputSystem/InputSystem.cpp)
+# for mesh block
+set(SRC ${SRC} src/InputSystem/ReadMeshBlock.cpp)
 
 
 
@@ -69,7 +71,7 @@ set(INC ${INC} include/Mesh/Mesh.h include/Mesh/GmshIO.h)
 set(SRC ${SRC} src/Mesh/Mesh.cpp src/Mesh/GmshIO/GmshIO.cpp src/Mesh/GmshIO/GmshIOGetInfo.cpp)
 set(SRC ${SRC} src/Mesh/GmshIO/ReadMshFile.cpp src/Mesh/ReadMesh.cpp)
 set(SRC ${SRC} src/Mesh/PrintMeshInfo.cpp src/Mesh/GmshIO/GetVTKCellTypeViaElmtType.cpp)
-set(SRC ${SRC} src/Mesh/SaveMeshAsVTU.cpp)
+set(SRC ${SRC} src/Mesh/SaveMeshAsVTU.cpp src/MsgPrint/Input/Msg_InputFile_NoNumberFound.cpp src/MsgPrint/Input/Msg_InputFile_MeshBlock_XYZNotFound.cpp)
 
 #################################################
 

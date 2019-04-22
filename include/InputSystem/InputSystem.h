@@ -29,6 +29,9 @@
 
 #include "Utils/StringUtils.h"
 
+//******************************
+#include "Mesh/Mesh.h"
+
 
 class InputSystem
 {
@@ -38,7 +41,9 @@ public:
 
     void InitInputSystem(int argc,char *argv[]);
 
-    
+
+private:
+    bool ReadMeshBlock(Mesh &mesh);
 
 private:
     bool IsInputSystemInit=false;
